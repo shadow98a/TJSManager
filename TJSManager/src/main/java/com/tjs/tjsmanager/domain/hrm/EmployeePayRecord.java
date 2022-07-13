@@ -2,16 +2,44 @@ package com.tjs.tjsmanager.domain.hrm;
 
 import java.util.Date;
 
-// Á÷¿ø ±Ş¿© Áö±Ş ÀÌ·Â Å×ÀÌºí
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.tjs.tjsmanager.domain.scm.ManagedStore;
+
+import lombok.Data;
+
+//ì§ì› ê¸‰ì—¬ ì§€ê¸‰ ê¸°ë¡
+@Data
+@Entity
+@Table(name="EMPLOYEE_PAY_RECORD")
 public class EmployeePayRecord {
-	// ±â·Ï ¹øÈ£
+//	ê¸°ë¡ ë²ˆí˜¸
+	@Column(name="RECORD_NUM")
+	@Id
+	@GeneratedValue
 	private Long recordNum;
-	// Á÷¿ø ¹øÈ£
+	
+//	ì§ì› ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="EMP_NUM")
 	private Employee empNum;
-	// ¼Ò¼Ó ÁöÁ¡ ¹øÈ£
+	
+//	ì†Œì† ì§€ì  ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="STORE_NUM")
 	private ManagedStore storeNum;
-	// ±Ş¿© Áö±ŞÀÏ
+	
+//	ê¸‰ì—¬ ì§€ê¸‰ì¼
+	@Column(name="PAY_DATE")
 	private Date payDate;
-	// Áö±Ş ±İ¾×
+	
+//	ì§€ê¸‰ ê¸ˆì•¡
+	@Column(name="PAY_VALUE")
 	private Integer payValue;
 }

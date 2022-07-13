@@ -2,22 +2,58 @@ package com.tjs.tjsmanager.domain.hrm;
 
 import java.util.Date;
 
-// ÀÎ»ç Æò°¡ Å×ÀÌºí
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.tjs.tjsmanager.domain.scm.ManagedStore;
+
+import lombok.Data;
+
+//ì§ì› ì¸ì‚¬ í‰ê°€
+@Data
+@Entity
+@Table(name="EMPLOYEE_PERFORMANCE")
 public class EmployeePerformance {
-	// ÀÎ»ç Æò°¡ ¹øÈ£
+//	ì¸ì‚¬ í‰ê°€ ë²ˆí˜¸
+	@Column(name="PERFORMANCE_NUM")
+	@Id
+	@GeneratedValue
 	private Long performanceNum;
-	// ÀÎ»ç Æò°¡ ´ë»ó Á÷¿ø ¹øÈ£
+	
+//	ì¸ì‚¬ í‰ê°€ ëŒ€ìƒ ì§ì› ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="EMP_NUM")
 	private Employee empNum;
-	// ¼Ò¼Ó ÁöÁ¡ ¹øÈ£
+	
+//	ì†Œì† ì§€ì  ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="STORE_NUM")
 	private ManagedStore storeNum;
-	// ÀÎ»ç Æò°¡ ÀÛ¼ºÀÚ ¹øÈ£(Á÷¿ø ¹øÈ£)
+	
+//	ì¸ì‚¬ í‰ê°€ ì‘ì„±ì ë²ˆí˜¸(ì§ì› ë²ˆí˜¸)
+	@ManyToOne
+	@JoinColumn(name="WRITER_NUM")
 	private Employee writerNum;
-	// ÀÎ»ç Æò°¡ ÀÛ¼ºÀÚ ÁöÁ¡ ¹øÈ£
+	
+//	ì¸ì‚¬ í‰ê°€ ì‘ì„±ì ì†Œì† ì§€ì  ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="WRITER_STORE_NUM")
 	private ManagedStore writerStoreNum;
-	// ÀÛ¼ºÀÏ
+	
+//	ì‘ì„±ì¼
+	@Column(name="CREATED_DATE")
 	private Date createdDate;
-	// Æò°¡ ºĞ·ù
+	
+//	í‰ê°€ ë¶„ë¥˜
+	@Column(name="TYPE")
 	private String type;
-	// Æò°¡ ³»¿ë
+	
+//	í‰ê°€ ë‚´ìš©
+	@Column(name="DISCRIPTION")
 	private String discription;
 }

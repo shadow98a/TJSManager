@@ -1,18 +1,51 @@
 package com.tjs.tjsmanager.domain.hrm;
 
 import java.util.Date;
-// Á÷¿ø Á¤º¸ ¼öÁ¤ ÀÌ·Â Å×ÀÌºí
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.tjs.tjsmanager.domain.scm.ManagedStore;
+
+import lombok.Data;
+
+//ì§ì› ì •ë³´ ìˆ˜ì • ê¸°ë¡
+@Data
+@Entity
+@Table(name="EMPLOYEE_INFO_UPDATED")
 public class EmployeeInfoUpdated {
-	// ¼öÁ¤ ±â·Ï ¹øÈ£
+//	ìˆ˜ì • ê¸°ë¡ ë²ˆí˜¸
+	@Column(name="UPDATE_NUM")
+	@Id
+	@GeneratedValue
 	private Long updateNum;
-	// ¼öÁ¤ ´ë»óÀÇ Á÷¿ø ¹øÈ£
+	
+//	ìˆ˜ì • ëŒ€ìƒì˜ ì§ì› ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="EMP_NUM")
 	private Employee emp_num;
-	// ¼öÁ¤ ´ë»ó ¼Ò¼Ó ÁöÁ¡ ¹øÈ£
+	
+//	ìˆ˜ì • ëŒ€ìƒ ì†Œì† ì§€ì  ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="STORE_NUM")
 	private ManagedStore storeNum;
-	// ¼öÁ¤ ÀÏ½Ã
+	
+//	ìˆ˜ì •ì¼
+	@Column(name="UPDATED_DATE")
 	private Date updatedDate;
-	// ¼öÁ¤ÇÑ Á÷¿ø ¹øÈ£
+	
+//	ìˆ˜ì •í•œ ì§ì› ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="UPDATER_NUM")
 	private Employee updaterNum;
-	// ¼öÁ¤ÇÑ Á÷¿ø ¼Ò¼Ó ÁöÁ¡ ¹øÈ£
+	
+//	ìˆ˜ì •í•œ ì§ì› ì†Œì† ì§€ì  ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="UPDATER_STORE_NUM")
 	private ManagedStore updaterStoreNum;
 }

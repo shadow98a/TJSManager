@@ -2,18 +2,48 @@ package com.tjs.tjsmanager.domain.hrm;
 
 import java.util.Date;
 
-// Á÷¿ø ±Ù¹« ÀÏÁö Å×ÀÌºí
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.tjs.tjsmanager.domain.scm.ManagedStore;
+
+import lombok.Data;
+
+//ì§ì› ê·¼ë¬´ ê¸°ë¡
+@Data
+@Entity
+@Table(name="EMPLOYEE_WORK_LOG")
 public class EmployeeWorkLog {
-	// ±Ù¹« ÀÏÁö ¹øÈ£
+//	ê·¼ë¬´ ì¼ì§€ ë²ˆí˜¸
+	@Column(name="WORK_LOG_NUM")
+	@Id
+	@GeneratedValue
 	private Long workLogNum;
-	// Á÷¿ø ¹øÈ£
+ 
+//	ì§ì› ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="EMP_NUM")
 	private Employee empNum;
-	// ¼Ò¼Ó ÁöÁ¡ ¹øÈ£
+	
+//	ì†Œì† ì§€ì  ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="STORE_NUM")
 	private ManagedStore storeNum;
-	// Ãâ±Ù ½Ã°¢
+	
+//	ì¶œê·¼ ì‹œê°
+	@Column(name="START_WORK")
 	private Date startWork;
-	// Åğ±Ù ½Ã°¢
+	
+//	í‡´ê·¼ ì‹œê°
+	@Column(name="END_WORK")
 	private Date endWork;
-	// ±Ù¹« »óÅÂ
+	
+//	ê·¼ë¬´ ìƒíƒœ
+	@Column(name="DISCRIPTION")
 	private String discription;
 }

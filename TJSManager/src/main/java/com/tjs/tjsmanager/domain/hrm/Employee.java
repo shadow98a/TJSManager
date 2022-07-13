@@ -2,28 +2,67 @@ package com.tjs.tjsmanager.domain.hrm;
 
 import java.util.Date;
 
-// ¸ğµç ÁöÁ¡ Á÷¿ø Å×ÀÌºí
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import com.tjs.tjsmanager.domain.scm.ManagedStore;
+
+import lombok.Data;
+
+// ì§ì› ê¸°ë³¸ ì •ë³´
+@Data
+@Entity
+@Table(name="EMPLOYEE")
 public class Employee {
-	// Á÷¿ø ¹øÈ£
+//	 ì§ì› ë²ˆí˜¸
+	@Column(name="EMP_NUM")
+	@Id
+	@GeneratedValue
 	private Long empNum;
-	// ¼Ò¼Ó ÁöÁ¡ ¹øÈ£
+	
+//	ì†Œì† ì§€ì  ë²ˆí˜¸
+	@ManyToOne
+	@JoinColumn(name="STORE_NUM")
 	private ManagedStore storeNum;
-	// ·Î±×ÀÎÀ» À§ÇÑ ºñ¹Ğ¹øÈ£
+	 
+//	ë¡œê·¸ì¸ì„ ìœ„í•œ ë¹„ë°€ë²ˆí˜¸
+	@Column(name="EMP_PASSWORD")
 	private String empPassword;
-	// Á÷¿ø ÀÌ¸§
+	
+//	ì§ì› ì´ë¦„
+	@Column(name="NAME")
 	private String name;
-	// Á÷Ã¥
+	
+//	ì§ì±…
+	@Column(name="JOB")
 	private String job;
-	// ¼ºº°
+	
+//	ì„±ë³„
+	@Column(name="GENDER")
 	private String gender;
-	// »ı³â¿ùÀÏ
+	
+//	ìƒë…„ì›”ì¼
+	@Column(name="BIRTH_DATE")
 	private Date birthDate;
-	// ÈŞ´ëÀüÈ­ ¹øÈ£
-	private String phoneNumber;
-	// ÀÔ»çÀÏ
+	
+//	íœ´ëŒ€ì „í™” ë²ˆí˜¸
+	@Column(name="PHONE_NUM",nullable=true)
+	private String phoneNum;
+	
+//	ì…ì‚¬ì¼
+	@Column(name="HIRE_DATE")
 	private Date hireDate;
-	// ¿ù±Ş
+	
+//	ì›”ê¸‰
+	@Column(name="SALARY")
 	private Integer salary;
-	// ½Ã±Ş
+	
+//	ì‹œê¸‰
+	@Column(name="WAGE")
 	private Integer wage;
 }

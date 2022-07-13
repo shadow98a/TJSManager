@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tjs.tjsmanager.domain.scm.InWarehouseReport;
+import com.tjs.tjsmanager.domain.scm.ItemInfo;
+import com.tjs.tjsmanager.domain.scm.ItemStock;
 import com.tjs.tjsmanager.domain.scm.ReqInWarehouse;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.domain.scm.SalesRecord;
@@ -83,5 +85,49 @@ public class ScmController {
 		return reqInWarehouse;
 	}
 	
+	// 재고 등록
+	@PostMapping("/item/stock")
+	public void createItemStock(@RequestBody ItemStock itemStock) {
+		
+	}
 	
+	// 모든 재고 조회
+	@GetMapping("/item/stock")
+	public List<ItemStock> getAllItemStock() {
+		List<ItemStock> list;
+		return list;
+	}
+	
+	// 한 재고 조회
+	@GetMapping("/item/stock/{item_num}")
+	public ItemStock getOneItemStock(@PathVariable("item_num") Long itemNum) {
+		ItemStock itemStock;
+		return itemStock;
+	}
+	
+	// 모든 상품 기본 정보
+	@GetMapping("/item/info")
+	public List<ItemInfo> getAllItemInfo() {
+		List<ItemInfo> list;
+		return list;
+	}
+
+	// 한 상품 기본 정보
+	@GetMapping("/item/info/{item_num}")
+	public ItemInfo getOneItemInfo(@PathVariable("item_num") Long itemNum) {
+		ItemInfo itemInfo;
+		return itemInfo;
+	}
+	
+	// 상품 기본 정보 수정
+	@PutMapping("/item/info/{item_num}")
+	public void updateItemInfo(@RequestBody ItemInfo itemInfo) {
+		
+	}
+	
+	// 상품 기본 정보 삭제
+	@DeleteMapping("/item/info/{item_num}")
+	public void deleteItemInfo() {
+		
+	}
 }

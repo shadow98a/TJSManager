@@ -1,7 +1,11 @@
 package com.tjs.tjsmanager.repository.scm;
 
+import java.util.List;
+
 import org.springframework.data.repository.CrudRepository;
 
-public interface InWarehouseReportRepository extends CrudRepository<InWarehouseReportRepository,Long>{
+import com.tjs.tjsmanager.domain.scm.InWarehouseReport;
 
+public interface InWarehouseReportRepository extends CrudRepository<InWarehouseReport, Long> {
+	List<InWarehouseReport> findByApprovedDateIsNotNull();
 }

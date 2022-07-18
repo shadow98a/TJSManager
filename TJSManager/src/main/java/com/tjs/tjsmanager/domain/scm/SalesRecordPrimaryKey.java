@@ -1,12 +1,10 @@
-package com.tjs.tjsmanager.domain.crm;
+package com.tjs.tjsmanager.domain.scm;
 
 import java.io.Serializable;
 
 import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -18,17 +16,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Getter
 @EqualsAndHashCode
-public class MembershipCustomerRecordPrimaryKey implements Serializable{
+public class SalesRecordPrimaryKey implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-//	멤버쉽 고객 번호
-	@JoinColumn(name="CUSTOMER_NUM")
-	@ManyToOne
-	private MembershipCustomer customerNum;
-	
-//	판매(구매) 번호
-	@JoinColumn(name="SALES_NUM")
+//	판매 번호
+	@JoinColumn(name = "SALES_NUM")
 	@ManyToOne
 	private SalesConsumer salesNum;
-}
 
+//	판매 물품 번호
+	@JoinColumn(name = "ITEM_NUM")
+	@ManyToOne
+	private ItemInfo itemNum;
+}

@@ -1,6 +1,6 @@
 package com.tjs.tjsmanager.domain.hrm;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,33 +17,33 @@ import lombok.Data;
 //직원 근무 기록
 @Data
 @Entity
-@Table(name="EMPLOYEE_WORK_LOG")
+@Table(name = "EMPLOYEE_WORK_LOG")
 public class EmployeeWorkLog {
 //	근무 일지 번호
-	@Column(name="WORK_LOG_NUM")
+	@Column(name = "WORK_LOG_NUM")
 	@Id
 	@GeneratedValue
 	private Long workLogNum;
- 
+
 //	직원 번호
+	@JoinColumn(name = "EMP_NUM")
 	@ManyToOne
-	@JoinColumn(name="EMP_NUM")
 	private Employee empNum;
-	
+
 //	소속 지점 번호
+	@JoinColumn(name = "STORE_NUM")
 	@ManyToOne
-	@JoinColumn(name="STORE_NUM")
 	private ManagedStore storeNum;
-	
+
 //	출근 시각
-	@Column(name="START_WORK")
-	private Date startWork;
-	
+	@Column(name = "START_WORK")
+	private LocalDateTime startWork;
+
 //	퇴근 시각
-	@Column(name="END_WORK")
-	private Date endWork;
-	
+	@Column(name = "END_WORK")
+	private LocalDateTime endWork;
+
 //	근무 상태
-	@Column(name="DISCRIPTION")
+	@Column(name = "DISCRIPTION")
 	private String discription;
 }

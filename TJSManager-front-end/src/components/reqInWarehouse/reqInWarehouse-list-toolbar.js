@@ -29,7 +29,7 @@ export const ReqInWarehouseListToolbar = (props) => (
         입고 신청 이력
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
         >
@@ -40,7 +40,7 @@ export const ReqInWarehouseListToolbar = (props) => (
           sx={{ mr: 1 }}
         >
           Export
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           variant="contained"

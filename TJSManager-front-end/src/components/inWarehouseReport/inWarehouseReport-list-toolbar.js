@@ -29,7 +29,7 @@ export const InWarehouseReportListToolbar = (props) => (
         승인대기 입고 신청 이력
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
         >
@@ -40,12 +40,26 @@ export const InWarehouseReportListToolbar = (props) => (
           sx={{ mr: 1 }}
         >
           Export
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           variant="contained"
+          sx={{ mr: 1 }}
         >
-          입고 신청 추가
+          승인대기 입고 신청 추가
+        </Button>
+        <Button
+          color="secondary"
+          variant="contained"
+          sx={{ mr: 1 }}
+        >
+          승인대기 입고 신청 수정
+        </Button>
+        <Button
+          color="error"
+          variant="contained"
+        >
+          승인대기 입고 신청 삭제
         </Button>
       </Box>
     </Box>
@@ -67,7 +81,7 @@ export const InWarehouseReportListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="입고 신청 검색"
+              placeholder="승인대기 입고 신청 검색"
               variant="outlined"
             />
           </Box>

@@ -26,10 +26,10 @@ export const ManagedStoreListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        지점 정보
+        지점
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
         >
@@ -40,7 +40,7 @@ export const ManagedStoreListToolbar = (props) => (
           sx={{ mr: 1 }}
         >
           Export
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           variant="contained"

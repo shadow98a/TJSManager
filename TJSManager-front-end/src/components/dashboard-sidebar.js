@@ -58,19 +58,32 @@ const items = [
     title: 'Error'
   },
   {
+    href: '/membership-customers',
+    icon: (<XCircleIcon fontSize="small" />),
+    title: '멤버쉽 고객'
+  },
+  {
+    href: '/membership-customer-records',
+    icon: (<XCircleIcon fontSize="small" />),
+    title: '멤버쉽 고객 구매 이력'
+  }
+];
+
+const scmItems = [
+  {
     href: '/item-infos',
     icon: (<XCircleIcon fontSize="small" />),
-    title: '모든 상품 기본 정보'
+    title: '모든 상품'
   },
   {
     href: '/managed-stores',
     icon: (<XCircleIcon fontSize="small" />),
-    title: '지점 정보'
+    title: '지점'
   },
   {
     href: '/in-warehouse-reports',
     icon: (<XCircleIcon fontSize="small" />),
-    title: '승인대기 입고 신청 이력'
+    title: '승인대기 입고 신청'
   },
   {
     href: '/reqs-in-warehouse',
@@ -80,27 +93,17 @@ const items = [
   {
     href: '/item-stocks',
     icon: (<XCircleIcon fontSize="small" />),
-    title: '재고 현황'
+    title: '재고'
   },
   {
     href: '/sales-consumers',
     icon: (<XCircleIcon fontSize="small" />),
-    title: '물품별 구매자 기록'
+    title: '구매자 기록'
   },
   {
     href: '/sales-records',
     icon: (<XCircleIcon fontSize="small" />),
     title: '판매 이력'
-  },
-  {
-    href: '/membership-customers',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: '멤버쉽 고객 기본 정보'
-  },
-  {
-    href: '/membership-customer-records',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: '멤버쉽 고객 구매 이력'
   }
 ];
 
@@ -206,7 +209,17 @@ export const DashboardSidebar = (props) => {
             />
           ))}
         </Box>
-        <Divider sx={{ borderColor: '#2D3748' }} />
+        <Box sx={{ flexGrow: 1 }}>
+          {scmItems.map((item) => (
+            <NavItem
+              key={item.title}
+              icon={item.icon}
+              href={item.href}
+              title={item.title}
+            />
+          ))}
+        </Box>
+        {/* <Divider sx={{ borderColor: '#2D3748' }} />
         <Box
           sx={{
             px: 2,
@@ -256,7 +269,7 @@ export const DashboardSidebar = (props) => {
               Pro Live Preview
             </Button>
           </NextLink>
-        </Box>
+        </Box> */}
       </Box>
     </>
   );

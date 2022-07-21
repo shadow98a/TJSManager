@@ -1,3 +1,4 @@
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -26,10 +27,10 @@ export const ItemInfoListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        모든 상품 기본 정보
+        모든 상품
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
         >
@@ -40,12 +41,41 @@ export const ItemInfoListToolbar = (props) => (
           sx={{ mr: 1 }}
         >
           Export
-        </Button>
-        <Button
+        </Button> */}
+        {/* <Button
           color="primary"
           variant="contained"
+          sx={{ mr: 1 }}
         >
           상품 추가
+        </Button> */}
+        <NextLink
+            href="/item-info"
+            passHref
+          >
+            <Button
+          color="primary"
+          variant="contained"
+          sx={{ mr: 1 }}
+        >
+          상품 추가
+        </Button>
+          </NextLink>
+          <Button
+          color="secondary"
+          variant="contained"
+          sx={{ mr: 1 }}
+          disabled={props.selectedItemInfoIds.length!=1}
+        >
+          상품 수정
+        </Button>
+        <Button
+          color="error"
+          variant="contained"
+          sx={{ mr: 1 }}
+          disabled={props.selectedItemInfoIds.length==0}
+        >
+          상품 삭제
         </Button>
       </Box>
     </Box>

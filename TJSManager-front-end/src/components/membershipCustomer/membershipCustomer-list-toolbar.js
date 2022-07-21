@@ -26,10 +26,10 @@ export const MembershipCustomerListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        멤버쉽 고객 기본 정보
+        멤버쉽 고객
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
         >
@@ -40,7 +40,7 @@ export const MembershipCustomerListToolbar = (props) => (
           sx={{ mr: 1 }}
         >
           Export
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           variant="contained"

@@ -26,10 +26,10 @@ export const ItemStockListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        재고 현황
+        재고
       </Typography>
       <Box sx={{ m: 1 }}>
-        <Button
+        {/* <Button
           startIcon={(<UploadIcon fontSize="small" />)}
           sx={{ mr: 1 }}
         >
@@ -40,7 +40,7 @@ export const ItemStockListToolbar = (props) => (
           sx={{ mr: 1 }}
         >
           Export
-        </Button>
+        </Button> */}
         <Button
           color="primary"
           variant="contained"

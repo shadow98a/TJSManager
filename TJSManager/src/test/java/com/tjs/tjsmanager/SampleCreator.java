@@ -342,6 +342,8 @@ public class SampleCreator {
 		SalesConsumer consumer = new SalesConsumer();
 		consumer.setConsumerGender("m");
 		consumer.setConsumerAge(20);
+//		consumer.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
+		consumer.setMemo("메모");
 		salesConsumerRepository.save(consumer);
 
 //		판매 이력 기록
@@ -350,17 +352,13 @@ public class SampleCreator {
 		salesRecord = new SalesRecord();
 		salesRecord.setPrimaryKey(new SalesRecordPrimaryKey(consumer, itemInfoRepository.findByItemName("빵").get(0)));
 		salesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
-//		salesRecord.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
 		salesRecord.setSalesCnt(1);
-		salesRecord.setMemo(null);
 		salesRecordRepository.save(salesRecord);
 
 		salesRecord = new SalesRecord();
 		salesRecord.setPrimaryKey(new SalesRecordPrimaryKey(consumer, itemInfoRepository.findByItemName("과자").get(0)));
 		salesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
-//		salesRecord.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
 		salesRecord.setSalesCnt(2);
-		salesRecord.setMemo("메모");
 		salesRecordRepository.save(salesRecord);
 
 //		멤버십 고객 구매 이력 기록

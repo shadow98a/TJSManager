@@ -1,5 +1,7 @@
 package com.tjs.tjsmanager.domain.scm;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,4 +28,12 @@ public class SalesConsumer {
 //	구매자 나이대
 	@Column(name = "CONSUMER_AGE")
 	private Integer consumerAge;
+	
+//	판매 일시
+	@Column(name = "SALES_DATE")
+	private LocalDateTime salesDate = LocalDateTime.now();
+
+//	판매 메모
+	@Column(nullable = true)
+	private String memo;
 }

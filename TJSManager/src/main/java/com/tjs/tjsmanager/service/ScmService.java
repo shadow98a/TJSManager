@@ -108,10 +108,15 @@ public class ScmService {
 		ItemStock itemStock = itemStockRepository.findById(itemStockPrimaryKey).get();
 		return itemStock;
 	}
-	
+
+	// 상품 기본 정보 추가
+	public void saveItemInfo(ItemInfo itemInfo) {
+		itemInfoRepository.save(itemInfo);
+	}
+
 	// 모든 상품 기본 정보
 	public List<ItemInfo> findAllItemInfo() {
-		List<ItemInfo> list = (List<ItemInfo>)itemInfoRepository.findAll();
+		List<ItemInfo> list = (List<ItemInfo>) itemInfoRepository.findAll();
 		return list;
 	}
 	

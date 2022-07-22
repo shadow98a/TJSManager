@@ -113,6 +113,12 @@ public class ScmController {
 		return itemStock;
 	}
 	
+	// 상품 정보 추가
+	@PostMapping("item/info")
+	public void createItemInfo(@RequestBody ItemInfo itemInfo) {
+		scmService.saveItemInfo(itemInfo);
+	}
+	
 	// 모든 상품 기본 정보
 	@GetMapping("/item/info")
 	public List<ItemInfo> getAllItemInfo() {

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tjs.tjsmanager.domain.crm.MembershipCustomer;
+import com.tjs.tjsmanager.domain.json.MembershipCustomerJson;
 import com.tjs.tjsmanager.service.CrmService;
 
 @RestController
@@ -22,7 +23,8 @@ public class CrmController {
 
 	// 멤버쉽 등록
 	@PostMapping("/membership/customer")
-	public void createMembershipCustomer(@RequestBody MembershipCustomer newMember) {
+	public void createMembershipCustomer(@RequestBody MembershipCustomerJson newMember) {
+		System.out.println("======== request : " + newMember);
 		crmService.saveMembershipCustomer(newMember);
 	}
 
@@ -42,7 +44,7 @@ public class CrmController {
 
 	// 멤버쉽 수정
 	@PutMapping("/membership/customer/{customer_num}")
-	public void updateMembershipCustomer(@PathVariable("customer_num") Long customerNum, @RequestBody MembershipCustomer customer) {
+	public void updateMembershipCustomer(@PathVariable("customer_num") Long customerNum, @RequestBody MembershipCustomerJson customer) {
 		crmService.updateMembershipCustomer(customer);
 	}
 

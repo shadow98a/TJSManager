@@ -1,0 +1,5 @@
+sqlplus
+sys as sysdba
+
+create user tjs identified by password;
+grant connect,resource to tjs;

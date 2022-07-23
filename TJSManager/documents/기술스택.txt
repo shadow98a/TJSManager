@@ -1,0 +1,26 @@
+Front-end:
+HTML5
+CSS3
+JavaScript ES6
+React.js
+
+Back-end:
+Java 11
+Spring Boot 2
+Hybernate
+
+Database:
+Oracle Database 11g
+
+Server:
+Apache Tomcat
+
+Infrastructure:
+Amazon Web Services
+Ubuntu
+
+Build Tool:
+Gradle
+
+SCM:
+Git

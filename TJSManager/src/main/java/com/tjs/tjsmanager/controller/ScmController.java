@@ -1,6 +1,5 @@
 package com.tjs.tjsmanager.controller;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +11,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tjs.tjsmanager.domain.json.InWarehouseReportJson;
+import com.tjs.tjsmanager.domain.json.ItemStockJson;
+import com.tjs.tjsmanager.domain.json.SalesRecordJson;
 import com.tjs.tjsmanager.domain.scm.InWarehouseReport;
 import com.tjs.tjsmanager.domain.scm.ItemInfo;
 import com.tjs.tjsmanager.domain.scm.ItemStock;
 import com.tjs.tjsmanager.domain.scm.ReqInWarehouse;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
-import com.tjs.tjsmanager.domain.scm.SalesRecord;
 import com.tjs.tjsmanager.service.ScmService;
 
 @RestController
@@ -32,16 +33,30 @@ public class ScmController {
 		scmService.saveSalesConsumer(consumer);
 	}
 	
+	// 모든 물품별 구매자 기록
+	@GetMapping("/sales/consumer")
+	public List<SalesConsumer> getAllSalesConsumer() {
+		List<SalesConsumer> list = scmService.findAllSalesConsumer();
+		return list;
+	}
+	
+	// 한 물품별 구매자 기록
+	@GetMapping("/sales/consumer/{sales_num}")
+	public SalesConsumer getOneSalesConsumer(@PathVariable("sales_num") Long salesNum) {
+		SalesConsumer salesConsumer = scmService.findByIdSalesConsumer(salesNum);
+		return salesConsumer;
+	}
+	
 	// 판매 이력 기록
 	@PostMapping("/sales/record")
-	public void createSalesRecord(@RequestBody SalesRecord record) {
-		scmService.saveSalesRecord(record);
+	public void createSalesRecord(@RequestBody SalesRecordJson jsonData) {
+		scmService.saveSalesRecord(jsonData);
 	}
 
 	// 입고 신청서 작성
 	@PostMapping("/item/in_warehouse_report")
-	public void createInWarehouseReport(@RequestBody InWarehouseReport inWarehouseReport) {
-
+	public void createInWarehouseReport(@RequestBody InWarehouseReportJson jsonData) {
+		scmService.saveInWarehouseReport(jsonData);
 	}
 
 	// 모든 입고 신청서 조회
@@ -60,23 +75,14 @@ public class ScmController {
 
 	// 입고 신청서 수정
 	@PutMapping("/item/in_warehouse_report/{report_num}")
-	public void updateInWarehouseReport(@PathVariable("report_num") Long reportNum, @RequestBody InWarehouseReport inWarehouseReport) {
-		scmService.updateInWarehouseReport(reportNum, inWarehouseReport);
+	public void updateInWarehouseReport(@PathVariable("report_num") Long reportNum, @RequestBody InWarehouseReportJson jsonData) {
+		scmService.updateInWarehouseReport(reportNum, jsonData);
 	}
 
 	// 입고 신청서 삭제
 	@DeleteMapping("/item/in_warehouse_report/{report_num}")
 	public void deleteInWarehouseReport(@PathVariable("report_num") Long reportNum) {
 		scmService.deleteInWarehouseReport(reportNum);
-	}
-	
-	// 입고 신청 최종 승인
-	// 기존의 InWarehouseReport 테이블에 있는 입고 신청서 데이터를 확인해야 하므로, InWarehouseReport 테이블의 Primary key인 report_num을 인자로 받음
-	@PostMapping("/item/req_in_warehouse/{report_num}")
-	public void approveInWarehouseReport(@PathVariable("report_num") Long reportNum) {
-		InWarehouseReport inWarehouseReport = scmService.findInWarehouseReportByReportNum(reportNum);
-		inWarehouseReport.setApprovedDate( LocalDate.now() );
-		scmService.updateInWarehouseReport(reportNum, inWarehouseReport);
 	}
 	
 	// 모든 최종 입고 신청 이력 조회
@@ -95,8 +101,8 @@ public class ScmController {
 	
 	// 재고 등록
 	@PostMapping("/item/stock")
-	public void createItemStock(@RequestBody ItemStock itemStock) {
-		
+	public void createItemStock(@RequestBody ItemStockJson jsonData) {
+		scmService.saveItemStock(jsonData);
 	}
 	
 	// 모든 재고 조회
@@ -111,6 +117,12 @@ public class ScmController {
 	public ItemStock getOneItemStock(@PathVariable("store_num") Long storeNum, @PathVariable("item_num") Long itemNum) {
 		ItemStock itemStock = scmService.findItemStockByItemNum(itemNum, storeNum);
 		return itemStock;
+	}
+	
+	// 재고 정보 수정
+	@PutMapping("/item/stock/{store_num}/{item_num}")
+	public void updateItemStock(@PathVariable("store_num") Long storeNum, @PathVariable("item_num") Long itemNum, @RequestBody ItemStockJson jsonData) {
+		scmService.updateItemStock(itemNum, storeNum, jsonData);
 	}
 	
 	// 상품 정보 추가

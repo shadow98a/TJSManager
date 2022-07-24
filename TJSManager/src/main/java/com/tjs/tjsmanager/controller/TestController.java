@@ -350,7 +350,7 @@ public class TestController {
 		salesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
 //		salesRecord.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
 		salesRecord.setSalesCnt(1);
-		salesRecord.setMemo(null);
+//		salesRecord.setMemo(null);  <= 테이블과 Entity 필드 변경으로 인해 삭제 필요
 		salesRecordRepository.save(salesRecord);
 
 		salesRecord = new SalesRecord();
@@ -358,7 +358,7 @@ public class TestController {
 		salesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
 //		salesRecord.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
 		salesRecord.setSalesCnt(2);
-		salesRecord.setMemo("메모");
+//		salesRecord.setMemo("메모");  <=  테이블과 WEntity 필드 변경으로 인해 삭제 필요
 		salesRecordRepository.save(salesRecord);
 
 //		멤버십 고객 구매 이력 기록

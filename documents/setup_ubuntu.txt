@@ -56,3 +56,13 @@ sudo /usr/bin/mysql -u root -p
 CREATE DATABASE tjsmanager default character set utf8;
 # create user
 CREATE USER 'tjs'@'%' IDENTIFIED BY 'password';
+# give permission access to database.
+GRANT ALL PRIVILEGES ON tjsmanager.* TO 'tjs'@'%'
+
+
+# run java spring boot server to background.
+nohup java -jar [jar file name] &
+# find pid of java process.
+ps -ef | grep java
+# stop java process.
+sudo kill -9 [pid]

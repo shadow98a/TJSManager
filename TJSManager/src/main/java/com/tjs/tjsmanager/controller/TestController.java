@@ -84,7 +84,7 @@ public class TestController {
 	@Autowired
 	EmployeeInfoUpdatedRepository employeeInfoUpdatedRepository;
 
-	@GetMapping("test/createSamples")
+	@GetMapping("/test/createSamples")
 	public void createSamples() {
 //		Create essential samples
 		createItems();

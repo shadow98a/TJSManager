@@ -1,0 +1,68 @@
+# setting ubuntu root password
+sudo passwd root
+root
+
+
+
+# install nginx
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get install nginx
+
+
+
+# start nginx server
+sudo service nginx start
+
+
+
+
+
+# install programming modules
+# install java
+sudo apt-get install openjdk-11-jre
+sudo apt-get install openjdk-11-jdk
+
+# set environment variable
+# open and write file profile
+sudo vi /etc/profile
+
+# insert text to bottom in file
+export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64      // 본인의 자바 설치 경로
+export PATH=$JAVA_HOME/bin:$PATH
+export CLASSPATH=$CLASSPATH:$JAVA_HOME/jre/lib/ext:$JAVA_HOME/lib/tools.jar
+
+# apply profile
+source /etc/profile
+
+# check apply
+echo $JAVA_HOME
+
+
+
+
+# install mysql
+sudo apt-get install mysql-server
+# mysql out port setting
+sudo ufw allow mysql
+# start mysql system
+sudo systemctl start mysql
+
+# join mysql
+sudo /usr/bin/mysql -u root -p
+
+
+# create database
+CREATE DATABASE tjsmanager default character set utf8;
+# create user
+CREATE USER 'tjs'@'%' IDENTIFIED BY 'password';
+# give permission access to database.
+GRANT ALL PRIVILEGES ON tjsmanager.* TO 'tjs'@'%'
+
+
+# run java spring boot server to background.
+nohup java -jar [jar file name] &
+# find pid of java process.
+ps -ef | grep java
+# stop java process.
+sudo kill -9 [pid]

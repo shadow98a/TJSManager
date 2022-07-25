@@ -21,7 +21,6 @@ import com.tjs.tjsmanager.domain.scm.ItemInfo;
 import com.tjs.tjsmanager.domain.scm.ItemStock;
 import com.tjs.tjsmanager.domain.scm.ItemStockPrimaryKey;
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
-import com.tjs.tjsmanager.domain.scm.ReqInWarehouse;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.domain.scm.SalesRecord;
 import com.tjs.tjsmanager.domain.scm.SalesRecordPrimaryKey;
@@ -36,7 +35,6 @@ import com.tjs.tjsmanager.repository.scm.InWarehouseReportRepository;
 import com.tjs.tjsmanager.repository.scm.ItemInfoRepository;
 import com.tjs.tjsmanager.repository.scm.ItemStockRepository;
 import com.tjs.tjsmanager.repository.scm.ManagedStoreRepository;
-import com.tjs.tjsmanager.repository.scm.ReqInWarehouseRepository;
 import com.tjs.tjsmanager.repository.scm.SalesConsumerRepository;
 import com.tjs.tjsmanager.repository.scm.SalesRecordRepository;
 
@@ -53,9 +51,6 @@ public class SampleCreator {
 
 	@Autowired
 	InWarehouseReportRepository inWarehouseReportRepository;
-
-	@Autowired
-	ReqInWarehouseRepository reqInWarehouseRepository;
 
 	@Autowired
 	ItemStockRepository itemStockRepository;
@@ -94,7 +89,6 @@ public class SampleCreator {
 		
 //		Create SCM samples
 		createReports();
-		createRequests();
 		createStocks();
 		
 //		Create CRM samples
@@ -236,22 +230,6 @@ public class SampleCreator {
 		report.setWriterNum(employeeRepository.findByName("정아윤").get(0));
 		report.setApprovedDate(LocalDate.of(2022, 2, 2));
 		inWarehouseReportRepository.save(report);
-	}
-
-//	@Test
-	public void createRequests() {
-		ReqInWarehouse request;
-		InWarehouseReport report;
-		Iterator<InWarehouseReport> iterator = inWarehouseReportRepository.findByApprovedDateIsNotNull().iterator();
-		while (iterator.hasNext()) {
-			request = new ReqInWarehouse();
-			report = iterator.next();
-			request.setStoreNum(report.getStoreNum());
-			request.setItemNum(report.getItemNum());
-			request.setReqCnt(report.getReqCnt());
-			request.setReqDate(report.getReqDate());
-			reqInWarehouseRepository.save(request);
-		}
 	}
 
 //	@Test

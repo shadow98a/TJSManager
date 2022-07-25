@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,6 +38,8 @@ import com.tjs.tjsmanager.repository.scm.ManagedStoreRepository;
 import com.tjs.tjsmanager.repository.scm.SalesConsumerRepository;
 import com.tjs.tjsmanager.repository.scm.SalesRecordRepository;
 
+
+@CrossOrigin(origins="ec2-43-200-8-58.ap-northeast-2.compute.amazonaws.com:8080")
 @RestController
 public class TestController {
 	@Autowired

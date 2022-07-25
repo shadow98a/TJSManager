@@ -3,6 +3,7 @@ package com.tjs.tjsmanager.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,8 @@ import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.domain.scm.SalesRecord;
 import com.tjs.tjsmanager.service.ScmService;
 
+
+@CrossOrigin(origins="ec2-43-200-8-58.ap-northeast-2.compute.amazonaws.com:8080")
 @RestController
 public class ScmController {
 	

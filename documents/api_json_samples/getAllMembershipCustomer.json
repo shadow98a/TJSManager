@@ -43,5 +43,20 @@
       "storeAdress": "서울특별시 중랑구",
       "storeTelNum": "0200000001"
     }
+  },
+  {
+    "customerNum": 22,
+    "customerName": "태연",
+    "customerBirthDate": "1992-12-01",
+    "customerGender": "f",
+    "customerPhoneNum": "01000000001",
+    "point": 100,
+    "joinedStoreNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAdress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    }
   }
 ]

@@ -1,10 +1,10 @@
 {
-  "customerNum": 15,
-  "customerName": "박윤호",
-  "customerBirthDate": "1998-09-01",
-  "customerGender": "m",
-  "customerPhoneNum": "01063491371",
-  "point": 0,
+  "customerNum": 22,
+  "customerName": "태연",
+  "customerBirthDate": "1992-12-01",
+  "customerGender": "f",
+  "customerPhoneNum": "01000000001",
+  "point": 100,
   "joinedStoreNum": {
     "storeNum": 5,
     "storePassword": "storePassword1",

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tjs.tjsmanager.domain.crm.MembershipCustomer;
+import com.tjs.tjsmanager.domain.crm.MembershipCustomerRecord;
 import com.tjs.tjsmanager.domain.json.MembershipCustomerJson;
 import com.tjs.tjsmanager.domain.json.MembershipCustomerRecordJson;
 import com.tjs.tjsmanager.service.CrmService;
@@ -62,5 +63,19 @@ public class CrmController {
 	@PostMapping("/membership/customer_record")
 	public void createMembershipCustomerRecord(@RequestBody MembershipCustomerRecordJson jsonData) {
 		crmService.saveMembershipCustomerRecord(jsonData);
+	}
+	
+	// 모든 포인트 적립 및 사용 기록
+	@GetMapping("/membership/customer_record")
+	public List<MembershipCustomerRecord> getAllMembershipCustomerRecord() {
+		List<MembershipCustomerRecord> list = (List<MembershipCustomerRecord>)crmService.findAllMembershipCustomerRecord();
+		return list;
+	}
+	
+	// 한 포인트 적립 및 사용 기록
+	@GetMapping("/membership/customer_record/{customer_num}/{sales_num}")
+	public MembershipCustomerRecord getOneMembershipCustomerRecord(@PathVariable("customer_num") Long customerNum, @PathVariable("sales_num") Long salesNum) {
+		MembershipCustomerRecord membershipCustomerRecord = crmService.findByIdMembershipCustomerRecord(customerNum, salesNum);
+		return membershipCustomerRecord;
 	}
 }

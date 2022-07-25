@@ -17,8 +17,8 @@ import com.tjs.tjsmanager.domain.json.SalesRecordJson;
 import com.tjs.tjsmanager.domain.scm.InWarehouseReport;
 import com.tjs.tjsmanager.domain.scm.ItemInfo;
 import com.tjs.tjsmanager.domain.scm.ItemStock;
-import com.tjs.tjsmanager.domain.scm.ReqInWarehouse;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
+import com.tjs.tjsmanager.domain.scm.SalesRecord;
 import com.tjs.tjsmanager.service.ScmService;
 
 @RestController
@@ -51,6 +51,20 @@ public class ScmController {
 	@PostMapping("/sales/record")
 	public void createSalesRecord(@RequestBody SalesRecordJson jsonData) {
 		scmService.saveSalesRecord(jsonData);
+	}
+	
+	// 모든 판매 이력 기록
+	@GetMapping("/sales/record")
+	public List<SalesRecord> getAllSalesRecord() {
+		List<SalesRecord> list = (List<SalesRecord>)scmService.findAllSalesRecord();
+		return list;
+	}
+	
+	// 한 판매 기록
+	@GetMapping("/sales/record/{sales_num}/{item_num}")
+	public SalesRecord getOneSalesRecord(@PathVariable("sales_num") Long salesNum, @PathVariable("item_num") Long itemNum) {
+		SalesRecord salesRecord = scmService.findBySalesPrimaryKeySalesRecord(salesNum, itemNum);
+		return salesRecord;
 	}
 
 	// 입고 신청서 작성
@@ -85,20 +99,6 @@ public class ScmController {
 		scmService.deleteInWarehouseReport(reportNum);
 	}
 	
-	// 모든 최종 입고 신청 이력 조회
-	@GetMapping("/item/req_in_warehouse")
-	public List<ReqInWarehouse> getAllReqInWarehouse() {
-		List<ReqInWarehouse> list = scmService.findAllReqInWarehouse();
-		return list;
-	}
-	
-	// 한 최종 입고 신청 이력 조회
-	@GetMapping("/item/req_in_warehouse/{req_num}")
-	public ReqInWarehouse getOneReqInWarehouse(@PathVariable("req_num") Long reqNum) {
-		ReqInWarehouse reqInWarehouse = scmService.findReqInWarehouseByReqNum(reqNum);
-		return reqInWarehouse;
-	}
-	
 	// 재고 등록
 	@PostMapping("/item/stock")
 	public void createItemStock(@RequestBody ItemStockJson jsonData) {
@@ -125,7 +125,7 @@ public class ScmController {
 		scmService.updateItemStock(itemNum, storeNum, jsonData);
 	}
 	
-	// 상품 정보 추가
+	// 상품 기본 정보 추가
 	@PostMapping("item/info")
 	public void createItemInfo(@RequestBody ItemInfo itemInfo) {
 		scmService.saveItemInfo(itemInfo);

@@ -7,14 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.tjs.tjsmanager.domain.json.InWarehouseReportJson;
 import com.tjs.tjsmanager.domain.json.ItemStockJson;
-import com.tjs.tjsmanager.domain.json.ReqInWarehouseJson;
 import com.tjs.tjsmanager.domain.json.SalesRecordJson;
 import com.tjs.tjsmanager.domain.scm.InWarehouseReport;
 import com.tjs.tjsmanager.domain.scm.ItemInfo;
 import com.tjs.tjsmanager.domain.scm.ItemStock;
 import com.tjs.tjsmanager.domain.scm.ItemStockPrimaryKey;
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
-import com.tjs.tjsmanager.domain.scm.ReqInWarehouse;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.domain.scm.SalesRecord;
 import com.tjs.tjsmanager.domain.scm.SalesRecordPrimaryKey;
@@ -23,7 +21,6 @@ import com.tjs.tjsmanager.repository.scm.InWarehouseReportRepository;
 import com.tjs.tjsmanager.repository.scm.ItemInfoRepository;
 import com.tjs.tjsmanager.repository.scm.ItemStockRepository;
 import com.tjs.tjsmanager.repository.scm.ManagedStoreRepository;
-import com.tjs.tjsmanager.repository.scm.ReqInWarehouseRepository;
 import com.tjs.tjsmanager.repository.scm.SalesConsumerRepository;
 import com.tjs.tjsmanager.repository.scm.SalesRecordRepository;
 
@@ -38,8 +35,6 @@ public class ScmService {
 	private ItemStockRepository itemStockRepository;
 	@Autowired
 	private ManagedStoreRepository managedStoreRepository;
-	@Autowired
-	private ReqInWarehouseRepository reqInWarehouseRepository;
 	@Autowired
 	private SalesConsumerRepository salesConsumerRepository;
 	@Autowired
@@ -68,17 +63,6 @@ public class ScmService {
 		entityData.setStoreNum( managedStoreRepository.findById(jsonData.getStoreNum()).get() );
 		entityData.setWriterNum( employeeRepository.findById(jsonData.getWriterNum()).get() );
 		entityData.setApprovedDate( jsonData.getApprovedDate() );
-		
-		return entityData;
-	}
-	
-	// ReqInWarehouseJson 객체를 ReqInWarehouse Entity 객체로 변환
-	public ReqInWarehouse jsonToReqInWarehouse(ReqInWarehouseJson jsonData) {
-		ReqInWarehouse entityData = new ReqInWarehouse();
-		entityData.setItemNum( itemInfoRepository.findById(jsonData.getItemNum()).get() );
-		entityData.setStoreNum( managedStoreRepository.findById(jsonData.getStoreNum()).get() );
-		entityData.setReqCnt(jsonData.getReqCnt());
-		entityData.setReqDate(jsonData.getReqDate());
 		
 		return entityData;
 	}
@@ -126,6 +110,20 @@ public class ScmService {
 		salesRecordRepository.save(insertData);
 	}
 	
+	// 모든 판매 이력
+	public List<SalesRecord> findAllSalesRecord() {
+		List<SalesRecord> list = (List<SalesRecord>)salesRecordRepository.findAll();
+		return list;
+	}
+	
+	// 한 판매 이력
+	public SalesRecord findBySalesPrimaryKeySalesRecord(Long salesNum, Long itemNum) {
+		SalesRecordPrimaryKey primaryKey = new SalesRecordPrimaryKey(
+				salesConsumerRepository.findById(salesNum).get(), itemInfoRepository.findById(itemNum).get());
+		SalesRecord salesRecord = salesRecordRepository.findById(primaryKey).get();
+		return salesRecord;
+	}
+	
 	// 입고 신청서 작성
 	public void saveInWarehouseReport(InWarehouseReportJson jsonData) {
 		InWarehouseReport insertData = this.jsonToInWarehouseRecord(jsonData);
@@ -154,24 +152,6 @@ public class ScmService {
 	// 입고 신청서 삭제
 	public void deleteInWarehouseReport(Long reportNum) {
 		inWarehouseReportRepository.deleteById(reportNum);
-	}
-	
-	// 최종 입고 신청 이력 생성
-	public void saveReqInWarehouse(ReqInWarehouseJson jsonData) {
-		ReqInWarehouse insertData = this.jsonToReqInWarehouse(jsonData);
-		reqInWarehouseRepository.save(insertData);
-	}
-
-	// 모든 최종 입고 신청 이력 조회
-	public List<ReqInWarehouse> findAllReqInWarehouse() {
-		List<ReqInWarehouse> list = (List<ReqInWarehouse>)reqInWarehouseRepository.findAll();
-		return list;
-	}
-	
-	// 한 최종 입고 신청 이력 조회
-	public ReqInWarehouse findReqInWarehouseByReqNum(Long reqNum) {
-		ReqInWarehouse reqInWarehouse = reqInWarehouseRepository.findById(reqNum).get();
-		return reqInWarehouse;
 	}
 	
 	

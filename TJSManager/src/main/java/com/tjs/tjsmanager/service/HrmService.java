@@ -19,8 +19,8 @@ public class HrmService {
 	
 	// 직원 로그인
 	public String employeeLogIn(EmployeeLoginJson jsonData, HttpSession session) {
-		if (employeeRepository.findById(jsonData.getEmpNum()) != null) {
-			Employee employee = employeeRepository.findById(jsonData.getEmpNum()).get();
+		Employee employee = employeeRepository.findById(jsonData.getEmpNum()).get();
+		if (employee != null) {
 			
 			if (employee.getEmpPassword() == jsonData.getEmpPassword()) {
 				session.setAttribute("loginAccount", employee);

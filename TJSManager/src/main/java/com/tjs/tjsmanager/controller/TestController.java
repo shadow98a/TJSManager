@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -38,8 +37,6 @@ import com.tjs.tjsmanager.repository.scm.ManagedStoreRepository;
 import com.tjs.tjsmanager.repository.scm.SalesConsumerRepository;
 import com.tjs.tjsmanager.repository.scm.SalesRecordRepository;
 
-
-@CrossOrigin(origins="ec2-43-200-8-58.ap-northeast-2.compute.amazonaws.com:8080")
 @RestController
 public class TestController {
 	@Autowired
@@ -81,29 +78,31 @@ public class TestController {
 	@Autowired
 	EmployeeInfoUpdatedRepository employeeInfoUpdatedRepository;
 
+	// @Test
 	@GetMapping("/test/createSamples")
 	public void createSamples() {
-//		Create essential samples
+//		      Create essential samples
 		createItems();
 		createStores();
 		createEmployees();
 
-//		Create SCM samples
+//		      Create SCM samples
 		createReports();
 		createStocks();
 
-//		Create CRM samples
+//		      Create CRM samples
 		createCustomers();
 		createSales();
 
-//		Create HRM samples
+//		      Create HRM samples
 		createPayRecord();
 		createPerformance();
 		createWorkLog();
 		updateEmployee();
 	}
 
-//	Create essential samples
+	// Create essential samples
+	// @Test
 	public void createItems() {
 		ItemInfo item;
 
@@ -132,7 +131,7 @@ public class TestController {
 		itemInfoRepository.save(item);
 	}
 
-//	@Test
+	// @Test
 	public void createStores() {
 		ManagedStore store;
 
@@ -151,7 +150,7 @@ public class TestController {
 		managedStoreRepository.save(store);
 	}
 
-//	@Test
+	// @Test
 	public void createEmployees() {
 		Employee employee;
 
@@ -208,8 +207,8 @@ public class TestController {
 		employeeRepository.save(employee);
 	}
 
-//	Create SCM samples
-//	@Test
+	// Create SCM samples
+	// @Test
 	public void createReports() {
 		InWarehouseReport report;
 
@@ -232,8 +231,7 @@ public class TestController {
 		inWarehouseReportRepository.save(report);
 	}
 
-
-//	@Test
+	// @Test
 	public void createStocks() {
 		ItemStock stock;
 
@@ -282,8 +280,8 @@ public class TestController {
 		itemStockRepository.save(stock);
 	}
 
-//	Create CRM samples
-//	@Test
+	// Create CRM samples
+	// @Test
 	public void createCustomers() {
 		MembershipCustomer customer;
 
@@ -292,7 +290,7 @@ public class TestController {
 		customer.setCustomerBirthDate(LocalDate.of(1998, 12, 14));
 		customer.setCustomerGender("m");
 		customer.setCustomerPhoneNum("01048223898");
-//		customer.setPoint(0);하지 않아도 0으로 초기화
+//		      customer.setPoint(0);하지 않아도 0으로 초기화
 		customer.setJoinedStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
 		membershipCustomerRepository.save(customer);
 
@@ -301,7 +299,7 @@ public class TestController {
 		customer.setCustomerBirthDate(LocalDate.of(1998, 9, 1));
 		customer.setCustomerGender("m");
 		customer.setCustomerPhoneNum("01063491371");
-//		customer.setPoint(0);하지 않아도 0으로 초기화
+//		      customer.setPoint(0);하지 않아도 0으로 초기화
 		customer.setJoinedStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
 		membershipCustomerRepository.save(customer);
 
@@ -310,39 +308,37 @@ public class TestController {
 		customer.setCustomerBirthDate(LocalDate.of(1988, 2, 9));
 		customer.setCustomerGender("f");
 		customer.setCustomerPhoneNum("01056125859");
-//		customer.setPoint(0);하지 않아도 0으로 초기화
+//		      customer.setPoint(0);하지 않아도 0으로 초기화
 		customer.setJoinedStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
 		membershipCustomerRepository.save(customer);
 	}
 
-//	@Test
+	// @Test
 	public void createSales() {
-//		물품별 구매자 기록
+//		      물품별 구매자 기록
 		SalesConsumer consumer = new SalesConsumer();
 		consumer.setConsumerGender("m");
 		consumer.setConsumerAge(20);
+//		      consumer.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
+		consumer.setMemo("메모");
 		salesConsumerRepository.save(consumer);
 
-//		판매 이력 기록
+//		      판매 이력 기록
 		SalesRecord salesRecord;
 
 		salesRecord = new SalesRecord();
 		salesRecord.setPrimaryKey(new SalesRecordPrimaryKey(consumer, itemInfoRepository.findByItemName("빵").get(0)));
 		salesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
-//		salesRecord.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
 		salesRecord.setSalesCnt(1);
-//		salesRecord.setMemo(null);  <= 테이블과 Entity 필드 변경으로 인해 삭제 필요
 		salesRecordRepository.save(salesRecord);
 
 		salesRecord = new SalesRecord();
 		salesRecord.setPrimaryKey(new SalesRecordPrimaryKey(consumer, itemInfoRepository.findByItemName("과자").get(0)));
 		salesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
-//		salesRecord.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
 		salesRecord.setSalesCnt(2);
-//		salesRecord.setMemo("메모");  <=  테이블과 WEntity 필드 변경으로 인해 삭제 필요
 		salesRecordRepository.save(salesRecord);
 
-//		멤버십 고객 구매 이력 기록
+//		      멤버십 고객 구매 이력 기록
 		MembershipCustomer customer = membershipCustomerRepository.findByCustomerName("김주현").get(0);
 		customer.setPoint(customer.getPoint() + 500);
 		membershipCustomerRepository.save(customer);
@@ -354,19 +350,19 @@ public class TestController {
 		membershipCustomerRecordRepository.save(CustomerRecord);
 	}
 
-//	Create HRM samples
-//	@Test
+	// Create HRM samples
+	// @Test
 	public void createPayRecord() {
 		EmployeePayRecord record = new EmployeePayRecord();
 		Employee employee = employeeRepository.findByName("김주현").get(0);
 		record.setEmpNum(employee);
 		record.setStoreNum(employee.getStoreNum());
-//		record.setPayDate(LocalDate.now());하지 않아도 오늘로 초기화
+//		      record.setPayDate(LocalDate.now());하지 않아도 오늘로 초기화
 		record.setPayValue(1000000);
 		employeePayRecordRepository.save(record);
 	}
 
-//	@Test
+	// @Test
 	public void createPerformance() {
 		EmployeePerformance performance = new EmployeePerformance();
 		Employee employee = employeeRepository.findByName("김주현").get(0);
@@ -375,13 +371,13 @@ public class TestController {
 		Employee writer = employeeRepository.findByName("정승균").get(0);
 		performance.setWriterNum(writer);
 		performance.setWriterStoreNum(writer.getStoreNum());
-//		performance.setCreatedDate(LocalDate.now());하지 않아도 오늘로 초기화
+//		      performance.setCreatedDate(LocalDate.now());하지 않아도 오늘로 초기화
 		performance.setType("월간");
 		performance.setDiscription("코딩 테스트 불합격");
 		employeePerformanceRepository.save(performance);
 	}
 
-//	@Test
+	// @Test
 	public void createWorkLog() {
 		EmployeeWorkLog log = new EmployeeWorkLog();
 		Employee employee = employeeRepository.findByName("김주현").get(0);
@@ -393,7 +389,7 @@ public class TestController {
 		employeeWorkLogRepository.save(log);
 	}
 
-//	@Test
+// @Test
 	public void updateEmployee() {
 		// 직원 정보 수정
 		Employee employee = employeeRepository.findByName("김주현").get(0);
@@ -405,7 +401,7 @@ public class TestController {
 		Employee updater = employeeRepository.findByName("정승균").get(0);
 		update.setEmp_num(employee);
 		update.setStoreNum(employee.getStoreNum());
-//		update.setUpdatedDate(LocalDate.now());하지 않아도 오늘로 초기화
+//		      update.setUpdatedDate(LocalDate.now());하지 않아도 오늘로 초기화
 		update.setUpdaterNum(updater);
 		update.setUpdaterStoreNum(updater.getStoreNum());
 		employeeInfoUpdatedRepository.save(update);

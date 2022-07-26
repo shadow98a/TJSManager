@@ -27,6 +27,8 @@ public class HrmService {
 				return "login success!";
 			}
 		}
+		
+		System.out.println("db id : " + employee.getEmpNum() + ", db PassWord : " + employee.getEmpPassword() + " / json ID : " + jsonData.getEmpNum() + ", json PassWord : " + jsonData.getEmpPassword());
 		return "login faild...";
 	}
 	

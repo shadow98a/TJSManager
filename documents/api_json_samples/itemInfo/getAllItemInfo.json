@@ -1,0 +1,26 @@
+[
+  {
+    "itemNum": 1,
+    "itemName": "빵",
+    "type": "식품",
+    "consumerPrice": 1000
+  },
+  {
+    "itemNum": 2,
+    "itemName": "과자",
+    "type": "식품",
+    "consumerPrice": 2000
+  },
+  {
+    "itemNum": 3,
+    "itemName": "물",
+    "type": "음료",
+    "consumerPrice": 3000
+  },
+  {
+    "itemNum": 4,
+    "itemName": "음료",
+    "type": "음료",
+    "consumerPrice": 4000
+  }
+]

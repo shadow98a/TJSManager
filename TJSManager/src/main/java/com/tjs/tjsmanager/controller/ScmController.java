@@ -33,7 +33,7 @@ public class ScmController {
 	// 매점 정보 생성
 	@PostMapping("/managed_store")
 	public void createManagedStore(@RequestBody ManagedStore newManagedStore) {
-		scmService.saveManagedStore(newManagedStore);
+	scmService.saveManagedStore(newManagedStore);
 	}
 	
 	// 모든 매점 정보
@@ -82,6 +82,12 @@ public class ScmController {
 		return salesConsumer;
 	}
 	
+	// 구매자 기록 수정
+	@PutMapping("/sales/consumer/{sales_num}")
+	public void updateSalesConsumer(@PathVariable("sales_num") Long salesNum, @RequestBody SalesConsumer updateData) {
+		scmService.updateSalesConsumer(salesNum, updateData);
+	}
+	
 	// 판매 이력 기록
 	@PostMapping("/sales/record")
 	public void createSalesRecord(@RequestBody SalesRecordJson jsonData) {
@@ -100,6 +106,12 @@ public class ScmController {
 	public SalesRecord getOneSalesRecord(@PathVariable("sales_num") Long salesNum, @PathVariable("item_num") Long itemNum) {
 		SalesRecord salesRecord = scmService.findBySalesPrimaryKeySalesRecord(salesNum, itemNum);
 		return salesRecord;
+	}
+	
+	// 판매 기록 수정
+	@PutMapping("/sales/record/{sales_num}/{item_num}")
+	public void updateSalesRecord(@PathVariable("sales_num") Long salesNum, @PathVariable("item_num") Long itemNum, @RequestBody SalesRecordJson jsonData) {
+		scmService.updateSalesRecord(salesNum, itemNum, jsonData);
 	}
 
 	// 입고 신청서 작성

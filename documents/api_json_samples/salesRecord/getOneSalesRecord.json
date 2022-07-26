@@ -1,0 +1,25 @@
+{
+  "primaryKey": {
+    "salesNum": {
+      "salesNum": 16,
+      "consumerGender": "m",
+      "consumerAge": 20,
+      "salesDate": "2022-07-26T23:52:12.726602",
+      "memo": "메모"
+    },
+    "itemNum": {
+      "itemNum": 2,
+      "itemName": "과자",
+      "type": "식품",
+      "consumerPrice": 2000
+    }
+  },
+  "storeNum": {
+    "storeNum": 5,
+    "storePassword": "storePassword1",
+    "storeName": "씨앗 편의점 '앗편' 중랑구점",
+    "storeAddress": "서울특별시 중랑구",
+    "storeTelNum": "0200000001"
+  },
+  "salesCnt": 8
+}

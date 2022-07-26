@@ -24,6 +24,7 @@ import com.tjs.tjsmanager.repository.scm.ManagedStoreRepository;
 import com.tjs.tjsmanager.repository.scm.SalesConsumerRepository;
 import com.tjs.tjsmanager.repository.scm.SalesRecordRepository;
 
+
 @Service
 public class ScmService {
 	
@@ -115,21 +116,29 @@ public class ScmService {
 		managedStoreRepository.deleteById(storeNum);
 	}
 	
-	// 물품별 구매자 기록
+
+	
+	// 구매자 기록 생성
 	public void saveSalesConsumer(SalesConsumer consumer) {
 		salesConsumerRepository.save(consumer);
 	}
 	
-	// 모든 물품별 구매자 기록
+	// 모든 구매자 기록
 	public List<SalesConsumer> findAllSalesConsumer() {
 		List<SalesConsumer> list = (List<SalesConsumer>)salesConsumerRepository.findAll();
 		return list;
 	}
 	
-	// 한 물품별 구매자 기록
+	// 한 구매자 기록
 	public SalesConsumer findByIdSalesConsumer(Long salesNum) {
 		SalesConsumer salesConsumer = salesConsumerRepository.findById(salesNum).get();
 		return salesConsumer;
+	}
+	
+	// 구매자 기록 수정
+	public void updateSalesConsumer(Long salesNum, SalesConsumer updateData) {
+		updateData.setSalesNum(salesNum);
+		salesConsumerRepository.save(updateData);
 	}
 	
 	// 판매 이력 기록
@@ -153,6 +162,17 @@ public class ScmService {
 				salesConsumerRepository.findById(salesNum).get(), itemInfoRepository.findById(itemNum).get());
 		SalesRecord salesRecord = salesRecordRepository.findById(primaryKey).get();
 		return salesRecord;
+	}
+	
+	// 판매 이력 수정
+	public void updateSalesRecord(Long salesNum, Long itemNum, SalesRecordJson jsonData) {
+		SalesRecord updateData = this.jsonToSalesRecord(jsonData);
+		SalesRecordPrimaryKey primaryKey = new SalesRecordPrimaryKey(
+				salesConsumerRepository.findById(salesNum).get(), itemInfoRepository.findById(itemNum).get()
+		);
+		
+		updateData.setPrimaryKey(primaryKey);
+		salesRecordRepository.save(updateData);
 	}
 	
 	// 입고 신청서 작성
@@ -244,6 +264,7 @@ public class ScmService {
 	
 	// 상품 기본 정보 수정
 	public void updateItemInfo(Long itemNum, ItemInfo itemInfo) {
+		itemInfo.setItemNum(itemNum);
 		itemInfoRepository.save(itemInfo);
 	}
 	

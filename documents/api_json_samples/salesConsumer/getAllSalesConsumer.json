@@ -1,0 +1,16 @@
+[
+  {
+    "salesNum": 19,
+    "consumerGender": "m",
+    "consumerAge": 20,
+    "salesDate": "2022-07-26T21:46:19.004166",
+    "memo": "메모"
+  },
+  {
+    "salesNum": 40,
+    "consumerGender": "m",
+    "consumerAge": 20,
+    "salesDate": "2022-07-26T21:46:19.574444",
+    "memo": "메모"
+  }
+]

@@ -1,0 +1,52 @@
+[
+  {
+    "primaryKey": {
+      "salesNum": {
+        "salesNum": 41,
+        "consumerGender": "m",
+        "consumerAge": 30,
+        "salesDate": "2022-07-26T23:01:08.532346",
+        "memo": "담배 다량 구매"
+      },
+      "itemNum": {
+        "itemNum": 36,
+        "itemName": "물",
+        "type": "음료",
+        "consumerPrice": 3000
+      }
+    },
+    "storeNum": {
+      "storeNum": 39,
+      "storePassword": "storePassword2",
+      "storeName": "씨앗 편의점 '앗편' 동대문구점",
+      "storeAddress": "서울특별시 동대문구",
+      "storeTelNum": "0200000002"
+    },
+    "salesCnt": 10
+  },
+  {
+    "primaryKey": {
+      "salesNum": {
+        "salesNum": 41,
+        "consumerGender": "m",
+        "consumerAge": 30,
+        "salesDate": "2022-07-26T23:01:08.532346",
+        "memo": "담배 다량 구매"
+      },
+      "itemNum": {
+        "itemNum": 37,
+        "itemName": "음료",
+        "type": "음료",
+        "consumerPrice": 4000
+      }
+    },
+    "storeNum": {
+      "storeNum": 39,
+      "storePassword": "storePassword2",
+      "storeName": "씨앗 편의점 '앗편' 동대문구점",
+      "storeAddress": "서울특별시 동대문구",
+      "storeTelNum": "0200000002"
+    },
+    "salesCnt": 30
+  }
+]

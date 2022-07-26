@@ -69,12 +69,15 @@ public class ScmService {
 	
 	// ItemStockJson 객체를 ItemStock Entity 객체로 변환
 	public ItemStock jsonToItemStock(ItemStockJson jsonData) {
+		ItemStockPrimaryKey primaryKey = new ItemStockPrimaryKey(
+				itemInfoRepository.findById(jsonData.getItemNum()).get(), managedStoreRepository.findById(jsonData.getStoreNum()).get() );
 		ItemStock entityData = new ItemStock();
 
-		entityData.setLot(jsonData.getLot());
+		entityData.setPrimaryKey(primaryKey);
 		entityData.setInCnt(jsonData.getInCnt());
 		entityData.setOutCnt(jsonData.getOutCnt());
 		entityData.setDropCnt(jsonData.getDropCnt());
+		entityData.setLot(jsonData.getLot());
 		entityData.setSale(jsonData.getSale());
 		entityData.setEvent(jsonData.getEvent());
 		
@@ -83,6 +86,34 @@ public class ScmService {
 	
 	
 	
+	
+	// 매점 정보 생성
+	public void saveManagedStore(ManagedStore newManagedStore) {
+		managedStoreRepository.save(newManagedStore);
+	}
+	
+	// 모든 매점 정보
+	public List<ManagedStore> findAllManagedStore() {
+		List<ManagedStore> list = (List<ManagedStore>)managedStoreRepository.findAll();
+		return list;
+	}
+	
+	// 한 매점 정보
+	public ManagedStore findByIdManagedStore(Long storeNum) {
+		ManagedStore managedStore = managedStoreRepository.findById(storeNum).get();
+		return managedStore;
+	}
+	
+	// 지점 정보 수정
+	public void updateManagedStore(Long storeNum, ManagedStore updateData) {
+		updateData.setStoreNum(storeNum);
+		managedStoreRepository.save(updateData);
+	}
+	
+	// 지점 정보 삭제
+	public void deleteManagedStore(Long storeNum) {
+		managedStoreRepository.deleteById(storeNum);
+	}
 	
 	// 물품별 구매자 기록
 	public void saveSalesConsumer(SalesConsumer consumer) {

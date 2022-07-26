@@ -22,7 +22,7 @@ public class HrmService {
 		Employee employee = employeeRepository.findById(jsonData.getEmpNum()).get();
 		if (employee != null) {
 			
-			if (employee.getEmpPassword() == jsonData.getEmpPassword()) {
+			if (employee.getEmpPassword().equals(jsonData.getEmpPassword()) ) {
 				session.setAttribute("loginAccount", employee);
 				return "login success!";
 			}

@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MembershipCustomerRecordJson {
-	// 멤버십 고객 번호
+	// 고객 번호
 	private Long customerNum;
-
+	
 	// 판매(구매) 번호
 	private Long salesNum;
 

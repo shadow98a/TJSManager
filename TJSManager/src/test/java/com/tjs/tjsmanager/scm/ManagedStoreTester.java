@@ -19,14 +19,14 @@ public class ManagedStoreTester {
 		store = new ManagedStore();
 		store.setStorePassword("storePassword1");
 		store.setStoreName("씨앗 편의점 '앗편' 중랑구점");
-		store.setStoreAdress("서울특별시 중랑구");
+		store.setStoreAddress("서울특별시 중랑구");
 		store.setStoreTelNum("0200000001");
 		managedStoreRepository.save(store);
 
 		store = new ManagedStore();
 		store.setStorePassword("storePassword2");
 		store.setStoreName("씨앗 편의점 '앗편' 동대문구점");
-		store.setStoreAdress("서울특별시 동대문구");
+		store.setStoreAddress("서울특별시 동대문구");
 		store.setStoreTelNum("0200000002");
 		managedStoreRepository.save(store);
 	}

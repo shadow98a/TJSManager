@@ -3,7 +3,6 @@ package com.tjs.tjsmanager.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +17,7 @@ import com.tjs.tjsmanager.domain.json.MembershipCustomerJson;
 import com.tjs.tjsmanager.domain.json.MembershipCustomerRecordJson;
 import com.tjs.tjsmanager.service.CrmService;
 
-@CrossOrigin(origins="ec2-43-200-8-58.ap-northeast-2.compute.amazonaws.com:8080")
+
 @RestController
 public class CrmController {
 	
@@ -28,7 +27,6 @@ public class CrmController {
 	// 멤버쉽 등록
 	@PostMapping("/membership/customer")
 	public void createMembershipCustomer(@RequestBody MembershipCustomerJson newMember) {
-		System.out.println("======== request : " + newMember);
 		crmService.saveMembershipCustomer(newMember);
 	}
 
@@ -56,7 +54,7 @@ public class CrmController {
 	@DeleteMapping("/membership/customer/{customer_num}")
 	public void deleteMembershipCustomer(@PathVariable("customer_num") Long customerNum) {
 		crmService.deleteMembershipCustomerByCustomerNum(customerNum);
-	}
+	} 
 	
 	
 	

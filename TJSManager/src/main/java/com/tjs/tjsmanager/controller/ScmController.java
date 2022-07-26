@@ -17,6 +17,7 @@ import com.tjs.tjsmanager.domain.json.SalesRecordJson;
 import com.tjs.tjsmanager.domain.scm.InWarehouseReport;
 import com.tjs.tjsmanager.domain.scm.ItemInfo;
 import com.tjs.tjsmanager.domain.scm.ItemStock;
+import com.tjs.tjsmanager.domain.scm.ManagedStore;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.domain.scm.SalesRecord;
 import com.tjs.tjsmanager.service.ScmService;
@@ -28,20 +29,53 @@ public class ScmController {
 	@Autowired
 	private ScmService scmService;
 
-	// 물품별 구매자 기록
+	
+	// 매점 정보 생성
+	@PostMapping("/managed_store")
+	public void createManagedStore(@RequestBody ManagedStore newManagedStore) {
+		scmService.saveManagedStore(newManagedStore);
+	}
+	
+	// 모든 매점 정보
+	@GetMapping("/managed_store")
+	public List<ManagedStore> getAllManagedStore() {
+		List<ManagedStore> list = scmService.findAllManagedStore();
+		return list;
+	}
+	
+	// 한 매점 정보
+	@GetMapping("/managed_store/{store_num}")
+	public ManagedStore getOneManagedStore(@PathVariable("store_num") Long storeNum) {
+		ManagedStore managedStore = scmService.findByIdManagedStore(storeNum);
+		return managedStore;
+	}
+	
+	// 매점 정보 수정
+	@PutMapping("/managed_store/{store_num}")
+	public void updateManagedStore(@PathVariable("store_num") Long storeNum, @RequestBody ManagedStore updateData) {
+		scmService.updateManagedStore(storeNum, updateData);
+	}
+	
+	// 매정 정보 삭제
+	@DeleteMapping("/managed_store/{store_num}")
+	public void deleteManagedStore(@PathVariable("store_num") Long storeNum) {
+		scmService.deleteManagedStore(storeNum);
+	}
+	
+	// 구매자 기록 생성
 	@PostMapping("/sales/consumer")
 	public void createSalesConsumer(@RequestBody SalesConsumer consumer) {
 		scmService.saveSalesConsumer(consumer);
 	}
 	
-	// 모든 물품별 구매자 기록
+	// 모든 구매자 기록
 	@GetMapping("/sales/consumer")
 	public List<SalesConsumer> getAllSalesConsumer() {
 		List<SalesConsumer> list = scmService.findAllSalesConsumer();
 		return list;
 	}
 	
-	// 한 물품별 구매자 기록
+	// 한 구매자 기록
 	@GetMapping("/sales/consumer/{sales_num}")
 	public SalesConsumer getOneSalesConsumer(@PathVariable("sales_num") Long salesNum) {
 		SalesConsumer salesConsumer = scmService.findByIdSalesConsumer(salesNum);

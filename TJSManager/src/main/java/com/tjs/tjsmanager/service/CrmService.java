@@ -10,7 +10,6 @@ import com.tjs.tjsmanager.domain.crm.MembershipCustomerRecord;
 import com.tjs.tjsmanager.domain.crm.MembershipCustomerRecordPrimaryKey;
 import com.tjs.tjsmanager.domain.json.MembershipCustomerJson;
 import com.tjs.tjsmanager.domain.json.MembershipCustomerRecordJson;
-import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.repository.crm.MembershipCustomerRecordRepository;
 import com.tjs.tjsmanager.repository.crm.MembershipCustomerRepository;
 import com.tjs.tjsmanager.repository.scm.ManagedStoreRepository;
@@ -45,17 +44,11 @@ public class CrmService {
 	
 	// MembershipCustomerRecordJson 객체를 entity 객체에 담기
 	public MembershipCustomerRecord jsonToMembershipCustomerRecord(MembershipCustomerRecordJson jsonData) {
-		MembershipCustomer membershipCustomer = membershipCustomerRepository.findById( jsonData.getCustomerNum() ).get();
-		SalesConsumer salesConsumer = salesConsumerRepository.findById( jsonData.getSalesNum() ).get();
-		MembershipCustomerRecordPrimaryKey primaryKey = new MembershipCustomerRecordPrimaryKey(membershipCustomer, salesConsumer);
 		MembershipCustomerRecord membershipCustomerRecord = new MembershipCustomerRecord();
 		
-		if (primaryKey != null) {
-			membershipCustomerRecord.setPrimaryKey(primaryKey);
-			membershipCustomerRecord.setSavePoint( jsonData.getSavePoint() );
-			membershipCustomerRecord.setUsedPoint( jsonData.getUsedPoint() );
-		}
-		
+		membershipCustomerRecord.setUsedPoint(jsonData.getUsedPoint());
+		membershipCustomerRecord.setSavePoint(jsonData.getSavePoint());
+
 		return membershipCustomerRecord;
 	}
 	
@@ -96,6 +89,12 @@ public class CrmService {
 	// 포인트 적립 및 사용 기록 생성
 	public void saveMembershipCustomerRecord(MembershipCustomerRecordJson jsonData) {
 		MembershipCustomerRecord insertData = this.jsonToMembershipCustomerRecord(jsonData);
+
+		MembershipCustomerRecordPrimaryKey primaryKey = new MembershipCustomerRecordPrimaryKey(
+				membershipCustomerRepository.findById(jsonData.getCustomerNum()).get(), salesConsumerRepository.findById(jsonData.getSalesNum()).get() );
+
+		insertData.setPrimaryKey(primaryKey);
+
 		membershipCustomerRecordRepository.save(insertData);
 	}
 	

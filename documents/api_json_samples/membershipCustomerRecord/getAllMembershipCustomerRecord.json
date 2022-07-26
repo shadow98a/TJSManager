@@ -1,0 +1,30 @@
+[
+  {
+    "primaryKey": {
+      "customerNum": {
+        "customerNum": 13,
+        "customerName": "김주현",
+        "customerBirthDate": "1998-12-14",
+        "customerGender": "m",
+        "customerPhoneNum": "01048223898",
+        "point": 500,
+        "joinedStoreNum": {
+          "storeNum": 5,
+          "storePassword": "storePassword1",
+          "storeName": "씨앗 편의점 '앗편' 중랑구점",
+          "storeAdress": "서울특별시 중랑구",
+          "storeTelNum": "0200000001"
+        }
+      },
+      "salesNum": {
+        "salesNum": 16,
+        "consumerGender": "m",
+        "consumerAge": 20,
+        "salesDate": "2022-07-26T14:45:53.227247",
+        "memo": "메모"
+      }
+    },
+    "usedPoint": 0,
+    "savePoint": 0
+  }
+]

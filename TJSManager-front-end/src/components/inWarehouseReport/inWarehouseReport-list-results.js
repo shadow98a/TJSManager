@@ -17,8 +17,8 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
-export const InWarehouseReportListResults = ({ inWarehouseReports, ...rest }) => {
-  const [selectedInWarehouseReportIds, setSelectedInWarehouseReportIds] = useState([]);
+export const InWarehouseReportListResults = ({ inWarehouseReports, selectedInWarehouseReportIds,setSelectedInWarehouseReportIds,...rest }) => {
+  // const [selectedInWarehouseReportIds, setSelectedInWarehouseReportIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -26,7 +26,7 @@ export const InWarehouseReportListResults = ({ inWarehouseReports, ...rest }) =>
     let newSelectedInWarehouseReportIds;
 
     if (event.target.checked) {
-      newSelectedInWarehouseReportIds = inWarehouseReports.map((inWarehouseReport) => inWarehouseReport.reportNum);
+      newSelectedInWarehouseReportIds = inWarehouseReports.map((inWarehouseReport) => JSON.stringify({reportNum:inWarehouseReport.reportNum}));
     } else {
       newSelectedInWarehouseReportIds = [];
     }
@@ -104,16 +104,16 @@ export const InWarehouseReportListResults = ({ inWarehouseReports, ...rest }) =>
               </TableRow>
             </TableHead>
             <TableBody>
-              {inWarehouseReports.slice(0, limit).map((inWarehouseReport) => (
+              {inWarehouseReports.slice(limit*page, limit*(page+1)).map((inWarehouseReport) => (
                 <TableRow
                   hover
-                  key={inWarehouseReport.reportNum}
-                  selected={selectedInWarehouseReportIds.indexOf(inWarehouseReport.reportNum) !== -1}
+                  key={JSON.stringify({reportNum:inWarehouseReport.reportNum})}
+                  selected={selectedInWarehouseReportIds.indexOf(JSON.stringify({reportNum:inWarehouseReport.reportNum})) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedInWarehouseReportIds.indexOf(inWarehouseReport.reportNum) !== -1}
-                      onChange={(event) => handleSelectOne(event, inWarehouseReport.reportNum)}
+                      checked={selectedInWarehouseReportIds.indexOf(JSON.stringify({reportNum:inWarehouseReport.reportNum})) !== -1}
+                      onChange={(event) => handleSelectOne(event, JSON.stringify({reportNum:inWarehouseReport.reportNum}))}
                       value="true"
                     />
                   </TableCell>
@@ -121,10 +121,10 @@ export const InWarehouseReportListResults = ({ inWarehouseReports, ...rest }) =>
                     {inWarehouseReport.reportNum}
                   </TableCell>
                   <TableCell>
-                    {inWarehouseReport.storeNum}
+                    {inWarehouseReport.storeNum.storeNum+'('+inWarehouseReport.storeNum.storeName+')'}
                   </TableCell>
                   <TableCell>
-                    {inWarehouseReport.reportNum}
+                    {inWarehouseReport.itemNum.itemNum+'('+inWarehouseReport.itemNum.itemName+')'}
                   </TableCell>
                   <TableCell>
                     {inWarehouseReport.reqCnt}
@@ -133,7 +133,7 @@ export const InWarehouseReportListResults = ({ inWarehouseReports, ...rest }) =>
                     {inWarehouseReport.reqDate}
                   </TableCell>
                   <TableCell>
-                    {inWarehouseReport.writerNum}
+                    {inWarehouseReport.writerNum.empNum+'('+inWarehouseReport.writerNum.name+')'}
                   </TableCell>
                   <TableCell>
                     {inWarehouseReport.approvedDate}

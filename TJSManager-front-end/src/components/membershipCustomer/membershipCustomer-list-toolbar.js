@@ -1,3 +1,4 @@
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -10,6 +11,12 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+
+function toParameters(selectedId)
+{
+  console.log(selectedId);
+  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
+} 
 
 export const MembershipCustomerListToolbar = (props) => (
   <Box {...props}>
@@ -41,11 +48,38 @@ export const MembershipCustomerListToolbar = (props) => (
         >
           Export
         </Button> */}
-        <Button
-          color="primary"
-          variant="contained"
+        <NextLink
+          href="/membership-customer?method=create"
+          passHref
         >
-          멤버쉽 고객 추가
+          <Button
+            color="primary"
+            variant="contained"
+            sx={{ mr: 1 }}
+          >
+            멤버쉽 고객 추가
+          </Button>
+        </NextLink>
+        <NextLink
+          href={"/membership-customer?method=update"+(props.selectedMembershipCustomerIds.length==1?'&'+toParameters(props.selectedMembershipCustomerIds[0]):'')}
+          passHref
+        >
+          <Button
+            color="secondary"
+            variant="contained"
+            sx={{ mr: 1 }}
+            disabled={props.selectedMembershipCustomerIds.length!=1}
+          >
+            멤버쉽 고객 수정
+          </Button>
+        </NextLink>
+        <Button
+          color="error"
+          variant="contained"
+          sx={{ mr: 1 }}
+          disabled={props.selectedMembershipCustomerIds.length==0}
+        >
+          멤버쉽 고객 삭제
         </Button>
       </Box>
     </Box>

@@ -1,3 +1,4 @@
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -10,6 +11,12 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+
+function toParameters(selectedId)
+{
+  console.log(selectedId);
+  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
+} 
 
 export const ItemStockListToolbar = (props) => (
   <Box {...props}>
@@ -26,7 +33,7 @@ export const ItemStockListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        재고
+        재고 현황
       </Typography>
       <Box sx={{ m: 1 }}>
         {/* <Button
@@ -41,11 +48,38 @@ export const ItemStockListToolbar = (props) => (
         >
           Export
         </Button> */}
-        <Button
-          color="primary"
-          variant="contained"
+        <NextLink
+          href="/item-stock?method=create"
+          passHref
         >
-          재고 추가
+          <Button
+            color="primary"
+            variant="contained"
+            sx={{ mr: 1 }}
+          >
+            재고 추가
+          </Button>
+        </NextLink>
+        <NextLink
+          href={"/item-stock?method=update"+(props.selectedItemStockIds.length==1?'&'+toParameters(props.selectedItemStockIds[0]):'')}
+          passHref
+        >
+          <Button
+            color="secondary"
+            variant="contained"
+            sx={{ mr: 1 }}
+            disabled={props.selectedItemStockIds.length!=1}
+          >
+            재고 수정
+          </Button>
+        </NextLink>
+        <Button
+          color="error"
+          variant="contained"
+          sx={{ mr: 1 }}
+          disabled={props.selectedItemStockIds.length==0}
+        >
+          재고 삭제
         </Button>
       </Box>
     </Box>

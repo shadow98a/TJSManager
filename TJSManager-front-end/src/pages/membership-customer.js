@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Typography } from '@mui/material';
-// import { ItemInfoProfile } from '../components/itemInfo/itemInfo-profile';
-import { ItemInfoProfileDetails } from '../components/itemInfo/itemInfo-profile-details';
+// import { MembershipCustomerProfile } from '../components/membershipCustomer/membershipCustomer-profile';
+import { MembershipCustomerProfileDetails } from '../components/membershipCustomer/membershipCustomer-profile-details';
 import { DashboardLayout } from '../components/dashboard-layout';
 
-const ItemInfo = () => (
+const MembershipCustomer = () => (
   <>
     <Head>
       <title>
-        모든 상품 | TJSManager
+        멤버쉽 고객 | TJSManager
       </title>
     </Head>
     <Box
@@ -23,18 +23,18 @@ const ItemInfo = () => (
           sx={{ mb: 3 }}
           variant="h4"
         >
-          모든 상품
+          멤버쉽 고객
         </Typography>
-        <ItemInfoProfileDetails />
+        <MembershipCustomerProfileDetails />
       </Container>
     </Box>
   </>
 );
 
-ItemInfo.getLayout = (page) => (
+MembershipCustomer.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default ItemInfo;
+export default MembershipCustomer;

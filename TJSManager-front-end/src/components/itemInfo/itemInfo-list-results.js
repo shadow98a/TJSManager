@@ -26,7 +26,7 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
     let newSelectedItemInfoIds;
 
     if (event.target.checked) {
-      newSelectedItemInfoIds = itemInfos.map((itemInfo) => itemInfo.itemNum);
+      newSelectedItemInfoIds = itemInfos.map((itemInfo) => JSON.stringify({itemNum:itemInfo.itemNum}));
     } else {
       newSelectedItemInfoIds = [];
     }
@@ -81,10 +81,10 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
                   />
                 </TableCell>
                 <TableCell>
-                  제품 번호
+                  물품 번호
                 </TableCell>
                 <TableCell>
-                  제품명
+                  물품명
                 </TableCell>
                 <TableCell>
                   물품 분류
@@ -95,16 +95,16 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
               </TableRow>
             </TableHead>
             <TableBody>
-              {itemInfos.slice(0, limit).map((itemInfo) => (
+              {itemInfos.slice(limit*page, limit*(page+1)).map((itemInfo) => (
                 <TableRow
                   hover
-                  key={itemInfo.itemNum}
-                  selected={selectedItemInfoIds.indexOf(itemInfo.itemNum) !== -1}
+                  key={JSON.stringify({itemNum:itemInfo.itemNum})}
+                  selected={selectedItemInfoIds.indexOf(JSON.stringify({itemNum:itemInfo.itemNum})) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedItemInfoIds.indexOf(itemInfo.itemNum) !== -1}
-                      onChange={(event) => handleSelectOne(event, itemInfo.itemNum)}
+                      checked={selectedItemInfoIds.indexOf(JSON.stringify({itemNum:itemInfo.itemNum})) !== -1}
+                      onChange={(event) => handleSelectOne(event, JSON.stringify({itemNum:itemInfo.itemNum}))}
                       value="true"
                     />
                   </TableCell>

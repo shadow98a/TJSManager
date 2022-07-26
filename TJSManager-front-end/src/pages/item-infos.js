@@ -3,12 +3,15 @@ import { Box, Container } from '@mui/material';
 import { ItemInfoListResults } from '../components/itemInfo/itemInfo-list-results';
 import { ItemInfoListToolbar } from '../components/itemInfo/itemInfo-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
-import { itemInfos } from '../__mocks__/itemInfos';
-import { useState } from 'react';
+// import { itemInfos } from '../__mocks__/itemInfos';
+import { useState,useEffect } from 'react';
+import axios from 'axios';
 
-// const ItemInfos = () => (
 const ItemInfos = () =>
 {
+  const [itemInfos,setItemInfos]=useState([]);
+  useEffect(()=>{axios.get('http://ec2-43-200-8-58.ap-northeast-2.compute.amazonaws.com:8080/item/info').then((response)=>{setItemInfos(response.data)})},[]);
+
   const [selectedItemInfoIds, setSelectedItemInfoIds] = useState([]);
   return  (
             <>

@@ -61,11 +61,11 @@ const items = [
     href: '/membership-customers',
     icon: (<XCircleIcon fontSize="small" />),
     title: '멤버쉽 고객'
-  },
-  {
-    href: '/membership-customer-records',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: '멤버쉽 고객 구매 이력'
+  // },
+  // {
+  //   href: '/membership-customer-records',
+  //   icon: (<XCircleIcon fontSize="small" />),
+  //   title: '멤버쉽 고객 구매 이력'
   }
 ];
 
@@ -83,27 +83,27 @@ const scmItems = [
   {
     href: '/in-warehouse-reports',
     icon: (<XCircleIcon fontSize="small" />),
-    title: '승인대기 입고 신청'
+    title: '입고 신청'
   },
-  {
-    href: '/reqs-in-warehouse',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: '입고 신청 이력'
-  },
+  // {
+  //   href: '/reqs-in-warehouse',
+  //   icon: (<XCircleIcon fontSize="small" />),
+  //   title: '입고 신청'
+  // },
   {
     href: '/item-stocks',
     icon: (<XCircleIcon fontSize="small" />),
-    title: '재고'
-  },
-  {
-    href: '/sales-consumers',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: '구매자 기록'
-  },
-  {
-    href: '/sales-records',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: '판매 이력'
+    title: '재고 현황'
+  // },
+  // {
+  //   href: '/sales-consumers',
+  //   icon: (<XCircleIcon fontSize="small" />),
+  //   title: '구매자 기록'
+  // },
+  // {
+  //   href: '/sales-records',
+  //   icon: (<XCircleIcon fontSize="small" />),
+  //   title: '판매 이력'
   }
 ];
 

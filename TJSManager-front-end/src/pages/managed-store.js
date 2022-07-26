@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Typography } from '@mui/material';
-// import { ItemInfoProfile } from '../components/itemInfo/itemInfo-profile';
-import { ItemInfoProfileDetails } from '../components/itemInfo/itemInfo-profile-details';
+// import { ManagedStoreProfile } from '../components/managedStore/managedStore-profile';
+import { ManagedStoreProfileDetails } from '../components/managedStore/managedStore-profile-details';
 import { DashboardLayout } from '../components/dashboard-layout';
 
-const ItemInfo = () => (
+const ManagedStore = () => (
   <>
     <Head>
       <title>
-        모든 상품 | TJSManager
+        지점 | TJSManager
       </title>
     </Head>
     <Box
@@ -23,18 +23,18 @@ const ItemInfo = () => (
           sx={{ mb: 3 }}
           variant="h4"
         >
-          모든 상품
+          지점
         </Typography>
-        <ItemInfoProfileDetails />
+        <ManagedStoreProfileDetails />
       </Container>
     </Box>
   </>
 );
 
-ItemInfo.getLayout = (page) => (
+ManagedStore.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default ItemInfo;
+export default ManagedStore;

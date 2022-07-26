@@ -17,8 +17,8 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
-export const ManagedStoreListResults = ({ managedStores, ...rest }) => {
-  const [selectedManagedStoreIds, setSelectedManagedStoreIds] = useState([]);
+export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds,setSelectedManagedStoreIds,...rest }) => {
+  // const [selectedManagedStoreIds, setSelectedManagedStoreIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -26,7 +26,7 @@ export const ManagedStoreListResults = ({ managedStores, ...rest }) => {
     let newSelectedManagedStoreIds;
 
     if (event.target.checked) {
-      newSelectedManagedStoreIds = managedStores.map((managedStore) => managedStore.storeNum);
+      newSelectedManagedStoreIds = managedStores.map((managedStore) => JSON.stringify({storeNum:managedStore.storeNum}));
     } else {
       newSelectedManagedStoreIds = [];
     }
@@ -98,16 +98,16 @@ export const ManagedStoreListResults = ({ managedStores, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {managedStores.slice(0, limit).map((managedStore) => (
+              {managedStores.slice(limit*page, limit*(page+1)).map((managedStore) => (
                 <TableRow
                   hover
-                  key={managedStore.storeNum}
-                  selected={selectedManagedStoreIds.indexOf(managedStore.storeNum) !== -1}
+                  key={JSON.stringify({storeNum:managedStore.storeNum})}
+                  selected={selectedManagedStoreIds.indexOf(JSON.stringify({storeNum:managedStore.storeNum})) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedManagedStoreIds.indexOf(managedStore.storeNum) !== -1}
-                      onChange={(event) => handleSelectOne(event, managedStore.storeNum)}
+                      checked={selectedManagedStoreIds.indexOf(JSON.stringify({storeNum:managedStore.storeNum})) !== -1}
+                      onChange={(event) => handleSelectOne(event, JSON.stringify({storeNum:managedStore.storeNum}))}
                       value="true"
                     />
                   </TableCell>

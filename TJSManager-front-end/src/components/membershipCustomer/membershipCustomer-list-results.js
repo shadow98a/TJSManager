@@ -17,8 +17,8 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
-export const MembershipCustomerListResults = ({ membershipCustomers, ...rest }) => {
-  const [selectedMembershipCustomerIds, setSelectedMembershipCustomerIds] = useState([]);
+export const MembershipCustomerListResults = ({ membershipCustomers, selectedMembershipCustomerIds,setSelectedMembershipCustomerIds,...rest }) => {
+  // const [selectedMembershipCustomerIds, setSelectedMembershipCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -26,7 +26,7 @@ export const MembershipCustomerListResults = ({ membershipCustomers, ...rest }) 
     let newSelectedMembershipCustomerIds;
 
     if (event.target.checked) {
-      newSelectedMembershipCustomerIds = membershipCustomers.map((membershipCustomer) => membershipCustomer.customerNum);
+      newSelectedMembershipCustomerIds = membershipCustomers.map((membershipCustomer) => JSON.stringify({customerNum:membershipCustomer.customerNum}));
     } else {
       newSelectedMembershipCustomerIds = [];
     }
@@ -104,16 +104,16 @@ export const MembershipCustomerListResults = ({ membershipCustomers, ...rest }) 
               </TableRow>
             </TableHead>
             <TableBody>
-              {membershipCustomers.slice(0, limit).map((membershipCustomer) => (
+              {membershipCustomers.slice(limit*page, limit*(page+1)).map((membershipCustomer) => (
                 <TableRow
                   hover
-                  key={membershipCustomer.customerNum}
-                  selected={selectedMembershipCustomerIds.indexOf(membershipCustomer.customerNum) !== -1}
+                  key={JSON.stringify({customerNum:membershipCustomer.customerNum})}
+                  selected={selectedMembershipCustomerIds.indexOf(JSON.stringify({customerNum:membershipCustomer.customerNum})) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedMembershipCustomerIds.indexOf(membershipCustomer.customerNum) !== -1}
-                      onChange={(event) => handleSelectOne(event, membershipCustomer.customerNum)}
+                      checked={selectedMembershipCustomerIds.indexOf(JSON.stringify({customerNum:membershipCustomer.customerNum})) !== -1}
+                      onChange={(event) => handleSelectOne(event, JSON.stringify({customerNum:membershipCustomer.customerNum}))}
                       value="true"
                     />
                   </TableCell>
@@ -148,7 +148,7 @@ export const MembershipCustomerListResults = ({ membershipCustomers, ...rest }) 
                     {membershipCustomer.point}
                   </TableCell>
                   <TableCell>
-                    {membershipCustomer.joinedStoreNum}
+                    {membershipCustomer.joinedStoreNum.storeNum+'('+membershipCustomer.joinedStoreNum.storeName+')'}
                   </TableCell>
                 </TableRow>
               ))}

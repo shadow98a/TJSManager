@@ -12,6 +12,12 @@ import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
 
+function toParameters(selectedId)
+{
+  console.log(selectedId);
+  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
+} 
+
 export const ItemInfoListToolbar = (props) => (
   <Box {...props}>
     <Box
@@ -42,33 +48,31 @@ export const ItemInfoListToolbar = (props) => (
         >
           Export
         </Button> */}
-        {/* <Button
-          color="primary"
-          variant="contained"
-          sx={{ mr: 1 }}
-        >
-          상품 추가
-        </Button> */}
         <NextLink
-            href="/item-info"
-            passHref
-          >
-            <Button
-          color="primary"
-          variant="contained"
-          sx={{ mr: 1 }}
+          href="/item-info?method=create"
+          passHref
         >
-          상품 추가
-        </Button>
-          </NextLink>
           <Button
-          color="secondary"
-          variant="contained"
-          sx={{ mr: 1 }}
-          disabled={props.selectedItemInfoIds.length!=1}
+            color="primary"
+            variant="contained"
+            sx={{ mr: 1 }}
+          >
+            상품 추가
+          </Button>
+        </NextLink>
+        <NextLink
+          href={"/item-info?method=update"+(props.selectedItemInfoIds.length==1?'&'+toParameters(props.selectedItemInfoIds[0]):'')}
+          passHref
         >
-          상품 수정
-        </Button>
+          <Button
+            color="secondary"
+            variant="contained"
+            sx={{ mr: 1 }}
+            disabled={props.selectedItemInfoIds.length!=1}
+          >
+            상품 수정
+          </Button>
+        </NextLink>
         <Button
           color="error"
           variant="contained"

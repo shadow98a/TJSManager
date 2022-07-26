@@ -17,8 +17,8 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
-export const ItemStockListResults = ({ itemStocks, ...rest }) => {
-  const [selectedItemStockIds, setSelectedItemStockIds] = useState([]);
+export const ItemStockListResults = ({ itemStocks, selectedItemStockIds,setSelectedItemStockIds,...rest }) => {
+  // const [selectedItemStockIds, setSelectedItemStockIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -26,7 +26,7 @@ export const ItemStockListResults = ({ itemStocks, ...rest }) => {
     let newSelectedItemStockIds;
 
     if (event.target.checked) {
-      newSelectedItemStockIds = itemStocks.map((itemStock) => JSON.stringify([itemStock.itemNum,itemStock.storeNum]));
+      newSelectedItemStockIds = itemStocks.map((itemStock) => JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum}));
     } else {
       newSelectedItemStockIds = [];
     }
@@ -81,10 +81,10 @@ export const ItemStockListResults = ({ itemStocks, ...rest }) => {
                   />
                 </TableCell>
                 <TableCell>
-                  제품 번호
+                  물품 번호
                 </TableCell>
                 <TableCell>
-                  지접 번호
+                  지점 번호
                 </TableCell>
                 <TableCell>
                   입고량
@@ -107,24 +107,24 @@ export const ItemStockListResults = ({ itemStocks, ...rest }) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {itemStocks.slice(0, limit).map((itemStock) => (
+              {itemStocks.slice(limit*page, limit*(page+1)).map((itemStock) => (
                 <TableRow
                   hover
-                  key={JSON.stringify([itemStock.itemNum,itemStock.storeNum])}
-                  selected={selectedItemStockIds.indexOf(JSON.stringify([itemStock.itemNum,itemStock.storeNum])) !== -1}
+                  key={JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum})}
+                  selected={selectedItemStockIds.indexOf(JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum})) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedItemStockIds.indexOf(JSON.stringify([itemStock.itemNum,itemStock.storeNum])) !== -1}
-                      onChange={(event) => handleSelectOne(event, JSON.stringify([itemStock.itemNum,itemStock.storeNum]))}
+                      checked={selectedItemStockIds.indexOf(JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum})) !== -1}
+                      onChange={(event) => handleSelectOne(event, JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum}))}
                       value="true"
                     />
                   </TableCell>
                   <TableCell>
-                    {itemStock.itemNum}
+                    {itemStock.primaryKey.itemNum.itemNum+'('+itemStock.primaryKey.itemNum.itemName+')'}
                   </TableCell>
                   <TableCell>
-                    {itemStock.storeNum}
+                    {itemStock.primaryKey.storeNum.storeNum+'('+itemStock.primaryKey.storeNum.storeName+')'}
                   </TableCell>
                   <TableCell>
                     {itemStock.inCnt}

@@ -17,8 +17,8 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
-export const ReqInWarehouseListResults = ({ reqsInWarehouse, ...rest }) => {
-  const [selectedReqInWarehouseIds, setSelectedReqInWarehouseIds] = useState([]);
+export const ReqInWarehouseListResults = ({ reqsInWarehouse, selectedReqInWarehouseIds,setSelectedReqInWarehouseIds,...rest }) => {
+  // const [selectedReqInWarehouseIds, setSelectedReqInWarehouseIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -26,7 +26,7 @@ export const ReqInWarehouseListResults = ({ reqsInWarehouse, ...rest }) => {
     let newSelectedReqInWarehouseIds;
 
     if (event.target.checked) {
-      newSelectedReqInWarehouseIds = reqsInWarehouse.map((reqInWarehouse) => reqInWarehouse.reqNum);
+      newSelectedReqInWarehouseIds = reqsInWarehouse.map((reqInWarehouse) => JSON.stringify({reqNum:reqInWarehouse.reqNum}));
     } else {
       newSelectedReqInWarehouseIds = [];
     }
@@ -101,13 +101,13 @@ export const ReqInWarehouseListResults = ({ reqsInWarehouse, ...rest }) => {
               {reqsInWarehouse.slice(0, limit).map((reqInWarehouse) => (
                 <TableRow
                   hover
-                  key={reqInWarehouse.reqNum}
-                  selected={selectedReqInWarehouseIds.indexOf(reqInWarehouse.reqNum) !== -1}
+                  key={JSON.stringify({reqNum:reqInWarehouse.reqNum})}
+                  selected={selectedReqInWarehouseIds.indexOf(JSON.stringify({reqNum:reqInWarehouse.reqNum})) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedReqInWarehouseIds.indexOf(reqInWarehouse.reqNum) !== -1}
-                      onChange={(event) => handleSelectOne(event, reqInWarehouse.reqNum)}
+                      checked={selectedReqInWarehouseIds.indexOf(JSON.stringify({reqNum:reqInWarehouse.reqNum})) !== -1}
+                      onChange={(event) => handleSelectOne(event, JSON.stringify({reqNum:reqInWarehouse.reqNum}))}
                       value="true"
                     />
                   </TableCell>
@@ -118,7 +118,7 @@ export const ReqInWarehouseListResults = ({ reqsInWarehouse, ...rest }) => {
                     {reqInWarehouse.storeNum}
                   </TableCell>
                   <TableCell>
-                    {reqInWarehouse.reqNum}
+                  {reqInWarehouse.itemNum}
                   </TableCell>
                   <TableCell>
                     {reqInWarehouse.reqCnt}

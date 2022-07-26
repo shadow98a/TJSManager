@@ -23,46 +23,21 @@ function getParameters()
   return parameters;
 }
 
-const types = [
-  {
-    value: '냉동식품',
-    label: '냉동식품'
-  },
-  {
-    value: '냉장식품',
-    label: '냉장식품'
-  },
-  {
-    value: '담배',
-    label: '담배'
-  },
-  {
-    value: '식품',
-    label: '식품'
-  },
-  {
-    value: '음료',
-    label: '음료'
-  },
-  {
-    value: '주류',
-    label: '주류'
-  },
-  {
-    value: '기타',
-    label: '기타'
-  }
+const itemNums = [
 ];
 
-export const ItemInfoProfileDetails = (props) => {
+export const InWarehouseReportProfileDetails = (props) => {
   let parameters;
   useEffect(()=>{parameters=getParameters();},[]);
 
   const [values, setValues] = useState({
-    itemNum: null,
-    itemName: '',
-    type: '냉동식품',
-    consumerPrice: 0
+    reportNum: null,
+    storeNum: 0,
+    itemNum: 0,
+    reqCnt: 0,
+    reqDate: new Date().toISOString().slice(0,4+1+2+1+2),
+    writerNum: 0,
+    approvedDate: null
   });
   
   const handleChange = (event) => {
@@ -81,7 +56,7 @@ export const ItemInfoProfileDetails = (props) => {
       <Card>
         <CardHeader
           // subheader="The information can be edited"
-          title="상품 기본 정보"
+          title="입고 신청서"
         />
         <Divider />
         <CardContent>
@@ -97,49 +72,16 @@ export const ItemInfoProfileDetails = (props) => {
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
-                label="물품명"
-                name="itemName"
-                onChange={handleChange}
-                required
-                value={values.itemName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                // helperText="Please specify the first name"
-                label="소비자판매가"
-                name="consumerPrice"
-                onChange={handleChange}
-                required
-                type="number"
-                value={values.consumerPrice}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                // helperText="Please specify the first name"
-                label="물품 분류"
-                name="type"
+                label="제품 번호"
+                name="itemNum"
                 onChange={handleChange}
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.type}
+                value={values.itemNum}
                 variant="outlined"
               >
-                {types.map((option) => (
+                {itemNums.map((option) => (
                   <option
                     key={option.value}
                     value={option.value}
@@ -148,6 +90,40 @@ export const ItemInfoProfileDetails = (props) => {
                   </option>
                 ))}
               </TextField>
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="입고 요청 수량"
+                name="reqCnt"
+                onChange={handleChange}
+                required
+                type="number"
+                value={values.reqCnt}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="입고 요청일"
+                name="reqDate"
+                onChange={handleChange}
+                required
+                type="date"
+                value={values.reqDate}
+                variant="outlined"
+              />
             </Grid>
           </Grid>
         </CardContent>
@@ -171,7 +147,7 @@ export const ItemInfoProfileDetails = (props) => {
             color="primary"
             variant="contained"
           >
-            기본 정보 저장
+            신청서 저장
           </Button>
         </Box>
       </Card>

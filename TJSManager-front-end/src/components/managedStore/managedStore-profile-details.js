@@ -23,46 +23,16 @@ function getParameters()
   return parameters;
 }
 
-const types = [
-  {
-    value: '냉동식품',
-    label: '냉동식품'
-  },
-  {
-    value: '냉장식품',
-    label: '냉장식품'
-  },
-  {
-    value: '담배',
-    label: '담배'
-  },
-  {
-    value: '식품',
-    label: '식품'
-  },
-  {
-    value: '음료',
-    label: '음료'
-  },
-  {
-    value: '주류',
-    label: '주류'
-  },
-  {
-    value: '기타',
-    label: '기타'
-  }
-];
-
-export const ItemInfoProfileDetails = (props) => {
+export const ManagedStoreProfileDetails = (props) => {
   let parameters;
   useEffect(()=>{parameters=getParameters();},[]);
 
   const [values, setValues] = useState({
-    itemNum: null,
-    itemName: '',
-    type: '냉동식품',
-    consumerPrice: 0
+    storeNum: null,
+    itemNamestorePassWord: '',
+    storeName: '',
+    storeAdress: '',
+    storeTelNum: ''
   });
   
   const handleChange = (event) => {
@@ -81,7 +51,7 @@ export const ItemInfoProfileDetails = (props) => {
       <Card>
         <CardHeader
           // subheader="The information can be edited"
-          title="상품 기본 정보"
+          title="지점 정보"
         />
         <Divider />
         <CardContent>
@@ -97,11 +67,12 @@ export const ItemInfoProfileDetails = (props) => {
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
-                label="물품명"
-                name="itemName"
+                label="지점 로그인을 위한 비밀번호"
+                name="storePassword"
                 onChange={handleChange}
                 required
-                value={values.itemName}
+                type="password"
+                value={values.storePassword}
                 variant="outlined"
               />
             </Grid>
@@ -113,12 +84,11 @@ export const ItemInfoProfileDetails = (props) => {
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
-                label="소비자판매가"
-                name="consumerPrice"
+                label="지점명"
+                name="storeName"
                 onChange={handleChange}
                 required
-                type="number"
-                value={values.consumerPrice}
+                value={values.storeName}
                 variant="outlined"
               />
             </Grid>
@@ -130,24 +100,29 @@ export const ItemInfoProfileDetails = (props) => {
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
-                label="물품 분류"
-                name="type"
+                label="지점 주소"
+                name="storeAdress"
                 onChange={handleChange}
                 required
-                select
-                SelectProps={{ native: true }}
-                value={values.type}
+                value={values.storeAdress}
                 variant="outlined"
-              >
-                {types.map((option) => (
-                  <option
-                    key={option.value}
-                    value={option.value}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </TextField>
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="지점 연락처"
+                name="storeTelNum"
+                onChange={handleChange}
+                required
+                value={values.storeTelNum}
+                variant="outlined"
+              />
             </Grid>
           </Grid>
         </CardContent>
@@ -171,7 +146,7 @@ export const ItemInfoProfileDetails = (props) => {
             color="primary"
             variant="contained"
           >
-            기본 정보 저장
+            정보 저장
           </Button>
         </Box>
       </Card>

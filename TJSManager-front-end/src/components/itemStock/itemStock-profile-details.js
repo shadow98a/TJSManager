@@ -23,46 +23,36 @@ function getParameters()
   return parameters;
 }
 
-const types = [
+const itemNums = [
+];
+const events = [
   {
-    value: '냉동식품',
-    label: '냉동식품'
+    value: '',
+    label: ''
   },
   {
-    value: '냉장식품',
-    label: '냉장식품'
+    value: '1 + 1',
+    label: '1 + 1'
   },
   {
-    value: '담배',
-    label: '담배'
-  },
-  {
-    value: '식품',
-    label: '식품'
-  },
-  {
-    value: '음료',
-    label: '음료'
-  },
-  {
-    value: '주류',
-    label: '주류'
-  },
-  {
-    value: '기타',
-    label: '기타'
+    value: '2 + 1',
+    label: '2 + 1'
   }
 ];
 
-export const ItemInfoProfileDetails = (props) => {
+export const ItemStockProfileDetails = (props) => {
   let parameters;
   useEffect(()=>{parameters=getParameters();},[]);
 
   const [values, setValues] = useState({
-    itemNum: null,
-    itemName: '',
-    type: '냉동식품',
-    consumerPrice: 0
+    itemNum: 0,
+    storeNum: 0,
+    inCnt: 0,
+    outCnt: 0,
+    dropCnt: 0,
+    lot: '',
+    sale: 0,
+    event: ''
   });
   
   const handleChange = (event) => {
@@ -81,7 +71,7 @@ export const ItemInfoProfileDetails = (props) => {
       <Card>
         <CardHeader
           // subheader="The information can be edited"
-          title="상품 기본 정보"
+          title="재고"
         />
         <Divider />
         <CardContent>
@@ -89,7 +79,7 @@ export const ItemInfoProfileDetails = (props) => {
             container
             spacing={3}
           >
-            <Grid
+                        <Grid
               item
               md={6}
               xs={12}
@@ -97,49 +87,125 @@ export const ItemInfoProfileDetails = (props) => {
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
-                label="물품명"
-                name="itemName"
-                onChange={handleChange}
-                required
-                value={values.itemName}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                // helperText="Please specify the first name"
-                label="소비자판매가"
-                name="consumerPrice"
-                onChange={handleChange}
-                required
-                type="number"
-                value={values.consumerPrice}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid
-              item
-              md={6}
-              xs={12}
-            >
-              <TextField
-                fullWidth
-                // helperText="Please specify the first name"
-                label="물품 분류"
-                name="type"
+                label="물품 번호"
+                name="itemNum"
                 onChange={handleChange}
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.type}
+                value={values.itemNum}
                 variant="outlined"
               >
-                {types.map((option) => (
+                {itemNums.map((option) => (
+                  <option
+                    key={option.value}
+                    value={option.value}
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </TextField>
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="입고량"
+                name="inCnt"
+                onChange={handleChange}
+                required
+                type="number"
+                value={values.inCnt}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="출고량"
+                name="outCnt"
+                onChange={handleChange}
+                required
+                type="number"
+                value={values.outCnt}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="미판매량"
+                name="dropCnt"
+                onChange={handleChange}
+                required
+                type="number"
+                value={values.dropCnt}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="진열 위치"
+                name="lot"
+                onChange={handleChange}
+                value={values.lot}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="할인율"
+                name="sale"
+                onChange={handleChange}
+                required
+                type="number"
+                value={values.sale}
+                variant="outlined"
+              />
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="행사 여부"
+                name="event"
+                onChange={handleChange}
+                select
+                SelectProps={{ native: true }}
+                value={values.event}
+                variant="outlined"
+              >
+                {events.map((option) => (
                   <option
                     key={option.value}
                     value={option.value}
@@ -171,7 +237,7 @@ export const ItemInfoProfileDetails = (props) => {
             color="primary"
             variant="contained"
           >
-            기본 정보 저장
+            저장
           </Button>
         </Box>
       </Card>

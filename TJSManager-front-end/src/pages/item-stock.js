@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Typography } from '@mui/material';
-// import { ItemInfoProfile } from '../components/itemInfo/itemInfo-profile';
-import { ItemInfoProfileDetails } from '../components/itemInfo/itemInfo-profile-details';
+// import { ItemStockProfile } from '../components/itemStock/itemStock-profile';
+import { ItemStockProfileDetails } from '../components/itemStock/itemStock-profile-details';
 import { DashboardLayout } from '../components/dashboard-layout';
 
-const ItemInfo = () => (
+const ItemStock = () => (
   <>
     <Head>
       <title>
-        모든 상품 | TJSManager
+        재고 현황 | TJSManager
       </title>
     </Head>
     <Box
@@ -23,18 +23,18 @@ const ItemInfo = () => (
           sx={{ mb: 3 }}
           variant="h4"
         >
-          모든 상품
+          재고 현황
         </Typography>
-        <ItemInfoProfileDetails />
+        <ItemStockProfileDetails />
       </Container>
     </Box>
   </>
 );
 
-ItemInfo.getLayout = (page) => (
+ItemStock.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default ItemInfo;
+export default ItemStock;

@@ -23,46 +23,29 @@ function getParameters()
   return parameters;
 }
 
-const types = [
+const customerGenders = [
   {
-    value: '냉동식품',
-    label: '냉동식품'
+    value: 'm',
+    label: 'm'
   },
   {
-    value: '냉장식품',
-    label: '냉장식품'
-  },
-  {
-    value: '담배',
-    label: '담배'
-  },
-  {
-    value: '식품',
-    label: '식품'
-  },
-  {
-    value: '음료',
-    label: '음료'
-  },
-  {
-    value: '주류',
-    label: '주류'
-  },
-  {
-    value: '기타',
-    label: '기타'
+    value: 'f',
+    label: 'f'
   }
 ];
 
-export const ItemInfoProfileDetails = (props) => {
+export const MembershipCustomerProfileDetails = (props) => {
   let parameters;
   useEffect(()=>{parameters=getParameters();},[]);
 
   const [values, setValues] = useState({
-    itemNum: null,
-    itemName: '',
-    type: '냉동식품',
-    consumerPrice: 0
+    customerNum: null,
+    customerName: '',
+    customerBirthDate: new Date().toISOString().slice(0,4+1+2+1+2),
+    customerGender: 'm',
+    customerPhoneNum: '',
+    point: 0,
+    joinedStoreNum: 0
   });
   
   const handleChange = (event) => {
@@ -81,7 +64,7 @@ export const ItemInfoProfileDetails = (props) => {
       <Card>
         <CardHeader
           // subheader="The information can be edited"
-          title="상품 기본 정보"
+          title="멤버쉽 고객 기본 정보"
         />
         <Divider />
         <CardContent>
@@ -97,11 +80,11 @@ export const ItemInfoProfileDetails = (props) => {
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
-                label="물품명"
-                name="itemName"
+                label="고객 이름"
+                name="customerName"
                 onChange={handleChange}
                 required
-                value={values.itemName}
+                value={values.customerName}
                 variant="outlined"
               />
             </Grid>
@@ -113,12 +96,12 @@ export const ItemInfoProfileDetails = (props) => {
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
-                label="소비자판매가"
-                name="consumerPrice"
+                label="고객 생년월일"
+                name="customerBirthDate"
                 onChange={handleChange}
                 required
-                type="number"
-                value={values.consumerPrice}
+                type="date"
+                value={values.customerBirthDate}
                 variant="outlined"
               />
             </Grid>
@@ -130,16 +113,16 @@ export const ItemInfoProfileDetails = (props) => {
               <TextField
                 fullWidth
                 // helperText="Please specify the first name"
-                label="물품 분류"
-                name="type"
+                label="고객 성별"
+                name="customerGender"
                 onChange={handleChange}
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.type}
+                value={values.customerGender}
                 variant="outlined"
               >
-                {types.map((option) => (
+                {customerGenders.map((option) => (
                   <option
                     key={option.value}
                     value={option.value}
@@ -148,6 +131,22 @@ export const ItemInfoProfileDetails = (props) => {
                   </option>
                 ))}
               </TextField>
+            </Grid>
+            <Grid
+              item
+              md={6}
+              xs={12}
+            >
+              <TextField
+                fullWidth
+                // helperText="Please specify the first name"
+                label="고객 연락처"
+                name="customerPhoneNum"
+                onChange={handleChange}
+                required
+                value={values.customerPhoneNum}
+                variant="outlined"
+              />
             </Grid>
           </Grid>
         </CardContent>

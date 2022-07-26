@@ -1,3 +1,4 @@
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -10,6 +11,12 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+
+function toParameters(selectedId)
+{
+  console.log(selectedId);
+  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
+} 
 
 export const ManagedStoreListToolbar = (props) => (
   <Box {...props}>
@@ -41,11 +48,38 @@ export const ManagedStoreListToolbar = (props) => (
         >
           Export
         </Button> */}
-        <Button
-          color="primary"
-          variant="contained"
+        <NextLink
+          href="/managed-store?method=create"
+          passHref
         >
-          지점 추가
+          <Button
+            color="primary"
+            variant="contained"
+            sx={{ mr: 1 }}
+          >
+            지점 추가
+          </Button>
+        </NextLink>
+        <NextLink
+          href={"/managed-store?method=update"+(props.selectedManagedStoreIds.length==1?'&'+toParameters(props.selectedManagedStoreIds[0]):'')}
+          passHref
+        >
+          <Button
+            color="secondary"
+            variant="contained"
+            sx={{ mr: 1 }}
+            disabled={props.selectedManagedStoreIds.length!=1}
+          >
+            지점 수정
+          </Button>
+        </NextLink>
+        <Button
+          color="error"
+          variant="contained"
+          sx={{ mr: 1 }}
+          disabled={props.selectedManagedStoreIds.length==0}
+        >
+          지점 삭제
         </Button>
       </Box>
     </Box>

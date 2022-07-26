@@ -1,14 +1,14 @@
 import Head from 'next/head';
 import { Box, Container, Grid, Typography } from '@mui/material';
-// import { ItemInfoProfile } from '../components/itemInfo/itemInfo-profile';
-import { ItemInfoProfileDetails } from '../components/itemInfo/itemInfo-profile-details';
+// import { InWarehouseReportProfile } from '../components/inWarehouseReport/inWarehouseReport-profile';
+import { InWarehouseReportProfileDetails } from '../components/inWarehouseReport/inWarehouseReport-profile-details';
 import { DashboardLayout } from '../components/dashboard-layout';
 
-const ItemInfo = () => (
+const InWarehouseReport = () => (
   <>
     <Head>
       <title>
-        모든 상품 | TJSManager
+        입고 신청 | TJSManager
       </title>
     </Head>
     <Box
@@ -23,18 +23,18 @@ const ItemInfo = () => (
           sx={{ mb: 3 }}
           variant="h4"
         >
-          모든 상품
+          입고 신청
         </Typography>
-        <ItemInfoProfileDetails />
+        <InWarehouseReportProfileDetails />
       </Container>
     </Box>
   </>
 );
 
-ItemInfo.getLayout = (page) => (
+InWarehouseReport.getLayout = (page) => (
   <DashboardLayout>
     {page}
   </DashboardLayout>
 );
 
-export default ItemInfo;
+export default InWarehouseReport;

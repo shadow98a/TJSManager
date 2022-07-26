@@ -1,3 +1,4 @@
+import NextLink from 'next/link';
 import {
   Box,
   Button,
@@ -10,6 +11,12 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+
+function toParameters(selectedId)
+{
+  console.log(selectedId);
+  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
+} 
 
 export const ReqInWarehouseListToolbar = (props) => (
   <Box {...props}>
@@ -26,7 +33,7 @@ export const ReqInWarehouseListToolbar = (props) => (
         sx={{ m: 1 }}
         variant="h4"
       >
-        입고 신청 이력
+        모든 상품
       </Typography>
       <Box sx={{ m: 1 }}>
         {/* <Button
@@ -41,11 +48,38 @@ export const ReqInWarehouseListToolbar = (props) => (
         >
           Export
         </Button> */}
-        <Button
-          color="primary"
-          variant="contained"
+        <NextLink
+          href="/item-info?method=create"
+          passHref
         >
-          입고 신청 추가
+          <Button
+            color="primary"
+            variant="contained"
+            sx={{ mr: 1 }}
+          >
+            상품 추가
+          </Button>
+        </NextLink>
+        <NextLink
+          href={"/item-info?method=update"+(props.selectedReqInWarehouseIds.length==1?'&'+toParameters(props.selectedReqInWarehouseIds[0]):'')}
+          passHref
+        >
+          <Button
+            color="secondary"
+            variant="contained"
+            sx={{ mr: 1 }}
+            disabled={props.selectedReqInWarehouseIds.length!=1}
+          >
+            상품 수정
+          </Button>
+        </NextLink>
+        <Button
+          color="error"
+          variant="contained"
+          sx={{ mr: 1 }}
+          disabled={props.selectedReqInWarehouseIds.length==0}
+        >
+          상품 삭제
         </Button>
       </Box>
     </Box>
@@ -67,7 +101,7 @@ export const ReqInWarehouseListToolbar = (props) => (
                   </InputAdornment>
                 )
               }}
-              placeholder="입고 신청 검색"
+              placeholder="상품 검색"
               variant="outlined"
             />
           </Box>

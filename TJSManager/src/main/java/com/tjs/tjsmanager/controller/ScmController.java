@@ -1,6 +1,7 @@
 package com.tjs.tjsmanager.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,10 +21,7 @@ import com.tjs.tjsmanager.domain.scm.ItemStock;
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.domain.scm.SalesRecord;
-import com.tjs.tjsmanager.domain.statistics.SalesConsumerGroupByAge;
-import com.tjs.tjsmanager.domain.statistics.SalesConsumerGroupByGender;
 import com.tjs.tjsmanager.service.ScmService;
-
 
 @RestController
 public class ScmController {
@@ -211,15 +209,19 @@ public class ScmController {
 	
 	// 전체 성별 판매량
 	@GetMapping("/statistics/consumer_gender/all")
-	public SalesConsumerGroupByGender getAllSalesConsumerGroupByGender() {
-		SalesConsumerGroupByGender data = scmService.allGroupByConsumerGender();
-		return data;
+	public Map<String, Object> getAllSalesConsumerGroupByGender() {
+		return scmService.allGroupByConsumerGender();
 	}
 	
 	// 전체 나이대별 판매량
 	@GetMapping("/statistics/consumer_age/all")
-	public SalesConsumerGroupByAge getAllSalesConsumerGroupByAge() {
-		SalesConsumerGroupByAge data = scmService.allGroupByConsumerAge();
-		return data;
+	public Map<Object, Object> getAllSalesConsumerGroupByAge() {
+		return scmService.allGroupByConsumerAge();
+	}
+	
+	// 전체 24시간대별 판매량
+	@GetMapping("/statistics/hour/all")
+	public Map<Object, Object> getAllSalesConsumerGroupByHour() {
+		return scmService.allGroupBySalesTime();
 	}
 }

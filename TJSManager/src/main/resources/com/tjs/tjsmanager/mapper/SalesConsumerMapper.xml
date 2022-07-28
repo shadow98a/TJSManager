@@ -9,7 +9,7 @@
 		SELECT
 		CONSUMER_GENDER AS consumerGender, IFNULL( count(*), 0 ) AS count
 		from
-		SALES_CONSUMER
+		sales_consumer
 		GROUP BY CONSUMER_GENDER;
 	</select>
 
@@ -18,7 +18,7 @@
 	<select id="allGroupByConsumerAge" resultType="map">
 		SELECT
 		CONSUMER_AGE AS consumerAge, count(*) AS count
-		from SALES_CONSUMER
+		from sales_consumer
 		GROUP BY CONSUMER_AGE;
 	</select>
 
@@ -26,7 +26,7 @@
 	<!-- 전체 시간대별 판매량 -->
 	<select id="allGroupBySalesTime" resultType="map">
 		SELECT hour(SALES_DATE) AS hour, count(*) AS count
-		FROM SALES_CONSUMER
+		FROM sales_consumer
 		GROUP BY hour(SALES_DATE);
 	</select>
 </mapper>

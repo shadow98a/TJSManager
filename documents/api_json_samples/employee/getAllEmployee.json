@@ -1,0 +1,249 @@
+[
+  {
+    "empNum": 7,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword1",
+    "name": "(김주현의 바뀐 이름)",
+    "job": "일반",
+    "gender": "m",
+    "birthDate": "1998-12-14",
+    "phoneNum": "01048223898",
+    "hireDate": "2022-01-01",
+    "salary": 0,
+    "wage": 10000
+  },
+  {
+    "empNum": 8,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword2",
+    "name": "박윤호",
+    "job": "일반",
+    "gender": "m",
+    "birthDate": "1998-09-01",
+    "phoneNum": "01063491371",
+    "hireDate": "2022-01-02",
+    "salary": 0,
+    "wage": 20000
+  },
+  {
+    "empNum": 9,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword3",
+    "name": "정승균",
+    "job": "매니저",
+    "gender": "m",
+    "birthDate": "1998-08-31",
+    "phoneNum": "01046889719",
+    "hireDate": "2022-01-03",
+    "salary": 3000000,
+    "wage": 0
+  },
+  {
+    "empNum": 10,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword4",
+    "name": "정아윤",
+    "job": "점장",
+    "gender": "f",
+    "birthDate": "1988-02-09",
+    "phoneNum": "01056125859",
+    "hireDate": "2022-01-04",
+    "salary": 4000000,
+    "wage": 0
+  },
+  {
+    "empNum": 30,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword1",
+    "name": "(김주현의 바뀐 이름)",
+    "job": "일반",
+    "gender": "m",
+    "birthDate": "1998-12-14",
+    "phoneNum": "01048223898",
+    "hireDate": "2022-01-01",
+    "salary": 0,
+    "wage": 10000
+  },
+  {
+    "empNum": 31,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword2",
+    "name": "박윤호",
+    "job": "일반",
+    "gender": "m",
+    "birthDate": "1998-09-01",
+    "phoneNum": "01063491371",
+    "hireDate": "2022-01-02",
+    "salary": 0,
+    "wage": 20000
+  },
+  {
+    "empNum": 32,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword3",
+    "name": "정승균",
+    "job": "매니저",
+    "gender": "m",
+    "birthDate": "1998-08-31",
+    "phoneNum": "01046889719",
+    "hireDate": "2022-01-03",
+    "salary": 3000000,
+    "wage": 0
+  },
+  {
+    "empNum": 33,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword4",
+    "name": "정아윤",
+    "job": "점장",
+    "gender": "f",
+    "birthDate": "1988-02-09",
+    "phoneNum": "01056125859",
+    "hireDate": "2022-01-04",
+    "salary": 4000000,
+    "wage": 0
+  },
+  {
+    "empNum": 47,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword1",
+    "name": "김주현",
+    "job": "일반",
+    "gender": "m",
+    "birthDate": "1998-12-14",
+    "phoneNum": "01048223898",
+    "hireDate": "2022-01-01",
+    "salary": 0,
+    "wage": 10000
+  },
+  {
+    "empNum": 48,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword2",
+    "name": "박윤호",
+    "job": "일반",
+    "gender": "m",
+    "birthDate": "1998-09-01",
+    "phoneNum": "01063491371",
+    "hireDate": "2022-01-02",
+    "salary": 0,
+    "wage": 20000
+  },
+  {
+    "empNum": 49,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword3",
+    "name": "정승균",
+    "job": "매니저",
+    "gender": "m",
+    "birthDate": "1998-08-31",
+    "phoneNum": "01046889719",
+    "hireDate": "2022-01-03",
+    "salary": 3000000,
+    "wage": 0
+  },
+  {
+    "empNum": 50,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "empPassword4",
+    "name": "정아윤",
+    "job": "점장",
+    "gender": "f",
+    "birthDate": "1988-02-09",
+    "phoneNum": "01056125859",
+    "hireDate": "2022-01-04",
+    "salary": 4000000,
+    "wage": 0
+  },
+  {
+    "empNum": 62,
+    "storeNum": {
+      "storeNum": 5,
+      "storePassword": "storePassword1",
+      "storeName": "씨앗 편의점 '앗편' 중랑구점",
+      "storeAddress": "서울특별시 중랑구",
+      "storeTelNum": "0200000001"
+    },
+    "empPassword": "1234",
+    "name": "정승균",
+    "job": "점장",
+    "gender": "m",
+    "birthDate": "1998-08-31",
+    "phoneNum": "01046889719",
+    "hireDate": "2022-02-07",
+    "salary": 3000000,
+    "wage": 0
+  }
+]

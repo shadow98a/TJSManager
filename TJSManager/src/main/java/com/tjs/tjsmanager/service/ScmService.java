@@ -16,6 +16,9 @@ import com.tjs.tjsmanager.domain.scm.ManagedStore;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.domain.scm.SalesRecord;
 import com.tjs.tjsmanager.domain.scm.SalesRecordPrimaryKey;
+import com.tjs.tjsmanager.domain.statistics.SalesConsumerGroupByAge;
+import com.tjs.tjsmanager.domain.statistics.SalesConsumerGroupByGender;
+import com.tjs.tjsmanager.mapper.SalesConsumerMapper;
 import com.tjs.tjsmanager.repository.hrm.EmployeeRepository;
 import com.tjs.tjsmanager.repository.scm.InWarehouseReportRepository;
 import com.tjs.tjsmanager.repository.scm.ItemInfoRepository;
@@ -23,6 +26,7 @@ import com.tjs.tjsmanager.repository.scm.ItemStockRepository;
 import com.tjs.tjsmanager.repository.scm.ManagedStoreRepository;
 import com.tjs.tjsmanager.repository.scm.SalesConsumerRepository;
 import com.tjs.tjsmanager.repository.scm.SalesRecordRepository;
+
 
 
 @Service
@@ -42,6 +46,9 @@ public class ScmService {
 	private SalesRecordRepository salesRecordRepository;
 	@Autowired
 	private EmployeeRepository employeeRepository;
+	@Autowired
+	private SalesConsumerMapper salesConsumerMapper;
+	
 	
 	// SalesRecordJson 객체를 SalesRecord Entity 객체로 변환
 	public SalesRecord jsonToSalesRecord(SalesRecordJson jsonData) {
@@ -271,5 +278,20 @@ public class ScmService {
 	// 상품 기본 정보 삭제
 	public void deleteItemInfo(Long itemNum) {
 		itemInfoRepository.deleteById(itemNum);
+	}
+	
+	
+	
+	
+	// 전체 성별 판매량
+	public SalesConsumerGroupByGender allGroupByConsumerGender() {
+		SalesConsumerGroupByGender data = salesConsumerMapper.allGroupByConsumerGender();
+		return data;
+	}
+	
+	// 전체 나이대별 판매량
+	public SalesConsumerGroupByAge allGroupByConsumerAge() {
+		SalesConsumerGroupByAge data = salesConsumerMapper.allGroupByConsumerAge();
+		return data;
 	}
 }

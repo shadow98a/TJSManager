@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tjs.tjsmanager.mapper.SalesConsumerMapper">
+
+	<!-- 전체 성별 판매량 -->
+	<select id="allGroupByConsumerGender"
+		resultType="SalesConsumerGroupByGender">
+		SELECT IFNULL( (
+		SELECT count(*) FROM SALES_CONSUMER
+		WHERE
+		CONSUMER_GENDER = 'm'
+		GROUP BY CONSUMER_GENDER
+		), 0) AS man,
+		IFNULL( (
+		SELECT count(*) FROM SALES_CONSUMER
+		WHERE CONSUMER_GENDER = 'f'
+		GROUP BY
+		CONSUMER_GENDER
+		), 0) AS woman,
+		IFNULL( (
+		SELECT count(*) FROM
+		SALES_CONSUMER
+		WHERE CONSUMER_GENDER = NULL
+		GROUP BY CONSUMER_GENDER
+		),
+		0) AS unknown;
+	</select>
+
+
+	<!-- 전체 나이대별 판매량 -->
+	<select id="allGroupByConsumerAge"
+		resultType="SalesConsumerGroupByAge">
+		SELECT IFNULL( (
+		SELECT count(*) FROM SALES_CONSUMER
+		WHERE
+		CONSUMER_AGE = 1
+		GROUP BY CONSUMER_AGE
+		), 0) AS underTen,
+		IFNULL( (
+		SELECT count(*) FROM
+		SALES_CONSUMER
+		WHERE CONSUMER_AGE = 10
+		GROUP BY
+		CONSUMER_AGE
+		), 0) AS
+		ten,
+		IFNULL( (
+		SELECT count(*) FROM SALES_CONSUMER
+		WHERE CONSUMER_AGE =
+		20
+		GROUP BY CONSUMER_AGE
+		), 0) AS twenty,
+		IFNULL( (
+		SELECT count(*) FROM
+		SALES_CONSUMER
+		WHERE CONSUMER_AGE = 30
+		GROUP BY
+		CONSUMER_AGE
+		), 0) AS
+		thirty,
+		IFNULL( (
+		SELECT count(*) FROM
+		SALES_CONSUMER
+		WHERE CONSUMER_AGE
+		= 40
+		GROUP BY CONSUMER_AGE
+		), 0) AS
+		forty,
+		IFNULL( (
+		SELECT count(*) FROM
+		SALES_CONSUMER
+		WHERE CONSUMER_AGE =
+		50
+		GROUP BY CONSUMER_AGE
+		), 0) AS
+		fifty,
+		IFNULL( (
+		SELECT count(*) FROM
+		SALES_CONSUMER
+		WHERE CONSUMER_AGE =
+		60
+		GROUP BY CONSUMER_AGE
+		), 0) AS
+		sixty,
+		IFNULL( (
+		SELECT count(*) FROM
+		SALES_CONSUMER
+		WHERE CONSUMER_AGE =
+		70
+		GROUP BY CONSUMER_AGE
+		), 0) AS
+		upSeventy;
+	</select>
+</mapper>

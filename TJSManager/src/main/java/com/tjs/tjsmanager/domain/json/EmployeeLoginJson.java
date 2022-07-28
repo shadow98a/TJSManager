@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EmployeeLoginJson {
 // 직원 번호
-	private long empNum;
+	private Long empNum;
 
 	// 로그인 시 사용하는 직원 비밀번호
 	private String empPassword;

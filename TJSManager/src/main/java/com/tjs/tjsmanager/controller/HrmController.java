@@ -1,14 +1,21 @@
 package com.tjs.tjsmanager.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.tjs.tjsmanager.domain.hrm.Employee;
+import com.tjs.tjsmanager.domain.json.EmployeeJson;
 import com.tjs.tjsmanager.domain.json.EmployeeLoginJson;
 import com.tjs.tjsmanager.service.HrmService;
 
@@ -40,5 +47,37 @@ public class HrmController {
 		} else {
 			return "false";
 		}
+	}
+	
+	
+	
+	// 직원 정보 생성
+	@PostMapping("/employee")
+	public void createEmployee(@RequestBody EmployeeJson jsonData) {
+		hrmService.saveEmployee(jsonData);
+	}
+	
+	// 모든 직원 정보
+	@GetMapping("/employee")
+	public List<Employee> getAllEmployee() {
+		return hrmService.findAllEmployee();
+	}
+	
+	// 한 직원 정보
+	@GetMapping("/employee/{emp_num}")
+	public Employee getOneEmployee(@PathVariable("emp_num") Long empNum) {
+		return hrmService.findByIdEmployee(empNum);
+	}
+	
+	// 직원 정보 수정
+	@PutMapping("/employee/{emp_num}")
+	public void updateEmployee(@PathVariable("emp_num") Long empNum, @RequestBody EmployeeJson jsonData) {
+		hrmService.updateEmployee(empNum, jsonData);
+	}
+	
+	// 직원 정보 삭제
+	@DeleteMapping("/employee/{emp_num}")
+	public void deleteEmployee(@PathVariable("emp_num") Long empNum) {
+		hrmService.deleteEmployee(empNum);
 	}
 }

@@ -20,6 +20,8 @@ import com.tjs.tjsmanager.domain.scm.ItemStock;
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.domain.scm.SalesRecord;
+import com.tjs.tjsmanager.domain.statistics.SalesConsumerGroupByAge;
+import com.tjs.tjsmanager.domain.statistics.SalesConsumerGroupByGender;
 import com.tjs.tjsmanager.service.ScmService;
 
 
@@ -202,5 +204,22 @@ public class ScmController {
 	@DeleteMapping("/item/info/{item_num}")
 	public void deleteItemInfo(@PathVariable("item_num") Long itemNum) {
 		scmService.deleteItemInfo(itemNum);
+	}
+	
+	
+	
+	
+	// 전체 성별 판매량
+	@GetMapping("/statistics/consumer_gender/all")
+	public SalesConsumerGroupByGender getAllSalesConsumerGroupByGender() {
+		SalesConsumerGroupByGender data = scmService.allGroupByConsumerGender();
+		return data;
+	}
+	
+	// 전체 나이대별 판매량
+	@GetMapping("/statistics/consumer_age/all")
+	public SalesConsumerGroupByAge getAllSalesConsumerGroupByAge() {
+		SalesConsumerGroupByAge data = scmService.allGroupByConsumerAge();
+		return data;
 	}
 }

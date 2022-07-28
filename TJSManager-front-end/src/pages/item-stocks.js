@@ -4,15 +4,17 @@ import { ItemStockListResults } from '../components/itemStock/itemStock-list-res
 import { ItemStockListToolbar } from '../components/itemStock/itemStock-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 // import { itemStocks } from '../__mocks__/itemStocks';
-import { useState,useEffect } from 'react';
+import {useState} from 'react';
 import axios from 'axios';
+import {domain} from '../api/restful-api';
 
 const ItemStocks = () =>
 {
   const [itemStocks,setItemStocks]=useState([]);
-  useEffect(()=>{axios.get('http://ec2-43-200-8-58.ap-northeast-2.compute.amazonaws.com:8080/item/stock').then((response)=>{setItemStocks(response.data)})},[]);
+  axios.get(domain+'/item/stock').then((response)=>{setItemStocks(response.data);});
 
   const [selectedItemStockIds, setSelectedItemStockIds] = useState([]);
+  
   return  (
             <>
               <Head>

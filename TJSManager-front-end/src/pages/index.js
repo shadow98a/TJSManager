@@ -3,18 +3,21 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { Box, Button, Container, Grid, Link, TextField, Typography } from '@mui/material';
+import { Box, Button, Container, FormHelperText,Grid, Link, TextField, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Facebook as FacebookIcon } from '../icons/facebook';
 import { Google as GoogleIcon } from '../icons/google';
+import { useState } from 'react';
+import axios from 'axios';
+import {domain} from '../api/restful-api';
 
 const Login = () => {
   const router = useRouter();
+  const [employee,setEmployee]=useState({empNum:'',empPassword:''});
+  const [isValid,setIsValid]=useState(undefined);
   const formik = useFormik({
     initialValues: {
-      // email: 'demo@devias.io',
       empNum: '',
-      // password: 'Password123'
       empPassword: ''
     },
     validationSchema: Yup.object({
@@ -31,10 +34,47 @@ const Login = () => {
         .required(
           '로그인을 위한 비밀번호를 입력해 주세요')
     }),
-    onSubmit: () => {
-      router.push('/dashboard');
+    onSubmit: () =>
+    {
+      axios.post(domain+'/employee/log_in',employee).
+      then
+      (
+        (response)=>
+        {
+          if(response.data=='login success!')
+          {
+            axios.get(domain+'/employee'+('/'+employee.empNum)).
+            then
+            (
+              (response)=>
+              {
+                sessionStorage.setItem('employee',JSON.stringify(response.data));
+              }
+            );
+            router.push('/statistics');  
+          }
+          else
+          {
+            setIsValid(false);
+          }
+        }
+      );
     }
   });
+
+  function handleChange(event)
+  {
+    const positiveNumberNames=new Set(['empNum']);
+    if(positiveNumberNames.has(event.target.name))
+    {
+      if(event.target.value!='')
+      {
+        event.target.value=Math.abs(event.target.value);
+      }
+    }
+
+    setEmployee({...employee,[event.target.name]:event.target.value});
+  };
 
   return (
     <>
@@ -137,10 +177,16 @@ const Login = () => {
               margin="normal"
               name="empNum"
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onChange= {(event)=>
+                          {
+                            formik.handleChange(event);
+                            handleChange(event);
+                          }
+                        }
               type="number"
               value={formik.values.empNum}
               variant="outlined"
+              inputProps={{min:"0"}}
             />
             <TextField
               error={Boolean(formik.touched.empPassword && formik.errors.empPassword)}
@@ -150,15 +196,23 @@ const Login = () => {
               margin="normal"
               name="empPassword"
               onBlur={formik.handleBlur}
-              onChange={formik.handleChange}
+              onChange= {(event)=>
+                {
+                  formik.handleChange(event);
+                  handleChange(event);
+                }
+              }
               type="password"
               value={formik.values.password}
               variant="outlined"
             />
+            <FormHelperText error>
+              {isValid==undefined?'':'다시 로그인해 주세요'}
+            </FormHelperText>
             <Box sx={{ py: 2 }}>
               <Button
                 color="primary"
-                disabled={formik.isSubmitting}
+                // disabled={formik.isSubmitting}
                 fullWidth
                 size="large"
                 type="submit"

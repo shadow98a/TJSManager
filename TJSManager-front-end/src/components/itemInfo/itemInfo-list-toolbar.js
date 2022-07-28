@@ -11,14 +11,34 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+import axios from 'axios';
+import {useRouter} from 'next/router';
+import {domain} from '../../api/restful-api';
 
 function toParameters(selectedId)
 {
-  console.log(selectedId);
-  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
-} 
+  return  selectedId.
+          slice(1, selectedId.length-1).
+          replaceAll(',','&').
+          replaceAll(':','=').
+          replaceAll('"','');
+}
 
-export const ItemInfoListToolbar = (props) => (
+function deleteItemInfos(selectedItemInfoIds,router)
+{
+  for( const selectedItemInfoId of selectedItemInfoIds)
+  {
+    const itemInfo=JSON.parse(selectedItemInfoId);
+    axios.delete(domain+'/item/info'+('/'+itemInfo.itemNum));
+  }
+
+  router.push('/item-infos');
+}
+
+export const ItemInfoListToolbar = (props) => 
+{
+  const router=useRouter();
+return  (
   <Box {...props}>
     <Box
       sx={{
@@ -78,6 +98,7 @@ export const ItemInfoListToolbar = (props) => (
           variant="contained"
           sx={{ mr: 1 }}
           disabled={props.selectedItemInfoIds.length==0}
+          onClick={()=>{deleteItemInfos(props.selectedItemInfoIds,router);}}
         >
           상품 삭제
         </Button>
@@ -110,3 +131,4 @@ export const ItemInfoListToolbar = (props) => (
     </Box>
   </Box>
 );
+            }

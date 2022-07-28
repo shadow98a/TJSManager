@@ -14,8 +14,11 @@ import { Download as DownloadIcon } from '../../icons/download';
 
 function toParameters(selectedId)
 {
-  console.log(selectedId);
-  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
+  return  selectedId.
+          slice(1, selectedId.length-1).
+          replaceAll(',','&').
+          replaceAll(':','=').
+          replaceAll('"','');
 } 
 
 export const ItemStockListToolbar = (props) => (
@@ -73,14 +76,14 @@ export const ItemStockListToolbar = (props) => (
             재고 수정
           </Button>
         </NextLink>
-        <Button
+        {/* <Button
           color="error"
           variant="contained"
           sx={{ mr: 1 }}
           disabled={props.selectedItemStockIds.length==0}
         >
           재고 삭제
-        </Button>
+        </Button> */}
       </Box>
     </Box>
     <Box sx={{ mt: 3 }}>

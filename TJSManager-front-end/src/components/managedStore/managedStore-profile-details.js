@@ -9,41 +9,100 @@ import {
   Grid,
   TextField
 } from '@mui/material';
-
-function getParameters()
-{
-  const queryString=window.location.search.slice(1);
-  const parameters={};
-  for(const nameAndValue of queryString.split('&'))
-  {
-     const [name,value]=nameAndValue.split('=');
-     parameters[name]=value;
-  }
-
-  return parameters;
-}
+import axios from 'axios';
+import {useRouter} from 'next/router';
+import {domain} from '../../api/restful-api';
 
 export const ManagedStoreProfileDetails = (props) => {
-  let parameters;
-  useEffect(()=>{parameters=getParameters();},[]);
-
   const [values, setValues] = useState({
     storeNum: null,
-    itemNamestorePassWord: '',
+    storePassword: '',
     storeName: '',
     storeAdress: '',
     storeTelNum: ''
   });
+  function getParameters()
+  {
+    const queryString=window.location.search.slice(1);
+    const parameters={};
+    for(const nameAndValue of queryString.split('&'))
+    {
+       const [name,value]=nameAndValue.split('=');
+       parameters[name]=value;
+    }
   
+    return parameters;
+  }
+  useEffect
+  ( 
+    ()=>
+    {
+      const employee=JSON.parse(sessionStorage.getItem('employee'));
+      setValues({...values});
+
+      const parameters=getParameters();
+      if(parameters.method=='update')
+      {
+        axios.get(domain+'/managed_store'+('/'+parameters.storeNum)).
+        then((response)=>{setValues({...response.data});});
+      }
+
+      // setValues({...values});
+    },[]
+  );
+  
+  function validate()
+  {
+    const requiredNames=['storePassword','storeName','storeAdress','storeTelNum'];
+
+    for(const name of requiredNames)
+    {
+      if(values[name]=='')
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+  const [isValid, setIsValid] = useState(validate());
+  useEffect(()=>{setIsValid(validate());},[values]);
+
   const handleChange = (event) => {
+    const positiveNumberNames=new Set([]);
+    if(positiveNumberNames.has(event.target.name))
+    {
+      if(event.target.value!='')
+      {
+        event.target.value=Math.abs(event.target.value);
+      }
+    }
+
     setValues({
       ...values,
       [event.target.name]: event.target.value
     });
   };
 
+  const router=useRouter();
+  function handleSubmit(event)
+  {
+    event.preventDefault();
+    
+    const parameters=getParameters();
+    axios
+    (
+      {
+        url:domain+'/managed_store'+(parameters.method=='create'?'':('/'+parameters.storeNum)),
+        method:parameters.method=='create'?'post':'put',
+        data:values
+      }
+    ).
+    then(()=>{router.push('/managed-stores');});
+  }
+
   return (
-    <form
+    <form onSubmit={handleSubmit}
       autoComplete="off"
       noValidate
       {...props}
@@ -65,8 +124,9 @@ export const ManagedStoreProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.storePassword==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.storePassword==''?'로그인을 위한 비밀번호를 입력해 주세요':''}
                 label="지점 로그인을 위한 비밀번호"
                 name="storePassword"
                 onChange={handleChange}
@@ -82,8 +142,9 @@ export const ManagedStoreProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.storeName==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.storeName==''?'지점명을 입력해 주세요':''}
                 label="지점명"
                 name="storeName"
                 onChange={handleChange}
@@ -98,8 +159,9 @@ export const ManagedStoreProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.storeAdress==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.storeAdress==''?'지점 주소를 입력해 주세요':''}
                 label="지점 주소"
                 name="storeAdress"
                 onChange={handleChange}
@@ -114,8 +176,9 @@ export const ManagedStoreProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.storeTelNum==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.storeTelNum==''?'지점 연락처를 입력해 주세요':''}
                 label="지점 연락처"
                 name="storeTelNum"
                 onChange={handleChange}
@@ -144,6 +207,8 @@ export const ManagedStoreProfileDetails = (props) => {
           </Button>
           <Button
             color="primary"
+            disabled={!isValid}
+            type='submit'
             variant="contained"
           >
             정보 저장

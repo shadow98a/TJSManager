@@ -36,6 +36,15 @@ export const AccountProfileDetails = (props) => {
   });
 
   const handleChange = (event) => {
+    const positiveNumberNames=new Set([]);
+    if(positiveNumberNames.has(event.target.name))
+    {
+      if(event.target.value!='')
+      {
+        event.target.value=Math.abs(event.target.value);
+      }
+    }
+
     setValues({
       ...values,
       [event.target.name]: event.target.value

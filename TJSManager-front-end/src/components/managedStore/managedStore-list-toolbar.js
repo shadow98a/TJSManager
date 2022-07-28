@@ -11,14 +11,34 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+import axios from 'axios';
+import {useRouter} from 'next/router';
+import {domain} from '../../api/restful-api';
 
 function toParameters(selectedId)
 {
-  console.log(selectedId);
-  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
-} 
+  return  selectedId.
+          slice(1, selectedId.length-1).
+          replaceAll(',','&').
+          replaceAll(':','=').
+          replaceAll('"','');
+}
 
-export const ManagedStoreListToolbar = (props) => (
+function deleteManagedStores(selectedManagedStoreIds,router)
+{
+  for( const selectedManagedStoreId of selectedManagedStoreIds)
+  {
+    const managedStore=JSON.parse(selectedManagedStoreId);
+    axios.delete(domain+'/managed_store'+('/'+managedStore.storeNum));
+  }
+
+  router.push('/managed-stores');
+}
+
+export const ManagedStoreListToolbar = (props) => 
+{
+  const router=useRouter();
+return  (
   <Box {...props}>
     <Box
       sx={{
@@ -78,6 +98,7 @@ export const ManagedStoreListToolbar = (props) => (
           variant="contained"
           sx={{ mr: 1 }}
           disabled={props.selectedManagedStoreIds.length==0}
+          onClick={()=>{deleteManagedStores(props.selectedManagedStoreIds,router);}}
         >
           지점 삭제
         </Button>
@@ -110,3 +131,4 @@ export const ManagedStoreListToolbar = (props) => (
     </Box>
   </Box>
 );
+            }

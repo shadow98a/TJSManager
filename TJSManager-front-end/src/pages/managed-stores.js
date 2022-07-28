@@ -4,15 +4,17 @@ import { ManagedStoreListResults } from '../components/managedStore/managedStore
 import { ManagedStoreListToolbar } from '../components/managedStore/managedStore-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 // import { managedStores } from '../__mocks__/managedStores';
-import { useState,useEffect } from 'react';
+import {useState} from 'react';
 import axios from 'axios';
+import {domain} from '../api/restful-api';
 
 const ManagedStores = () =>
 {
   const [managedStores,setManagedStores]=useState([]);
-  useEffect(()=>{axios.get('http://ec2-43-200-8-58.ap-northeast-2.compute.amazonaws.com:8080/item/info').then((response)=>{setItemInfos(response.data)})},[]);
+  axios.get(domain+'/managed_store').then((response)=>{setManagedStores(response.data);});
 
   const [selectedManagedStoreIds, setSelectedManagedStoreIds] = useState([]);
+  
   return  (
             <>
               <Head>

@@ -4,15 +4,17 @@ import { InWarehouseReportListResults } from '../components/inWarehouseReport/in
 import { InWarehouseReportListToolbar } from '../components/inWarehouseReport/inWarehouseReport-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 // import { inWarehouseReports } from '../__mocks__/inWarehouseReports';
-import { useState,useEffect } from 'react';
+import {useState} from 'react';
 import axios from 'axios';
+import {domain} from '../api/restful-api';
 
 const InWarehouseReports = () =>
 {
   const [inWarehouseReports,setInWarehouseReports]=useState([]);
-  useEffect(()=>{axios.get('http://ec2-43-200-8-58.ap-northeast-2.compute.amazonaws.com:8080/item/in_warehouse_report').then((response)=>{setInWarehouseReports(response.data)})},[]);
+  axios.get(domain+'/item/in_warehouse_report').then((response)=>{setInWarehouseReports(response.data);});
 
   const [selectedInWarehouseReportIds, setSelectedInWarehouseReportIds] = useState([]);
+  
   return  (
             <>
               <Head>

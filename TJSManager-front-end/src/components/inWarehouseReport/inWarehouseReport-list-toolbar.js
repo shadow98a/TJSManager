@@ -11,14 +11,34 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+import axios from 'axios';
+import {useRouter} from 'next/router';
+import {domain} from '../../api/restful-api';
 
 function toParameters(selectedId)
 {
-  console.log(selectedId);
-  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
-} 
+  return  selectedId.
+          slice(1, selectedId.length-1).
+          replaceAll(',','&').
+          replaceAll(':','=').
+          replaceAll('"','');
+}
 
-export const InWarehouseReportListToolbar = (props) => (
+function deleteInWarehouseReports(selectedInWarehouseReportIds,router)
+{
+  for( const selectedInWarehouseReportId of selectedInWarehouseReportIds)
+  {
+    const inWarehouseReport=JSON.parse(selectedInWarehouseReportId);
+    axios.delete(domain+'/item/in_warehouse_report'+('/'+inWarehouseReport.reportNum));
+  }
+
+  router.push('/in-warehouse-reports');
+}
+
+export const InWarehouseReportListToolbar = (props) => 
+{
+  const router=useRouter();
+return  (
   <Box {...props}>
     <Box
       sx={{
@@ -61,7 +81,7 @@ export const InWarehouseReportListToolbar = (props) => (
           </Button>
         </NextLink>
         <NextLink
-          href={"/item-info?method=update"+(props.selectedInWarehouseReportIds.length==1?'&'+toParameters(props.selectedInWarehouseReportIds[0]):'')}
+          href={"/in-warehouse-report?method=update"+(props.selectedInWarehouseReportIds.length==1?'&'+toParameters(props.selectedInWarehouseReportIds[0]):'')}
           passHref
         >
           <Button
@@ -78,6 +98,7 @@ export const InWarehouseReportListToolbar = (props) => (
           variant="contained"
           sx={{ mr: 1 }}
           disabled={props.selectedInWarehouseReportIds.length==0}
+          onClick={()=>{deleteInWarehouseReports(props.selectedInWarehouseReportIds,router);}}
         >
           입고 신청 삭제
         </Button>
@@ -110,3 +131,4 @@ export const InWarehouseReportListToolbar = (props) => (
     </Box>
   </Box>
 );
+            }

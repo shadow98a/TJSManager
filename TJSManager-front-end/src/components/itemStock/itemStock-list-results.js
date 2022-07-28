@@ -26,7 +26,7 @@ export const ItemStockListResults = ({ itemStocks, selectedItemStockIds,setSelec
     let newSelectedItemStockIds;
 
     if (event.target.checked) {
-      newSelectedItemStockIds = itemStocks.map((itemStock) => JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum}));
+      newSelectedItemStockIds = itemStocks.map((itemStock) => JSON.stringify({itemNum:itemStock.primaryKey.itemNum.itemNum,storeNum:itemStock.primaryKey.storeNum.storeNum}));
     } else {
       newSelectedItemStockIds = [];
     }
@@ -110,13 +110,13 @@ export const ItemStockListResults = ({ itemStocks, selectedItemStockIds,setSelec
               {itemStocks.slice(limit*page, limit*(page+1)).map((itemStock) => (
                 <TableRow
                   hover
-                  key={JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum})}
-                  selected={selectedItemStockIds.indexOf(JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum})) !== -1}
+                  key={JSON.stringify({itemNum:itemStock.primaryKey.itemNum.itemNum,storeNum:itemStock.primaryKey.storeNum.storeNum})}
+                  selected={selectedItemStockIds.indexOf(JSON.stringify({itemNum:itemStock.primaryKey.itemNum.itemNum,storeNum:itemStock.primaryKey.storeNum.storeNum})) !== -1}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
-                      checked={selectedItemStockIds.indexOf(JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum})) !== -1}
-                      onChange={(event) => handleSelectOne(event, JSON.stringify({itemNum:itemStock.itemNum,storeNum:itemStock.storeNum}))}
+                      checked={selectedItemStockIds.indexOf(JSON.stringify({itemNum:itemStock.primaryKey.itemNum.itemNum,storeNum:itemStock.primaryKey.storeNum.storeNum})) !== -1}
+                      onChange={(event) => handleSelectOne(event, JSON.stringify({itemNum:itemStock.primaryKey.itemNum.itemNum,storeNum:itemStock.primaryKey.storeNum.storeNum}))}
                       value="true"
                     />
                   </TableCell>

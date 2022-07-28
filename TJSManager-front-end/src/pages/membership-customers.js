@@ -4,15 +4,17 @@ import { MembershipCustomerListResults } from '../components/membershipCustomer/
 import { MembershipCustomerListToolbar } from '../components/membershipCustomer/membershipCustomer-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 // import { membershipCustomers } from '../__mocks__/membershipCustomers';
-import { useState,useEffect } from 'react';
+import {useState} from 'react';
 import axios from 'axios';
+import {domain} from '../api/restful-api';
 
 const MembershipCustomers = () =>
 {
   const [membershipCustomers,setMembershipCustomers]=useState([]);
-  useEffect(()=>{axios.get('http://ec2-43-200-8-58.ap-northeast-2.compute.amazonaws.com:8080/membership/customer').then((response)=>{setMembershipCustomers(response.data)})},[]);
+  axios.get(domain+'/membership/customer').then((response)=>{setMembershipCustomers(response.data);});
 
   const [selectedMembershipCustomerIds, setSelectedMembershipCustomerIds] = useState([]);
+  
   return  (
             <>
               <Head>

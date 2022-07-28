@@ -9,22 +9,10 @@ import {
   Grid,
   TextField
 } from '@mui/material';
+import axios from 'axios';
+import {useRouter} from 'next/router';
+import {domain} from '../../api/restful-api';
 
-function getParameters()
-{
-  const queryString=window.location.search.slice(1);
-  const parameters={};
-  for(const nameAndValue of queryString.split('&'))
-  {
-     const [name,value]=nameAndValue.split('=');
-     parameters[name]=value;
-  }
-
-  return parameters;
-}
-
-const itemNums = [
-];
 const events = [
   {
     value: '',
@@ -41,29 +29,117 @@ const events = [
 ];
 
 export const ItemStockProfileDetails = (props) => {
-  let parameters;
-  useEffect(()=>{parameters=getParameters();},[]);
+  const [itemNums,setItemNums]=useState([]);
+  function getItemNums()
+  {
+    axios.get(domain+'/item/info').
+    then
+    (
+      (response)=>
+      {
+        const itemNums=[];
+        for(const itemInfo of response.data)
+        {          
+          itemNums.push({value:itemInfo.itemNum,label:itemInfo.itemNum+'('+itemInfo.itemName+')'});
+        }
+
+        setItemNums(itemNums);
+      }
+    );
+  }
+  getItemNums();
 
   const [values, setValues] = useState({
-    itemNum: 0,
-    storeNum: 0,
-    inCnt: 0,
-    outCnt: 0,
-    dropCnt: 0,
+    itemNum: '1',
+    storeNum: undefined,
+    inCnt: '0',
+    outCnt: '0',
+    dropCnt: '0',
     lot: '',
-    sale: 0,
+    sale: '0',
     event: ''
   });
+  function getParameters()
+  {
+    const queryString=window.location.search.slice(1);
+    const parameters={};
+    for(const nameAndValue of queryString.split('&'))
+    {
+       const [name,value]=nameAndValue.split('=');
+       parameters[name]=value;
+    }
   
+    return parameters;
+  }
+  useEffect
+  ( 
+    ()=>
+    {
+      const employee=JSON.parse(sessionStorage.getItem('employee'));
+      setValues({...values,storeNum:employee.storeNum.storeNum});
+
+      const parameters=getParameters();
+      if(parameters.method=='update')
+      {
+        axios.get(domain+'/item/stock'+('/'+parameters.storeNum)+('/'+parameters.itemNum)).
+        then((response)=>{setValues({...response.data,itemNum:response.data.primaryKey.itemNum.itemNum,storeNum:response.data.primaryKey.storeNum.storeNum});});
+      }
+
+      // setValues({...values});
+    },[]
+  );
+  
+  function validate()
+  {
+    const requiredNames=['itemNum','inCnt','outCnt','dropCnt','sale'];
+    for(const name of requiredNames)
+    {
+      if(values[name]=='')
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+  const [isValid, setIsValid] = useState(validate());
+  useEffect(()=>{setIsValid(validate());},[values]);
+
   const handleChange = (event) => {
+    const positiveNumberNames=new Set(['inCnt', 'outCnt', 'dropCnt', 'sale']);
+    if(positiveNumberNames.has(event.target.name))
+    {
+      if(event.target.value!='')
+      {
+        event.target.value=Math.abs(event.target.value);
+      }
+    }
+
     setValues({
       ...values,
       [event.target.name]: event.target.value
     });
   };
 
+  const router=useRouter();
+  function handleSubmit(event)
+  {
+    event.preventDefault();
+    
+    const parameters=getParameters();
+    axios
+    (
+      {
+        url:domain+'/item/stock'+(parameters.method=='create'?'':('/'+parameters.storeNum)+('/'+parameters.itemNum)),
+        method:parameters.method=='create'?'post':'put',
+        data:values
+      }
+    ).
+    then(()=>{router.push('/item-stocks');});
+  }
+
   return (
-    <form
+    <form onSubmit={handleSubmit}
       autoComplete="off"
       noValidate
       {...props}
@@ -79,14 +155,15 @@ export const ItemStockProfileDetails = (props) => {
             container
             spacing={3}
           >
-                        <Grid
+            <Grid
               item
               md={6}
               xs={12}
             >
               <TextField
+                error={values.itemNum==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.itemNum==''?'물품 번호를 입력해 주세요':''}
                 label="물품 번호"
                 name="itemNum"
                 onChange={handleChange}
@@ -112,8 +189,9 @@ export const ItemStockProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.inCnt==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.inCnt==''?'입고량을 입력해 주세요':''}
                 label="입고량"
                 name="inCnt"
                 onChange={handleChange}
@@ -121,6 +199,7 @@ export const ItemStockProfileDetails = (props) => {
                 type="number"
                 value={values.inCnt}
                 variant="outlined"
+                inputProps={{min:"0"}}
               />
             </Grid>
             <Grid
@@ -129,8 +208,9 @@ export const ItemStockProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.outCnt==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.outCnt==''?'출고량을 입력해 주세요':''}
                 label="출고량"
                 name="outCnt"
                 onChange={handleChange}
@@ -138,6 +218,7 @@ export const ItemStockProfileDetails = (props) => {
                 type="number"
                 value={values.outCnt}
                 variant="outlined"
+                inputProps={{min:"0"}}
               />
             </Grid>
             <Grid
@@ -146,8 +227,9 @@ export const ItemStockProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.dropCnt==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.dropCnt==''?'미판매량을 입력해 주세요':''}
                 label="미판매량"
                 name="dropCnt"
                 onChange={handleChange}
@@ -155,6 +237,7 @@ export const ItemStockProfileDetails = (props) => {
                 type="number"
                 value={values.dropCnt}
                 variant="outlined"
+                inputProps={{min:"0"}}
               />
             </Grid>
             <Grid
@@ -178,8 +261,9 @@ export const ItemStockProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.sale==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.sale==''?'할인율을 입력해 주세요':''}
                 label="할인율"
                 name="sale"
                 onChange={handleChange}
@@ -187,6 +271,7 @@ export const ItemStockProfileDetails = (props) => {
                 type="number"
                 value={values.sale}
                 variant="outlined"
+                inputProps={{min:"0"}}
               />
             </Grid>
             <Grid
@@ -235,6 +320,8 @@ export const ItemStockProfileDetails = (props) => {
           </Button>
           <Button
             color="primary"
+            disabled={!isValid}
+            type='submit'
             variant="contained"
           >
             저장

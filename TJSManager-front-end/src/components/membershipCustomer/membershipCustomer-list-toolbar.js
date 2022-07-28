@@ -11,14 +11,34 @@ import {
 import { Search as SearchIcon } from '../../icons/search';
 import { Upload as UploadIcon } from '../../icons/upload';
 import { Download as DownloadIcon } from '../../icons/download';
+import axios from 'axios';
+import {useRouter} from 'next/router';
+import {domain} from '../../api/restful-api';
 
 function toParameters(selectedId)
 {
-  console.log(selectedId);
-  return selectedId.slice(1, selectedId.length-1).replaceAll(',','&').replaceAll(':','=').replaceAll('"','');
-} 
+  return  selectedId.
+          slice(1, selectedId.length-1).
+          replaceAll(',','&').
+          replaceAll(':','=').
+          replaceAll('"','');
+}
 
-export const MembershipCustomerListToolbar = (props) => (
+function deleteMembershipCustomers(selectedMembershipCustomerIds,router)
+{
+  for( const selectedMembershipCustomerId of selectedMembershipCustomerIds)
+  {
+    const membershipCustomer=JSON.parse(selectedMembershipCustomerId);
+    axios.delete(domain+'/membership/customer'+('/'+membershipCustomer.customerNum));
+  }
+
+  router.push('/membership-customers');
+}
+
+export const MembershipCustomerListToolbar = (props) => 
+{
+  const router=useRouter();
+return  (
   <Box {...props}>
     <Box
       sx={{
@@ -78,6 +98,7 @@ export const MembershipCustomerListToolbar = (props) => (
           variant="contained"
           sx={{ mr: 1 }}
           disabled={props.selectedMembershipCustomerIds.length==0}
+          onClick={()=>{deleteMembershipCustomers(props.selectedMembershipCustomerIds,router);}}
         >
           멤버쉽 고객 삭제
         </Button>
@@ -110,3 +131,4 @@ export const MembershipCustomerListToolbar = (props) => (
     </Box>
   </Box>
 );
+            }

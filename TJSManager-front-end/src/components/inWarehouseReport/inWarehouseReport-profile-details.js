@@ -9,46 +9,125 @@ import {
   Grid,
   TextField
 } from '@mui/material';
-
-function getParameters()
-{
-  const queryString=window.location.search.slice(1);
-  const parameters={};
-  for(const nameAndValue of queryString.split('&'))
-  {
-     const [name,value]=nameAndValue.split('=');
-     parameters[name]=value;
-  }
-
-  return parameters;
-}
-
-const itemNums = [
-];
+import axios from 'axios';
+import {useRouter} from 'next/router';
+import {domain} from '../../api/restful-api';
 
 export const InWarehouseReportProfileDetails = (props) => {
-  let parameters;
-  useEffect(()=>{parameters=getParameters();},[]);
+  const [itemNums,setItemNums]=useState([]);
+  function getItemNums()
+  {
+    axios.get(domain+'/item/info').
+    then
+    (
+      (response)=>
+      {
+        const itemNums=[];
+        for(const itemInfo of response.data)
+        {          
+          itemNums.push({value:itemInfo.itemNum,label:itemInfo.itemNum+'('+itemInfo.itemName+')'});
+        }
+
+        setItemNums(itemNums);
+      }
+    );
+  }
+  getItemNums();
 
   const [values, setValues] = useState({
     reportNum: null,
-    storeNum: 0,
-    itemNum: 0,
-    reqCnt: 0,
-    reqDate: new Date().toISOString().slice(0,4+1+2+1+2),
-    writerNum: 0,
+    storeNum: undefined,
+    itemNum: '1',
+    reqCnt: '0',
+    reqDate:  new Date().
+              toISOString().
+              slice(0,4+1+2+1+2),
+    writerNum: undefined,
     approvedDate: null
   });
+  function getParameters()
+  {
+    const queryString=window.location.search.slice(1);
+    const parameters={};
+    for(const nameAndValue of queryString.split('&'))
+    {
+       const [name,value]=nameAndValue.split('=');
+       parameters[name]=value;
+    }
   
+    return parameters;
+  }
+  useEffect
+  ( 
+    ()=>
+    {
+      const employee=JSON.parse(sessionStorage.getItem('employee'));
+      // setValues({...values,storeNum:employee.storeNum.storeNum});
+      setValues({...values,storeNum:employee.storeNum.storeNum,writerNum:employee.empNum});
+
+      const parameters=getParameters();
+      if(parameters.method=='update')
+      {
+        axios.get(domain+'/item/in_warehouse_report'+('/'+parameters.reportNum)).
+        // then((response)=>{setValues({...response.data,storeNum:response.data.storeNum.storeNum,writerNum:response.data.writerNum.writerNum});});
+        then((response)=>{setValues({...response.data,storeNum:response.data.storeNum.storeNum,itemNum:response.data.itemNum.itemNum,writerNum:employee.empNum});});
+      }
+
+      // setValues({...values,writerNum:employee.empNum});
+    },[]
+  );
+  
+  function validate()
+  {
+    const requiredNames=['itemNum','reqCnt','reqDate'];
+    for(const name of requiredNames)
+    {
+      if(values[name]=='')
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+  const [isValid, setIsValid] = useState(validate());
+  useEffect(()=>{setIsValid(validate());},[values]);
+
   const handleChange = (event) => {
+    const positiveNumberNames=new Set(['reqCnt']);
+    if(positiveNumberNames.has(event.target.name))
+    {
+      if(event.target.value!='')
+      {
+        event.target.value=Math.abs(event.target.value);
+      }
+    }
+
     setValues({
       ...values,
       [event.target.name]: event.target.value
     });
   };
 
+  const router=useRouter();
+  function handleSubmit(event)
+  {
+    event.preventDefault();
+    
+    const parameters=getParameters();
+    axios
+    (
+      {
+        url:domain+'/item/in_warehouse_report'+(parameters.method=='create'?'':('/'+parameters.reportNum)),
+        method:parameters.method=='create'?'post':'put',
+        data:values
+      }
+    ).
+    then(()=>{router.push('/in-warehouse-reports');});
+  }
+
   return (
-    <form
+    <form onSubmit={handleSubmit}
       autoComplete="off"
       noValidate
       {...props}
@@ -70,9 +149,10 @@ export const InWarehouseReportProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.itemNum==''}
                 fullWidth
-                // helperText="Please specify the first name"
-                label="제품 번호"
+                helperText={values.itemNum==''?'물품 번호를 입력해 주세요':''}
+                label="물품 번호"
                 name="itemNum"
                 onChange={handleChange}
                 required
@@ -97,8 +177,9 @@ export const InWarehouseReportProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.reqCnt==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.reqCnt==''?'입고 요청 수량을 입력해 주세요':''}
                 label="입고 요청 수량"
                 name="reqCnt"
                 onChange={handleChange}
@@ -106,6 +187,7 @@ export const InWarehouseReportProfileDetails = (props) => {
                 type="number"
                 value={values.reqCnt}
                 variant="outlined"
+                inputProps={{min:"0"}}
               />
             </Grid>
             <Grid
@@ -114,8 +196,9 @@ export const InWarehouseReportProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.reqDate==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.reqDate==''?'입고 요청일을 입력해 주세요':''}
                 label="입고 요청일"
                 name="reqDate"
                 onChange={handleChange}
@@ -145,6 +228,8 @@ export const InWarehouseReportProfileDetails = (props) => {
           </Button>
           <Button
             color="primary"
+            disabled={!isValid}
+            type='submit'
             variant="contained"
           >
             신청서 저장

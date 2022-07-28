@@ -94,7 +94,11 @@ const scmItems = [
     href: '/item-stocks',
     icon: (<XCircleIcon fontSize="small" />),
     title: '재고 현황'
-  // },
+  },
+  {
+    href: '/statistics',
+    icon: (<XCircleIcon fontSize="small" />),
+    title: '통계'
   // {
   //   href: '/sales-consumers',
   //   icon: (<XCircleIcon fontSize="small" />),

@@ -9,19 +9,9 @@ import {
   Grid,
   TextField
 } from '@mui/material';
-
-function getParameters()
-{
-  const queryString=window.location.search.slice(1);
-  const parameters={};
-  for(const nameAndValue of queryString.split('&'))
-  {
-     const [name,value]=nameAndValue.split('=');
-     parameters[name]=value;
-  }
-
-  return parameters;
-}
+import axios from 'axios';
+import {useRouter} from 'next/router';
+import {domain} from '../../api/restful-api';
 
 const types = [
   {
@@ -55,25 +45,93 @@ const types = [
 ];
 
 export const ItemInfoProfileDetails = (props) => {
-  let parameters;
-  useEffect(()=>{parameters=getParameters();},[]);
-
   const [values, setValues] = useState({
     itemNum: null,
     itemName: '',
     type: '냉동식품',
-    consumerPrice: 0
+    consumerPrice: ''
   });
-  
+  function getParameters()
+  {
+    const queryString=window.location.search.slice(1);
+    const parameters={};
+    for(const nameAndValue of queryString.split('&'))
+    {
+      const [name,value]=nameAndValue.split('=');
+      parameters[name]=value;
+    }
+
+    return parameters;
+  }
+  useEffect
+  ( 
+    ()=>
+    {
+      const employee=JSON.parse(sessionStorage.getItem('employee'));
+      setValues({...values});
+
+      const parameters=getParameters();
+      if(parameters.method=='update')
+      {
+        axios.get(domain+'/item/info'+('/'+parameters.itemNum)).
+        then((response)=>{setValues(response.data);});
+      }
+
+      // setValues({...values});
+    },[]
+  );
+
+  function validate()
+  {
+    const requiredNames=['itemName','type','consumerPrice'];
+    for(const name of requiredNames)
+    {
+      if(values[name]=='')
+      {
+        return false;
+      }
+    }
+
+    return true;
+  }
+  const [isValid, setIsValid] = useState(validate());
+  useEffect(()=>{setIsValid(validate());},[values]);
+
   const handleChange = (event) => {
+    const positiveNumberNames=new Set(['consumerPrice']);
+    if(positiveNumberNames.has(event.target.name))
+    {
+      if(event.target.value!='')
+      {
+        event.target.value=Math.abs(event.target.value);
+      }
+    }
+
     setValues({
       ...values,
       [event.target.name]: event.target.value
     });
   };
 
+  const router=useRouter();
+  function handleSubmit(event)
+  {
+    event.preventDefault();
+    
+    const parameters=getParameters();
+    axios
+    (
+      {
+        url:domain+'/item/info'+(parameters.method=='create'?'':('/'+parameters.itemNum)),
+        method:parameters.method=='create'?'post':'put',
+        data:values
+      }
+    ).
+    then(()=>{router.push('/item-infos');});
+  }
+
   return (
-    <form
+    <form onSubmit={handleSubmit}
       autoComplete="off"
       noValidate
       {...props}
@@ -95,8 +153,9 @@ export const ItemInfoProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.itemName==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.itemName==''?'물품명을 입력해 주세요':''}
                 label="물품명"
                 name="itemName"
                 onChange={handleChange}
@@ -111,8 +170,9 @@ export const ItemInfoProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.consumerPrice==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.consumerPrice==''?'소비자판매가를 입력해 주세요':''}
                 label="소비자판매가"
                 name="consumerPrice"
                 onChange={handleChange}
@@ -120,6 +180,7 @@ export const ItemInfoProfileDetails = (props) => {
                 type="number"
                 value={values.consumerPrice}
                 variant="outlined"
+                inputProps={{min:"0"}}
               />
             </Grid>
             <Grid
@@ -128,8 +189,9 @@ export const ItemInfoProfileDetails = (props) => {
               xs={12}
             >
               <TextField
+                error={values.type==''}
                 fullWidth
-                // helperText="Please specify the first name"
+                helperText={values.type==''?'물품 분류를 입력해 주세요':''}
                 label="물품 분류"
                 name="type"
                 onChange={handleChange}
@@ -169,6 +231,8 @@ export const ItemInfoProfileDetails = (props) => {
           </Button>
           <Button
             color="primary"
+            disabled={!isValid}
+            type='submit'
             variant="contained"
           >
             기본 정보 저장

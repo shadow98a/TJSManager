@@ -6,6 +6,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,10 +25,12 @@ public class SalesRecordPrimaryKey implements Serializable {
 //	판매 번호
 	@JoinColumn(name = "SALES_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private SalesConsumer salesNum;
 
 //	판매 물품 번호
 	@JoinColumn(name = "ITEM_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ItemInfo itemNum;
 }

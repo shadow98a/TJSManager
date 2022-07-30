@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tjs.tjsmanager.domain.hrm.Employee;
+import com.tjs.tjsmanager.domain.hrm.EmployeeInfoUpdated;
+import com.tjs.tjsmanager.domain.json.EmployeeInfoUpdatedJson;
 import com.tjs.tjsmanager.domain.json.EmployeeJson;
 import com.tjs.tjsmanager.domain.json.EmployeeLoginJson;
 import com.tjs.tjsmanager.service.HrmService;
@@ -25,6 +27,7 @@ public class HrmController {
 	
 	@Autowired
 	private HrmService hrmService;
+
 
 	// 로그인
 	@PostMapping("/employee/log_in")
@@ -79,5 +82,20 @@ public class HrmController {
 	@DeleteMapping("/employee/{emp_num}")
 	public void deleteEmployee(@PathVariable("emp_num") Long empNum) {
 		hrmService.deleteEmployee(empNum);
+	}
+	
+	
+	// 직원 수정 기록 생성
+	@PostMapping("/employee/info_updated")
+	public void createEmployeeInfoUpdated(@RequestBody EmployeeInfoUpdatedJson jsonData) {
+		
+	}
+	
+	
+	// 모든 직원 정보 수정 기록
+	@GetMapping("/employee/info_updated")
+	public List<EmployeeInfoUpdated> getAllEmployeeInfoUpdated() {
+		List<EmployeeInfoUpdated> list;
+		return list;
 	}
 }

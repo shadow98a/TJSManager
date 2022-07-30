@@ -7,6 +7,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.Data;
 
 //판매 이력
@@ -19,6 +22,7 @@ public class SalesRecord {
 
 //	지점 번호
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(name = "STORE_NUM")
 	private ManagedStore storeNum;
 

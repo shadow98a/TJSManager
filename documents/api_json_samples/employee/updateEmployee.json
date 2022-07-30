@@ -1,0 +1,12 @@
+{
+  "storeNum": 5,
+    "empPassword": "1234",
+    "name": "정승균 바뀜",
+    "job": "점장",
+    "gender": "m",
+    "birthDate": "1998-08-31",
+    "phoneNum": "01046889719",
+    "hireDate": "2022-02-07",
+    "salary": 3000000,
+    "wage": 0
+  }

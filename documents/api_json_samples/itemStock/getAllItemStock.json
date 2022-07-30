@@ -1,0 +1,94 @@
+[
+  {
+    "primaryKey": {
+      "itemNum": {
+        "itemNum": 1,
+        "itemName": "빵",
+        "type": "식품",
+        "consumerPrice": 1000
+      },
+      "storeNum": {
+        "storeNum": 5,
+        "storePassword": "storePassword1",
+        "storeName": "씨앗 편의점 '앗편' 중랑구점",
+        "storeAddress": "서울특별시 중랑구",
+        "storeTelNum": "0200000001"
+      }
+    },
+    "inCnt": 10,
+    "outCnt": 1,
+    "dropCnt": 1,
+    "lot": "1",
+    "sale": 0,
+    "event": "1+1"
+  },
+  {
+    "primaryKey": {
+      "itemNum": {
+        "itemNum": 2,
+        "itemName": "과자",
+        "type": "식품",
+        "consumerPrice": 2000
+      },
+      "storeNum": {
+        "storeNum": 5,
+        "storePassword": "storePassword1",
+        "storeName": "씨앗 편의점 '앗편' 중랑구점",
+        "storeAddress": "서울특별시 중랑구",
+        "storeTelNum": "0200000001"
+      }
+    },
+    "inCnt": 20,
+    "outCnt": 2,
+    "dropCnt": 2,
+    "lot": "2",
+    "sale": 0,
+    "event": "2+1"
+  },
+  {
+    "primaryKey": {
+      "itemNum": {
+        "itemNum": 3,
+        "itemName": "물",
+        "type": "음료",
+        "consumerPrice": 3000
+      },
+      "storeNum": {
+        "storeNum": 5,
+        "storePassword": "storePassword1",
+        "storeName": "씨앗 편의점 '앗편' 중랑구점",
+        "storeAddress": "서울특별시 중랑구",
+        "storeTelNum": "0200000001"
+      }
+    },
+    "inCnt": 30,
+    "outCnt": 3,
+    "dropCnt": 3,
+    "lot": "3",
+    "sale": 30,
+    "event": null
+  },
+  {
+    "primaryKey": {
+      "itemNum": {
+        "itemNum": 4,
+        "itemName": "음료",
+        "type": "음료",
+        "consumerPrice": 4000
+      },
+      "storeNum": {
+        "storeNum": 5,
+        "storePassword": "storePassword1",
+        "storeName": "씨앗 편의점 '앗편' 중랑구점",
+        "storeAddress": "서울특별시 중랑구",
+        "storeTelNum": "0200000001"
+      }
+    },
+    "inCnt": 40,
+    "outCnt": 4,
+    "dropCnt": 4,
+    "lot": null,
+    "sale": 0,
+    "event": null
+  }
+]

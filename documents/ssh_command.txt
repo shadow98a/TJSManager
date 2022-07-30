@@ -1,1 +1,1 @@
-ssh -i "tjsManager_key.pem" ubuntu@ec2-13-125-210-122.ap-northeast-2.compute.amazonaws.com
+ssh -i "tjsManager_key.pem" ubuntu@ec2-13-125-164-72.ap-northeast-2.compute.amazonaws.com

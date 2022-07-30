@@ -28,8 +28,8 @@ public class ManagedStore {
 	private String storeName;
 
 //	지점 주소
-	@Column(name = "STORE_ADRESS")
-	private String storeAdress;
+	@Column(name = "STORE_ADDRESS")
+	private String storeAddress;
 
 //	지점 연락처
 	@Column(name = "STORE_TEL_NUM")

@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
 
 import lombok.Data;
@@ -28,11 +31,13 @@ public class EmployeePayRecord {
 //	직원 번호
 	@JoinColumn(name = "EMP_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Employee empNum;
 
 //	소속 지점 번호
 	@JoinColumn(name = "STORE_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ManagedStore storeNum;
 
 //	급여 지급일

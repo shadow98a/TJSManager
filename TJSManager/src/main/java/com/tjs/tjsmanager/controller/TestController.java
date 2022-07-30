@@ -2,7 +2,6 @@ package com.tjs.tjsmanager.controller;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,7 +20,6 @@ import com.tjs.tjsmanager.domain.scm.ItemInfo;
 import com.tjs.tjsmanager.domain.scm.ItemStock;
 import com.tjs.tjsmanager.domain.scm.ItemStockPrimaryKey;
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
-import com.tjs.tjsmanager.domain.scm.ReqInWarehouse;
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 import com.tjs.tjsmanager.domain.scm.SalesRecord;
 import com.tjs.tjsmanager.domain.scm.SalesRecordPrimaryKey;
@@ -36,7 +34,6 @@ import com.tjs.tjsmanager.repository.scm.InWarehouseReportRepository;
 import com.tjs.tjsmanager.repository.scm.ItemInfoRepository;
 import com.tjs.tjsmanager.repository.scm.ItemStockRepository;
 import com.tjs.tjsmanager.repository.scm.ManagedStoreRepository;
-import com.tjs.tjsmanager.repository.scm.ReqInWarehouseRepository;
 import com.tjs.tjsmanager.repository.scm.SalesConsumerRepository;
 import com.tjs.tjsmanager.repository.scm.SalesRecordRepository;
 
@@ -53,9 +50,6 @@ public class TestController {
 
 	@Autowired
 	InWarehouseReportRepository inWarehouseReportRepository;
-
-	@Autowired
-	ReqInWarehouseRepository reqInWarehouseRepository;
 
 	@Autowired
 	ItemStockRepository itemStockRepository;
@@ -86,28 +80,30 @@ public class TestController {
 
 	@GetMapping("/test/createSamples")
 	public void createSamples() {
-//		Create essential samples
+//      Create essential samples
 		createItems();
 		createStores();
 		createEmployees();
 
-//		Create SCM samples
+//      Create SCM samples
 		createReports();
-		createRequests();
 		createStocks();
 
-//		Create CRM samples
+//      Create CRM samples
 		createCustomers();
 		createSales();
 
-//		Create HRM samples
+//      Create HRM samples
 		createPayRecord();
 		createPerformance();
 		createWorkLog();
 		updateEmployee();
+
+		createSalesConsumerAndSalesRecordForStatistics();
 	}
 
-//	Create essential samples
+//   Create essential samples
+//   @Test
 	public void createItems() {
 		ItemInfo item;
 
@@ -136,26 +132,26 @@ public class TestController {
 		itemInfoRepository.save(item);
 	}
 
-//	@Test
+//   @Test
 	public void createStores() {
 		ManagedStore store;
 
 		store = new ManagedStore();
 		store.setStorePassword("storePassword1");
 		store.setStoreName("씨앗 편의점 '앗편' 중랑구점");
-		store.setStoreAdress("서울특별시 중랑구");
+		store.setStoreAddress("서울특별시 중랑구");
 		store.setStoreTelNum("0200000001");
 		managedStoreRepository.save(store);
 
 		store = new ManagedStore();
 		store.setStorePassword("storePassword2");
 		store.setStoreName("씨앗 편의점 '앗편' 동대문구점");
-		store.setStoreAdress("서울특별시 동대문구");
+		store.setStoreAddress("서울특별시 동대문구");
 		store.setStoreTelNum("0200000002");
 		managedStoreRepository.save(store);
 	}
 
-//	@Test
+//   @Test
 	public void createEmployees() {
 		Employee employee;
 
@@ -212,8 +208,8 @@ public class TestController {
 		employeeRepository.save(employee);
 	}
 
-//	Create SCM samples
-//	@Test
+//   Create SCM samples
+//   @Test
 	public void createReports() {
 		InWarehouseReport report;
 
@@ -236,23 +232,7 @@ public class TestController {
 		inWarehouseReportRepository.save(report);
 	}
 
-//	@Test
-	public void createRequests() {
-		ReqInWarehouse request;
-		InWarehouseReport report;
-		Iterator<InWarehouseReport> iterator = inWarehouseReportRepository.findByApprovedDateIsNotNull().iterator();
-		while (iterator.hasNext()) {
-			request = new ReqInWarehouse();
-			report = iterator.next();
-			request.setStoreNum(report.getStoreNum());
-			request.setItemNum(report.getItemNum());
-			request.setReqCnt(report.getReqCnt());
-			request.setReqDate(report.getReqDate());
-			reqInWarehouseRepository.save(request);
-		}
-	}
-
-//	@Test
+//   @Test
 	public void createStocks() {
 		ItemStock stock;
 
@@ -301,8 +281,8 @@ public class TestController {
 		itemStockRepository.save(stock);
 	}
 
-//	Create CRM samples
-//	@Test
+//   Create CRM samples
+//   @Test
 	public void createCustomers() {
 		MembershipCustomer customer;
 
@@ -311,7 +291,7 @@ public class TestController {
 		customer.setCustomerBirthDate(LocalDate.of(1998, 12, 14));
 		customer.setCustomerGender("m");
 		customer.setCustomerPhoneNum("01048223898");
-//		customer.setPoint(0);하지 않아도 0으로 초기화
+//      customer.setPoint(0);하지 않아도 0으로 초기화
 		customer.setJoinedStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
 		membershipCustomerRepository.save(customer);
 
@@ -320,7 +300,7 @@ public class TestController {
 		customer.setCustomerBirthDate(LocalDate.of(1998, 9, 1));
 		customer.setCustomerGender("m");
 		customer.setCustomerPhoneNum("01063491371");
-//		customer.setPoint(0);하지 않아도 0으로 초기화
+//      customer.setPoint(0);하지 않아도 0으로 초기화
 		customer.setJoinedStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
 		membershipCustomerRepository.save(customer);
 
@@ -329,39 +309,37 @@ public class TestController {
 		customer.setCustomerBirthDate(LocalDate.of(1988, 2, 9));
 		customer.setCustomerGender("f");
 		customer.setCustomerPhoneNum("01056125859");
-//		customer.setPoint(0);하지 않아도 0으로 초기화
+//      customer.setPoint(0);하지 않아도 0으로 초기화
 		customer.setJoinedStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
 		membershipCustomerRepository.save(customer);
 	}
 
-//	@Test
+//   @Test
 	public void createSales() {
-//		물품별 구매자 기록
+//      물품별 구매자 기록
 		SalesConsumer consumer = new SalesConsumer();
 		consumer.setConsumerGender("m");
-		consumer.setConsumerAge(20);
+		consumer.setConsumerAge(2);
+//      consumer.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
+		consumer.setMemo("메모");
 		salesConsumerRepository.save(consumer);
 
-//		판매 이력 기록
+//      판매 이력 기록
 		SalesRecord salesRecord;
 
 		salesRecord = new SalesRecord();
 		salesRecord.setPrimaryKey(new SalesRecordPrimaryKey(consumer, itemInfoRepository.findByItemName("빵").get(0)));
 		salesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
-//		salesRecord.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
 		salesRecord.setSalesCnt(1);
-		salesRecord.setMemo(null);
 		salesRecordRepository.save(salesRecord);
 
 		salesRecord = new SalesRecord();
 		salesRecord.setPrimaryKey(new SalesRecordPrimaryKey(consumer, itemInfoRepository.findByItemName("과자").get(0)));
 		salesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
-//		salesRecord.setSalesDate(LocalDateTime.now());하지 않아도 지금으로 초기화 
 		salesRecord.setSalesCnt(2);
-		salesRecord.setMemo("메모");
 		salesRecordRepository.save(salesRecord);
 
-//		멤버십 고객 구매 이력 기록
+//      멤버십 고객 구매 이력 기록
 		MembershipCustomer customer = membershipCustomerRepository.findByCustomerName("김주현").get(0);
 		customer.setPoint(customer.getPoint() + 500);
 		membershipCustomerRepository.save(customer);
@@ -373,19 +351,19 @@ public class TestController {
 		membershipCustomerRecordRepository.save(CustomerRecord);
 	}
 
-//	Create HRM samples
-//	@Test
+//   Create HRM samples
+//   @Test
 	public void createPayRecord() {
 		EmployeePayRecord record = new EmployeePayRecord();
 		Employee employee = employeeRepository.findByName("김주현").get(0);
 		record.setEmpNum(employee);
 		record.setStoreNum(employee.getStoreNum());
-//		record.setPayDate(LocalDate.now());하지 않아도 오늘로 초기화
+//      record.setPayDate(LocalDate.now());하지 않아도 오늘로 초기화
 		record.setPayValue(1000000);
 		employeePayRecordRepository.save(record);
 	}
 
-//	@Test
+//   @Test
 	public void createPerformance() {
 		EmployeePerformance performance = new EmployeePerformance();
 		Employee employee = employeeRepository.findByName("김주현").get(0);
@@ -394,13 +372,13 @@ public class TestController {
 		Employee writer = employeeRepository.findByName("정승균").get(0);
 		performance.setWriterNum(writer);
 		performance.setWriterStoreNum(writer.getStoreNum());
-//		performance.setCreatedDate(LocalDate.now());하지 않아도 오늘로 초기화
+//      performance.setCreatedDate(LocalDate.now());하지 않아도 오늘로 초기화
 		performance.setType("월간");
 		performance.setDiscription("코딩 테스트 불합격");
 		employeePerformanceRepository.save(performance);
 	}
 
-//	@Test
+//   @Test
 	public void createWorkLog() {
 		EmployeeWorkLog log = new EmployeeWorkLog();
 		Employee employee = employeeRepository.findByName("김주현").get(0);
@@ -412,7 +390,7 @@ public class TestController {
 		employeeWorkLogRepository.save(log);
 	}
 
-//	@Test
+//   @Test
 	public void updateEmployee() {
 		// 직원 정보 수정
 		Employee employee = employeeRepository.findByName("김주현").get(0);
@@ -424,10 +402,203 @@ public class TestController {
 		Employee updater = employeeRepository.findByName("정승균").get(0);
 		update.setEmp_num(employee);
 		update.setStoreNum(employee.getStoreNum());
-//		update.setUpdatedDate(LocalDate.now());하지 않아도 오늘로 초기화
+//      update.setUpdatedDate(LocalDate.now());하지 않아도 오늘로 초기화
 		update.setUpdaterNum(updater);
 		update.setUpdaterStoreNum(updater.getStoreNum());
 		employeeInfoUpdatedRepository.save(update);
-
 	}
+
+	public void createSalesConsumerAndSalesRecordForStatistics() {
+		SalesConsumer sampleSalesConsumer;
+		SalesRecord sampleSalesRecord;
+		sampleSalesConsumer = new SalesConsumer();
+		sampleSalesRecord = new SalesRecord();
+
+		sampleSalesConsumer.setConsumerAge(0);
+		sampleSalesConsumer.setConsumerGender("m");
+		sampleSalesConsumer.setMemo("과자 다량 구매 3봉투");
+		sampleSalesConsumer.setSalesDate( LocalDateTime.of(2022, 3, 1, 10, 20) );
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("과자").get(0)));
+		sampleSalesRecord.setSalesCnt(13);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+		
+		salesConsumerRepository.save(sampleSalesConsumer);
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		sampleSalesRecord = new SalesRecord();
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("음료").get(0)));
+		sampleSalesRecord.setSalesCnt(2);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("빵").get(0)));
+		sampleSalesRecord.setSalesCnt(3);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		
+		
+		sampleSalesConsumer = new SalesConsumer();
+		sampleSalesRecord = new SalesRecord();
+		
+		sampleSalesConsumer.setConsumerAge(0);
+		sampleSalesConsumer.setConsumerGender("-");
+		sampleSalesConsumer.setSalesDate( LocalDateTime.of(2022, 3, 2, 14, 5) );
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("과자").get(0)));
+		sampleSalesRecord.setSalesCnt(1);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesConsumerRepository.save(sampleSalesConsumer);
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		
+		
+		sampleSalesConsumer = new SalesConsumer();
+		sampleSalesRecord = new SalesRecord();
+		
+		sampleSalesConsumer.setConsumerAge(1);
+		sampleSalesConsumer.setConsumerGender("m");
+		sampleSalesConsumer.setMemo("또래 여러 명과 방문");
+		sampleSalesConsumer.setSalesDate( LocalDateTime.of(2022, 3, 2, 16, 25) );
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("빵").get(0)));
+		sampleSalesRecord.setSalesCnt(3);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesConsumerRepository.save(sampleSalesConsumer);
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		sampleSalesRecord = new SalesRecord();
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("과자").get(0)));
+		sampleSalesRecord.setSalesCnt(3);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		sampleSalesRecord = new SalesRecord();
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("음료").get(0)));
+		sampleSalesRecord.setSalesCnt(3);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		
+		
+		sampleSalesConsumer = new SalesConsumer();
+		
+		sampleSalesConsumer.setConsumerAge(1);
+		sampleSalesConsumer.setConsumerGender("f");
+		sampleSalesConsumer.setSalesDate( LocalDateTime.of(2022, 3, 3, 17, 20) );
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("과자").get(0)));
+		sampleSalesRecord.setSalesCnt(2);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesConsumerRepository.save(sampleSalesConsumer);
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		sampleSalesRecord = new SalesRecord();
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("빵").get(0)));
+		sampleSalesRecord.setSalesCnt(2);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+		
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		sampleSalesRecord = new SalesRecord();
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("음료").get(0)));
+		sampleSalesRecord.setSalesCnt(1);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		
+		
+		sampleSalesConsumer = new SalesConsumer();
+		sampleSalesRecord = new SalesRecord();
+		sampleSalesConsumer.setConsumerAge(2);
+		sampleSalesConsumer.setConsumerGender("f");
+		sampleSalesConsumer.setSalesDate( LocalDateTime.of(2022, 3, 3, 12, 40) );
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("물").get(0)));
+		sampleSalesRecord.setSalesCnt(3);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesConsumerRepository.save(sampleSalesConsumer);
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		sampleSalesRecord = new SalesRecord();
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("음료").get(0)));
+		sampleSalesRecord.setSalesCnt(1);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		
+		
+		sampleSalesConsumer = new SalesConsumer();
+		sampleSalesRecord = new SalesRecord();
+		
+		sampleSalesConsumer.setConsumerAge(5);
+		sampleSalesConsumer.setConsumerGender("m");
+		sampleSalesConsumer.setMemo("물 대량 구매");
+		sampleSalesConsumer.setSalesDate( LocalDateTime.of(2022, 3, 3, 15, 0) );
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("물").get(0)));
+		sampleSalesRecord.setSalesCnt(25);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesConsumerRepository.save(sampleSalesConsumer);
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		
+		
+		sampleSalesConsumer = new SalesConsumer();
+		sampleSalesRecord = new SalesRecord();
+		
+		sampleSalesConsumer.setConsumerAge(6);
+		sampleSalesConsumer.setConsumerGender("f");
+		sampleSalesConsumer.setMemo("등산복");
+		sampleSalesConsumer.setSalesDate( LocalDateTime.of(2022, 3, 3, 20, 0) );
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("물").get(0)));
+		sampleSalesRecord.setSalesCnt(5);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesConsumerRepository.save(sampleSalesConsumer);
+		salesRecordRepository.save(sampleSalesRecord);
+		
+		
+		sampleSalesRecord = new SalesRecord();
+		sampleSalesRecord.setPrimaryKey(
+				new SalesRecordPrimaryKey(sampleSalesConsumer, itemInfoRepository.findByItemName("음료").get(0)));
+		sampleSalesRecord.setSalesCnt(1);
+		sampleSalesRecord.setStoreNum(managedStoreRepository.findByStoreName("씨앗 편의점 '앗편' 중랑구점").get(0));
+
+		salesRecordRepository.save(sampleSalesRecord);
+	}
+
 }

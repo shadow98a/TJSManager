@@ -6,40 +6,59 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.tjs.tjsmanager.domain.crm.MembershipCustomer;
+import com.tjs.tjsmanager.domain.crm.MembershipCustomerRecord;
+import com.tjs.tjsmanager.domain.crm.MembershipCustomerRecordPrimaryKey;
 import com.tjs.tjsmanager.domain.json.MembershipCustomerJson;
+import com.tjs.tjsmanager.domain.json.MembershipCustomerRecordJson;
+import com.tjs.tjsmanager.repository.crm.MembershipCustomerRecordRepository;
 import com.tjs.tjsmanager.repository.crm.MembershipCustomerRepository;
 import com.tjs.tjsmanager.repository.scm.ManagedStoreRepository;
+import com.tjs.tjsmanager.repository.scm.SalesConsumerRepository;
 
 @Service
 public class CrmService {
-	
+
 	@Autowired
 	private ManagedStoreRepository managedStoreRepository;
 	@Autowired
 	private MembershipCustomerRepository membershipCustomerRepository;
-	
-	// json 객체를 entity 객체에 담기
-	public MembershipCustomer jsonToEntity(MembershipCustomerJson jsonData) {
+	@Autowired
+	private SalesConsumerRepository salesConsumerRepository;
+	@Autowired
+	private MembershipCustomerRecordRepository membershipCustomerRecordRepository;
+
+	// MembershipCustomerJson 객체를 entity 객체에 담기
+	public MembershipCustomer jsonToMembershipCustomer(MembershipCustomerJson jsonData) {
 		MembershipCustomer entityData = new MembershipCustomer();
-		entityData.setCustomerNum( jsonData.getCustomerNum() );
+		
 		entityData.setCustomerName( jsonData.getCustomerName() );
 		entityData.setCustomerBirthDate( jsonData.getCustomerBirthDate() );
 		entityData.setCustomerGender( jsonData.getCustomerGender() );
 		entityData.setCustomerPhoneNum( jsonData.getCustomerPhoneNum() );
 		entityData.setPoint( jsonData.getPoint() );
 		entityData.setJoinedStoreNum(
-			managedStoreRepository.findById( jsonData.getJoinedStoreNum() ).get()
-		);
+				managedStoreRepository.findById( jsonData.getJoinedStoreNum() ).get() );
 
 		return entityData;
 	}
+	
+	// MembershipCustomerRecordJson 객체를 entity 객체에 담기
+	public MembershipCustomerRecord jsonToMembershipCustomerRecord(MembershipCustomerRecordJson jsonData) {
+		MembershipCustomerRecord membershipCustomerRecord = new MembershipCustomerRecord();
+		
+		membershipCustomerRecord.setUsedPoint(jsonData.getUsedPoint());
+		membershipCustomerRecord.setSavePoint(jsonData.getSavePoint());
 
-	// 멤버쉽 등록
-	public void saveMembershipCustomer(MembershipCustomerJson jsonData) {
-		MembershipCustomer insertData = this.jsonToEntity(jsonData);
-		membershipCustomerRepository.save(insertData);
+		return membershipCustomerRecord;
 	}
 	
+	
+	// 멤버쉽 등록
+	public void saveMembershipCustomer(MembershipCustomerJson jsonData) {
+		MembershipCustomer insertData = this.jsonToMembershipCustomer(jsonData);
+		membershipCustomerRepository.save(insertData);
+	}
+
 	// 모든 멤버쉽 조회
 	public List<MembershipCustomer> findAllMembershipCustomer() {
 		List<MembershipCustomer> list = (List<MembershipCustomer>) membershipCustomerRepository.findAll();
@@ -53,8 +72,9 @@ public class CrmService {
 	}
 
 // 멤버쉽 수정
-	public void updateMembershipCustomer(MembershipCustomerJson jsonData) {
-		MembershipCustomer updateData = this.jsonToEntity(jsonData);
+	public void updateMembershipCustomer(Long customerNum, MembershipCustomerJson jsonData) {
+		MembershipCustomer updateData = this.jsonToMembershipCustomer(jsonData);
+		updateData.setCustomerNum(customerNum);
 		membershipCustomerRepository.save(updateData);
 	}
 
@@ -62,14 +82,35 @@ public class CrmService {
 	public void deleteMembershipCustomerByCustomerNum(Long customerNum) {
 		membershipCustomerRepository.deleteById(customerNum);
 	}
+
+
 	
 	
-	
-	
-	// 포인트 적립
-	public void updateMembershipCustomerPoint(Long customerNum, int savePoint) {
-		MembershipCustomer customer = membershipCustomerRepository.findById(customerNum).get();
-		customer.setPoint(savePoint);
-		membershipCustomerRepository.save(customer);
+	// 포인트 적립 및 사용 기록 생성
+	public void saveMembershipCustomerRecord(MembershipCustomerRecordJson jsonData) {
+		MembershipCustomerRecord insertData = this.jsonToMembershipCustomerRecord(jsonData);
+
+		MembershipCustomerRecordPrimaryKey primaryKey = new MembershipCustomerRecordPrimaryKey(
+				membershipCustomerRepository.findById(jsonData.getCustomerNum()).get(), salesConsumerRepository.findById(jsonData.getSalesNum()).get() );
+
+		insertData.setPrimaryKey(primaryKey);
+
+		membershipCustomerRecordRepository.save(insertData);
 	}
+	
+	// 모든 포인트 적립 및 사용 기록 확인
+	public List<MembershipCustomerRecord> findAllMembershipCustomerRecord() {
+		List<MembershipCustomerRecord> list = (List<MembershipCustomerRecord>)membershipCustomerRecordRepository.findAll();
+		return list;
+	}
+	
+	// 한 포인트 적립 및 사용 기록
+	public MembershipCustomerRecord findByIdMembershipCustomerRecord(Long customerNum, Long salesNum) {
+		MembershipCustomerRecordPrimaryKey primaryKey = new MembershipCustomerRecordPrimaryKey(
+				membershipCustomerRepository.findById(customerNum).get(), salesConsumerRepository.findById(salesNum).get());
+		
+		MembershipCustomerRecord membershipCustomerRecord = membershipCustomerRecordRepository.findById(primaryKey).get();
+		return membershipCustomerRecord;
+	}
+	
 }

@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
 
 import lombok.Data;
@@ -28,11 +31,13 @@ public class EmployeeInfoUpdated {
 //	수정 대상의 직원 번호
 	@JoinColumn(name = "EMP_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Employee emp_num;
 
 //	수정 대상 소속 지점 번호
 	@JoinColumn(name = "STORE_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ManagedStore storeNum;
 
 //	수정일
@@ -42,10 +47,12 @@ public class EmployeeInfoUpdated {
 //	수정한 직원 번호
 	@JoinColumn(name = "UPDATER_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Employee updaterNum;
 
 //	수정한 직원 소속 지점 번호
 	@JoinColumn(name = "UPDATER_STORE_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ManagedStore updaterStoreNum;
 }

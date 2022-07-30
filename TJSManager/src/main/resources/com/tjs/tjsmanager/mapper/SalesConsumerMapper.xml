@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tjs.tjsmanager.mapper.SalesConsumerMapper">
+
+	<!-- 전체 성별 판매량 -->
+	<select id="allGroupByConsumerGender" resultType="map">
+		SELECT
+		CONSUMER_GENDER AS consumerGender, IFNULL( count(*), 0 ) AS count
+		from
+		sales_consumer
+		GROUP BY CONSUMER_GENDER;
+	</select>
+
+
+	<!-- 전체 나이대별 판매량 -->
+	<select id="allGroupByConsumerAge" resultType="map">
+		SELECT
+		CONSUMER_AGE AS consumerAge, count(*) AS count
+		from sales_consumer
+		GROUP BY CONSUMER_AGE;
+	</select>
+
+
+	<!-- 전체 시간대별 판매량 -->
+	<select id="allGroupBySalesHour" resultType="map">
+		SELECT
+		hour(SALES_DATE) AS hour, count(*) AS count
+		FROM sales_consumer
+		GROUP BY
+		hour(SALES_DATE);
+	</select>
+
+
+	<!-- 특정 물품에 대해 성별 판매량 -->
+	<select id="oneItemGroupByConsumerGender" resultType="map">
+		SELECT
+		sc.consumer_gender AS consumerGender, sum( sales_item_cnt.sales_cnt )
+		AS count
+		FROM sales_consumer
+		AS sc
+		JOIN (SELECT sr.sales_num,
+		ii.item_name, sr.sales_cnt
+		FROM
+		sales_record AS sr
+		JOIN (SELECT item_num,
+		item_name
+		FROM item_info
+		WHERE
+		item_num =
+		#{findItemNum}) AS ii
+		ON
+		sr.item_num = ii.item_num) AS
+		sales_item_cnt
+		ON sc.sales_num =
+		sales_item_cnt.sales_num
+		GROUP BY
+		sc.consumer_gender
+	</select>
+
+
+	<!-- 특정 물품에 대한 나이대별 판매량 -->
+	<select id="oneItemGroupByConsumerAge" resultType="map">
+		SELECT
+		sc.consumer_age AS consumerAge, sum( sales_item_cnt.sales_cnt ) AS
+		count
+		FROM sales_consumer
+		AS sc
+		JOIN (SELECT sr.sales_num, ii.item_name,
+		sr.sales_cnt
+		FROM
+		sales_record AS sr
+		JOIN (SELECT item_num, item_name
+		FROM item_info
+		WHERE
+		item_num =
+		#{findItemNum}) AS ii
+		ON sr.item_num =
+		ii.item_num) AS
+		sales_item_cnt
+		ON sc.sales_num =
+		sales_item_cnt.sales_num
+		GROUP BY
+		sc.consumer_age
+	</select>
+
+
+	<!-- 특정 물품에 대한 시간대별 판매량 -->
+	<select id="oneItemGroupBySalesHour" resultType="map">
+		SELECT
+		hour(
+		sc.sales_date ) AS hour, sum( sales_item_cnt.sales_cnt ) AS
+		count
+		FROM
+		sales_consumer
+		AS sc
+		JOIN (SELECT sr.sales_num, ii.item_name,
+		sr.sales_cnt
+		FROM
+		sales_record AS sr
+		JOIN (SELECT item_num, item_name
+		FROM item_info
+		WHERE
+		item_num =
+		#{findItemNum}) AS ii
+		ON sr.item_num =
+		ii.item_num) AS
+		sales_item_cnt
+		ON sc.sales_num =
+		sales_item_cnt.sales_num
+		GROUP BY
+		hour( sc.sales_date )
+	</select>
+</mapper>

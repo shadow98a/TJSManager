@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.tjs.tjsmanager.domain.hrm.Employee;
 
 import lombok.Data;
@@ -28,11 +31,13 @@ public class InWarehouseReport {
 //	입고 신청한 지점 번호
 	@JoinColumn(name = "STORE_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ManagedStore storeNum;
 
 //	물품 번호
 	@JoinColumn(name = "ITEM_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ItemInfo itemNum;
 
 //	입고 요청 수량
@@ -46,6 +51,7 @@ public class InWarehouseReport {
 //	신청서 작성자 번호
 	@JoinColumn(name = "WRITER_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Employee writerNum;
 
 //	점장 승인일

@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import lombok.Data;
 
 //입고 신청 이력
@@ -26,11 +29,13 @@ public class ReqInWarehouse {
 //	입고 신청한 지점 번호
 	@JoinColumn(name = "STORE_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ManagedStore storeNum;
 
 //	물품 번호
 	@JoinColumn(name = "ITEM_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ItemInfo itemNum;
 
 //	입고 요청 수량

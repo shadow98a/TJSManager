@@ -269,14 +269,7 @@ public class ScmService {
 	public void deleteItemInfo(Long itemNum) {
 		itemInfoRepository.deleteById(itemNum);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
 	// 전체 성별 판매량
 	public Map<String, Object> allGroupByConsumerGender() {
 		List<Map<String, Object>> sqlResult = salesConsumerMapper.allGroupByConsumerGender();
@@ -293,20 +286,15 @@ public class ScmService {
 
 		return returnJson;
 	}
-	
-	
-	
-	
+
 	// 전체 나이대별 판매량
 	public Map<Object, Object> allGroupByConsumerAge() {
 		List<Map<String, Object>> sqlResult = salesConsumerMapper.allGroupByConsumerAge();
 		Map<Object, Object> returnJson = new HashMap<Object, Object>();
 
-		// json = {1: 0, 10: 0, 20: 0, 30: 0, ... 70: 0} 형식으로 초기화
-		returnJson.put(1, 0);
-		int maxAgeKey = 70;
-		for (int i = 1; (i * 10) <= maxAgeKey; i++) {
-			returnJson.put(i * 10, 0);
+		// json = {0: 0, 1: 0, 2: 0, 3: 0, ... 7: 0} 형식으로 초기화
+		for (int i = 0; i <= 7; i++) {
+			returnJson.put(i, 0);
 		}
 
 		for (Map<String, Object> row : sqlResult) {
@@ -315,26 +303,71 @@ public class ScmService {
 
 		return returnJson;
 	}
-	
-	
-	
-	
+
 	// 전체 24시간대별 판매량
-	public Map<Object, Object> allGroupBySalesTime() {
-		List<Map<String, Object>> sqlResult = salesConsumerMapper.allGroupBySalesTime();
+	public Map<Object, Object> allGroupBySalesHour() {
+		List<Map<String, Object>> sqlResult = salesConsumerMapper.allGroupBySalesHour();
 		Map<Object, Object> returnJson = new HashMap<Object, Object>();
-		
-		
+
 		// returnJson {0: 0, ~ 23: 0} 형식으로 초기화
 		for (int i = 0; i <= 23; i++) {
 			returnJson.put(i, 0);
 		}
-		
-		
-		for (Map<String, Object> row: sqlResult) {
+
+		for (Map<String, Object> row : sqlResult) {
 			returnJson.put(row.get("hour"), row.get("count"));
 		}
-		
+
+		return returnJson;
+	}
+
+	// 특정 물품에 대한 성별 판매량
+	public Map<String, Object> getOneItemGroutByConsumerGender(Long findItemNum) {
+		List<Map<String, Object>> sqlResult = salesConsumerMapper.oneItemGroupByConsumerGender(findItemNum);
+		Map<String, Object> returnJson = new HashMap<String, Object>();
+
+		returnJson.put("m", 0);
+		returnJson.put("f", 0);
+		returnJson.put("-", 0);
+
+		for (Map<String, Object> row : sqlResult) {
+			returnJson.put(row.get("consumerGender").toString(), row.get("count"));
+		}
+
+		return returnJson;
+	}
+
+	// 특정 물품에 대한 나이대별 판매량
+	public Map<Object, Object> getOneItemGroutByConsumerAge(Long findItemNum) {
+		List<Map<String, Object>> sqlResult = salesConsumerMapper.oneItemGroupByConsumerAge(findItemNum);
+		Map<Object, Object> returnJson = new HashMap<Object, Object>();
+
+		// json = {0: 0, 1: 0, 2: 0, 3: 0, ... 7: 0} 형식으로 초기화
+		for (int i = 0; i <= 7; i++) {
+			returnJson.put(i, 0);
+		}
+
+		for (Map<String, Object> row : sqlResult) {
+			returnJson.put(row.get("consumerAge"), row.get("count"));
+		}
+
+		return returnJson;
+	}
+
+	// 특정 물품에 대한 시간대별 판매량
+	public Map<Object, Object> getOneItemGroutBySalesHour(Long findItemNum) {
+		List<Map<String, Object>> sqlResult = salesConsumerMapper.oneItemGroupBySalesHour(findItemNum);
+		Map<Object, Object> returnJson = new HashMap<Object, Object>();
+
+		// returnJson {0: 0, ~ 23: 0} 형식으로 초기화
+		for (int i = 0; i <= 23; i++) {
+			returnJson.put(i, 0);
+		}
+
+		for (Map<String, Object> row : sqlResult) {
+			returnJson.put(row.get("hour"), row.get("count"));
+		}
+
 		return returnJson;
 	}
 }

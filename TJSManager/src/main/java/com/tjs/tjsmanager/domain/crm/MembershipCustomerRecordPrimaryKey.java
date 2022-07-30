@@ -6,6 +6,9 @@ import javax.persistence.Embeddable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.tjs.tjsmanager.domain.scm.SalesConsumer;
 
 import lombok.AllArgsConstructor;
@@ -24,11 +27,13 @@ public class MembershipCustomerRecordPrimaryKey implements Serializable{
 //	멤버쉽 고객 번호
 	@JoinColumn(name="CUSTOMER_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private MembershipCustomer customerNum;
 	
 //	판매(구매) 번호
 	@JoinColumn(name="SALES_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private SalesConsumer salesNum;
 }
 

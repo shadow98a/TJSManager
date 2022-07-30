@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
 
 import lombok.Data;
@@ -48,6 +51,7 @@ public class MembershipCustomer {
 //	고객이 가입한 지점 번호
 	@JoinColumn(name = "JOINED_STORE_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ManagedStore joinedStoreNum;
 
 }

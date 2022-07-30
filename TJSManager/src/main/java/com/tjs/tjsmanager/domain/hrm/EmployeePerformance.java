@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
 
 import lombok.Data;
@@ -28,21 +31,25 @@ public class EmployeePerformance {
 //	인사 평가 대상 직원 번호
 	@JoinColumn(name = "EMP_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Employee empNum;
 
 //	소속 지점 번호
 	@JoinColumn(name = "STORE_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ManagedStore storeNum;
 
 //	인사 평가 작성자 번호(직원 번호)
 	@JoinColumn(name = "WRITER_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Employee writerNum;
 
 //	인사 평가 작성자 소속 지점 번호
 	@JoinColumn(name = "WRITER_STORE_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ManagedStore writerStoreNum;
 
 //	작성일

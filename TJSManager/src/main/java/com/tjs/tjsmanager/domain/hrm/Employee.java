@@ -10,6 +10,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.tjs.tjsmanager.domain.scm.ManagedStore;
 
 import lombok.Data;
@@ -28,6 +31,7 @@ public class Employee {
 //	소속 지점 번호
 	@JoinColumn(name = "STORE_NUM")
 	@ManyToOne
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private ManagedStore storeNum;
 
 //	로그인을 위한 비밀번호

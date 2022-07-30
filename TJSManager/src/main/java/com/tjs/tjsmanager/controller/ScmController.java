@@ -209,19 +209,40 @@ public class ScmController {
 	
 	// 전체 성별 판매량
 	@GetMapping("/statistics/consumer_gender/all")
-	public Map<String, Object> getAllSalesConsumerGroupByGender() {
+	public Map<String, Object> getAllSalesConsumerGroupByConsumerGender() {
 		return scmService.allGroupByConsumerGender();
 	}
 	
 	// 전체 나이대별 판매량
 	@GetMapping("/statistics/consumer_age/all")
-	public Map<Object, Object> getAllSalesConsumerGroupByAge() {
+	public Map<Object, Object> getAllSalesConsumerGroupByConsumerAge() {
 		return scmService.allGroupByConsumerAge();
 	}
 	
 	// 전체 24시간대별 판매량
-	@GetMapping("/statistics/hour/all")
-	public Map<Object, Object> getAllSalesConsumerGroupByHour() {
-		return scmService.allGroupBySalesTime();
+	@GetMapping("/statistics/sales_hour/all")
+	public Map<Object, Object> getAllSalesConsumerGroupBySalesHour() {
+		return scmService.allGroupBySalesHour();
+	}
+	
+	
+	// 특정 물품에 대한 성별 판매량
+	@GetMapping("/statistics/consumer_gender/one_item/{find_item_num}")
+	public Map<String, Object> getOneItemGroupByConsumerGender(@PathVariable("find_item_num") Long findItemNum) {
+		return scmService.getOneItemGroutByConsumerGender(findItemNum);
+	}
+	
+	
+	// 특정 물품에 대한 나이대별 판매량
+	@GetMapping("/statistics/consumer_age/one_item/{find_item_num}")
+	public Map<Object, Object> getOneItemGroupByConsumerAge(@PathVariable("find_item_num") Long findItemNum) {
+		return scmService.getOneItemGroutByConsumerAge(findItemNum);
+	}
+	
+	
+	// 특정 물품에 대한 24시간대별 판매량
+	@GetMapping("/statistics/sales_hour/one_item/{find_item_num}")
+	public Map<Object, Object> getOneItemGroupBySalesHour(@PathVariable("find_item_num") Long findItemNum) {
+		return scmService.getOneItemGroutBySalesHour(findItemNum);
 	}
 }

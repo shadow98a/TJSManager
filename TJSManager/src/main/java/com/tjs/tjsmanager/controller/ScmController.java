@@ -64,8 +64,9 @@ public class ScmController {
 	
 	// 구매자 기록 생성
 	@PostMapping("/sales/consumer")
-	public void createSalesConsumer(@RequestBody SalesConsumer consumer) {
-		scmService.saveSalesConsumer(consumer);
+	public String createSalesConsumer(@RequestBody SalesConsumer consumer) {
+		Long primaryKey = scmService.saveSalesConsumer(consumer);
+		return primaryKey.toString();
 	}
 	
 	// 모든 구매자 기록

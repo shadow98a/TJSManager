@@ -118,8 +118,8 @@ public class ScmService {
 	}
 
 	// 구매자 기록 생성
-	public void saveSalesConsumer(SalesConsumer consumer) {
-		salesConsumerRepository.save(consumer);
+	public Long saveSalesConsumer(SalesConsumer consumer) {
+		return salesConsumerRepository.save(consumer).getSalesNum();
 	}
 
 	// 모든 구매자 기록

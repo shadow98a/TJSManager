@@ -15,6 +15,10 @@ import {domain} from '../../api/restful-api';
 
 const types = [
   {
+    value: '',
+    label: ''
+  },
+  {
     value: '냉동식품',
     label: '냉동식품'
   },
@@ -48,7 +52,7 @@ export const ItemInfoProfileDetails = (props) => {
   const [values, setValues] = useState({
     itemNum: null,
     itemName: '',
-    type: '냉동식품',
+    type: '',
     consumerPrice: ''
   });
   function getParameters()
@@ -74,14 +78,14 @@ export const ItemInfoProfileDetails = (props) => {
       if(parameters.method=='update')
       {
         axios.get(domain+'/item/info'+('/'+parameters.itemNum)).
-        then((response)=>{setValues(response.data);});
+        then((response)=>{setValues({...response.data,consumerPrice:response.data.consumerPrice.toString()});});
       }
 
       // setValues({...values});
     },[]
   );
 
-  function validate()
+  function validate(values)
   {
     const requiredNames=['itemName','type','consumerPrice'];
     for(const name of requiredNames)
@@ -94,8 +98,8 @@ export const ItemInfoProfileDetails = (props) => {
 
     return true;
   }
-  const [isValid, setIsValid] = useState(validate());
-  useEffect(()=>{setIsValid(validate());},[values]);
+  const [isValid, setIsValid] = useState(validate(values));
+  useEffect(()=>{setIsValid(validate(values));},[values]);
 
   const handleChange = (event) => {
     const positiveNumberNames=new Set(['consumerPrice']);

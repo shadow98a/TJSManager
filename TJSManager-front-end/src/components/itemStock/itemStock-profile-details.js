@@ -19,12 +19,12 @@ const events = [
     label: ''
   },
   {
-    value: '1 + 1',
-    label: '1 + 1'
+    value: '1+1',
+    label: '1+1'
   },
   {
-    value: '2 + 1',
-    label: '2 + 1'
+    value: '2+1',
+    label: '2+1'
   }
 ];
 
@@ -38,6 +38,7 @@ export const ItemStockProfileDetails = (props) => {
       (response)=>
       {
         const itemNums=[];
+        itemNums.push({value:'',label:''});
         for(const itemInfo of response.data)
         {          
           itemNums.push({value:itemInfo.itemNum,label:itemInfo.itemNum+'('+itemInfo.itemName+')'});
@@ -50,7 +51,7 @@ export const ItemStockProfileDetails = (props) => {
   getItemNums();
 
   const [values, setValues] = useState({
-    itemNum: '1',
+    itemNum: '',
     storeNum: undefined,
     inCnt: '0',
     outCnt: '0',
@@ -89,7 +90,7 @@ export const ItemStockProfileDetails = (props) => {
     },[]
   );
   
-  function validate()
+  function validate(values)
   {
     const requiredNames=['itemNum','inCnt','outCnt','dropCnt','sale'];
     for(const name of requiredNames)
@@ -102,8 +103,8 @@ export const ItemStockProfileDetails = (props) => {
 
     return true;
   }
-  const [isValid, setIsValid] = useState(validate());
-  useEffect(()=>{setIsValid(validate());},[values]);
+  const [isValid, setIsValid] = useState(validate(values));
+  useEffect(()=>{setIsValid(validate(values));},[values]);
 
   const handleChange = (event) => {
     const positiveNumberNames=new Set(['inCnt', 'outCnt', 'dropCnt', 'sale']);
@@ -251,6 +252,7 @@ export const ItemStockProfileDetails = (props) => {
                 label="진열 위치"
                 name="lot"
                 onChange={handleChange}
+                // required
                 value={values.lot}
                 variant="outlined"
               />
@@ -285,6 +287,7 @@ export const ItemStockProfileDetails = (props) => {
                 label="행사 여부"
                 name="event"
                 onChange={handleChange}
+                // required
                 select
                 SelectProps={{ native: true }}
                 value={values.event}

@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
+// export const ManagedStoreListResults = ({ managedStores, ...rest }) => {
 export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds,setSelectedManagedStoreIds,...rest }) => {
   // const [selectedManagedStoreIds, setSelectedManagedStoreIds] = useState([]);
   const [limit, setLimit] = useState(10);

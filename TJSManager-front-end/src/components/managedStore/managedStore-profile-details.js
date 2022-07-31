@@ -51,7 +51,7 @@ export const ManagedStoreProfileDetails = (props) => {
     },[]
   );
   
-  function validate()
+  function validate(values)
   {
     const requiredNames=['storePassword','storeName','storeAdress','storeTelNum'];
 
@@ -65,8 +65,8 @@ export const ManagedStoreProfileDetails = (props) => {
 
     return true;
   }
-  const [isValid, setIsValid] = useState(validate());
-  useEffect(()=>{setIsValid(validate());},[values]);
+  const [isValid, setIsValid] = useState(validate(values));
+  useEffect(()=>{setIsValid(validate(values));},[values]);
 
   const handleChange = (event) => {
     const positiveNumberNames=new Set([]);

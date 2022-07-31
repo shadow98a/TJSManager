@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
+// export const MembershipCustomerListResults = ({ membershipCustomers, ...rest }) => {
 export const MembershipCustomerListResults = ({ membershipCustomers, selectedMembershipCustomerIds,setSelectedMembershipCustomerIds,...rest }) => {
   // const [selectedMembershipCustomerIds, setSelectedMembershipCustomerIds] = useState([]);
   const [limit, setLimit] = useState(10);

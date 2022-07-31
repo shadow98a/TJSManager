@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
+// export const ItemStockListResults = ({ itemStocks, ...rest }) => {
 export const ItemStockListResults = ({ itemStocks, selectedItemStockIds,setSelectedItemStockIds,...rest }) => {
   // const [selectedItemStockIds, setSelectedItemStockIds] = useState([]);
   const [limit, setLimit] = useState(10);

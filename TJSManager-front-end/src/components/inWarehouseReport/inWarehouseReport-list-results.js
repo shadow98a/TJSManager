@@ -17,6 +17,7 @@ import {
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
 
+// export const InWarehouseReportListResults = ({ inWarehouseReports, ...rest }) => {
 export const InWarehouseReportListResults = ({ inWarehouseReports, selectedInWarehouseReportIds,setSelectedInWarehouseReportIds,...rest }) => {
   // const [selectedInWarehouseReportIds, setSelectedInWarehouseReportIds] = useState([]);
   const [limit, setLimit] = useState(10);

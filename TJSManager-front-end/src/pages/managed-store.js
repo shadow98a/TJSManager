@@ -25,7 +25,27 @@ const ManagedStore = () => (
         >
           지점
         </Typography>
-        <ManagedStoreProfileDetails />
+        {/* <Grid
+          container
+          spacing={3}
+        >
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+          >
+            <ManagedStoreProfile />
+          </Grid>
+          <Grid
+            item
+            lg={8}
+            md={6}
+            xs={12}
+          > */}
+            <ManagedStoreProfileDetails />
+          {/* </Grid>
+        </Grid> */}
       </Container>
     </Box>
   </>

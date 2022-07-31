@@ -23,6 +23,7 @@ export const InWarehouseReportProfileDetails = (props) => {
       (response)=>
       {
         const itemNums=[];
+        itemNums.push({value:'',label:''});
         for(const itemInfo of response.data)
         {          
           itemNums.push({value:itemInfo.itemNum,label:itemInfo.itemNum+'('+itemInfo.itemName+')'});
@@ -37,7 +38,7 @@ export const InWarehouseReportProfileDetails = (props) => {
   const [values, setValues] = useState({
     reportNum: null,
     storeNum: undefined,
-    itemNum: '1',
+    itemNum: '',
     reqCnt: '0',
     reqDate:  new Date().
               toISOString().
@@ -69,15 +70,15 @@ export const InWarehouseReportProfileDetails = (props) => {
       if(parameters.method=='update')
       {
         axios.get(domain+'/item/in_warehouse_report'+('/'+parameters.reportNum)).
-        // then((response)=>{setValues({...response.data,storeNum:response.data.storeNum.storeNum,writerNum:response.data.writerNum.writerNum});});
-        then((response)=>{setValues({...response.data,storeNum:response.data.storeNum.storeNum,itemNum:response.data.itemNum.itemNum,writerNum:employee.empNum});});
+        // then((response)=>{setValues({...response.data,storeNum:response.data.storeNum.storeNum,reqCnt:response.data.reqCnt.toString(),writerNum:response.data.writerNum.writerNum});});
+        then((response)=>{setValues({...response.data,storeNum:response.data.storeNum.storeNum,itemNum:response.data.itemNum.itemNum,reqCnt:response.data.reqCnt.toString(),writerNum:employee.empNum});});
       }
 
       // setValues({...values,writerNum:employee.empNum});
     },[]
   );
   
-  function validate()
+  function validate(values)
   {
     const requiredNames=['itemNum','reqCnt','reqDate'];
     for(const name of requiredNames)
@@ -90,8 +91,8 @@ export const InWarehouseReportProfileDetails = (props) => {
 
     return true;
   }
-  const [isValid, setIsValid] = useState(validate());
-  useEffect(()=>{setIsValid(validate());},[values]);
+  const [isValid, setIsValid] = useState(validate(values));
+  useEffect(()=>{setIsValid(validate(values));},[values]);
 
   const handleChange = (event) => {
     const positiveNumberNames=new Set(['reqCnt']);

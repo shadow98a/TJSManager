@@ -66,6 +66,11 @@ const items = [
   //   href: '/membership-customer-records',
   //   icon: (<XCircleIcon fontSize="small" />),
   //   title: '멤버쉽 고객 구매 이력'
+  },
+  {
+    href: '/sales',
+    icon: (<XCircleIcon fontSize="small" />),
+    title: '판매'
   }
 ];
 

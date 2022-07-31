@@ -25,7 +25,27 @@ const MembershipCustomer = () => (
         >
           멤버쉽 고객
         </Typography>
-        <MembershipCustomerProfileDetails />
+        {/* <Grid
+          container
+          spacing={3}
+        >
+          <Grid
+            item
+            lg={4}
+            md={6}
+            xs={12}
+          >
+            <MembershipCustomerProfile />
+          </Grid>
+          <Grid
+            item
+            lg={8}
+            md={6}
+            xs={12}
+          > */}
+            <MembershipCustomerProfileDetails />
+          {/* </Grid>
+        </Grid> */}
       </Container>
     </Box>
   </>

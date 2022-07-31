@@ -15,6 +15,10 @@ import {domain} from '../../api/restful-api';
 
 const customerGenders = [
   {
+    value: '',
+    label: ''
+  },
+  {
     value: 'm',
     label: 'm'
   },
@@ -31,7 +35,7 @@ export const MembershipCustomerProfileDetails = (props) => {
     customerBirthDate:  new Date().
                         toISOString().
                         slice(0,4+1+2+1+2),
-    customerGender: 'm',
+    customerGender: '',
     customerPhoneNum: '',
     point: '0',
     joinedStoreNum: undefined
@@ -66,7 +70,7 @@ export const MembershipCustomerProfileDetails = (props) => {
     },[]
   );
   
-  function validate()
+  function validate(values)
   {
     const requiredNames=['customerName','customerBirthDate','customerGender','customerPhoneNum'];
     for(const name of requiredNames)
@@ -79,8 +83,8 @@ export const MembershipCustomerProfileDetails = (props) => {
 
     return true;
   }
-  const [isValid, setIsValid] = useState(validate());
-  useEffect(()=>{setIsValid(validate());},[values]);
+  const [isValid, setIsValid] = useState(validate(values));
+  useEffect(()=>{setIsValid(validate(values));},[values]);
 
   const handleChange = (event) => {
     setValues({

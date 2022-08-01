@@ -1,3 +1,4 @@
+
 # setting ubuntu root password
 sudo passwd root
 root
@@ -61,7 +62,7 @@ GRANT ALL PRIVILEGES ON tjsmanager.* TO 'tjs'@'%'
 
 
 # run java spring boot server to background.
-nohup java -jar TJSManager-0.0.1-SNAPSHOT.jar &
+nohup java -jar ./jar_build/TJSManager-2.7.1.jar &
 # find pid of java process.
 ps -ef | grep java
 # stop java process.

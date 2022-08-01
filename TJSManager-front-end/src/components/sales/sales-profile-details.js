@@ -38,31 +38,31 @@ const consumerAges = [
     label: '10대 미만'
   },
   {
-    value: '10',
+    value: '1',
     label: '10대'
   },
   {
-    value: '20',
+    value: '2',
     label: '20대'
   },
   {
-    value: '30',
+    value: '3',
     label: '30대'
   },
   {
-    value: '40',
+    value: '4',
     label: '40대'
   },
   {
-    value: '50',
+    value: '5',
     label: '50대'
   },
   {
-    value: '60',
+    value: '6',
     label: '60대'
   },
   {
-    value: '70',
+    value: '7',
     label: '70대 이상'
   }
 ];
@@ -306,7 +306,7 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
         postMembershipCustomerRecord(membershipCustomerRecordValues,salesNum,getCost(salesCnts));
       }
     );
-    router.push('/statistics');
+    router.push('/statistics'+'?'+'target=all');
   }
 
   return (

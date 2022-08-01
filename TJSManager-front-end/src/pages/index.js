@@ -51,7 +51,7 @@ const Login = () => {
                 sessionStorage.setItem('employee',JSON.stringify(response.data));
               }
             );
-            router.push('/statistics');  
+            router.push('/statistics'+'?'+'target=all');  
           }
           else
           {

@@ -101,7 +101,7 @@ const scmItems = [
     title: '재고 현황'
   },
   {
-    href: '/statistics',
+    href: '/statistics'+'?'+'target=all',
     icon: (<XCircleIcon fontSize="small" />),
     title: '통계'
   // {

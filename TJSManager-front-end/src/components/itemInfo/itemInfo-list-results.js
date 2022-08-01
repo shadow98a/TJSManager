@@ -16,6 +16,7 @@ import {
   Typography
 } from '@mui/material';
 import { getInitials } from '../../utils/get-initials';
+import {useRouter} from 'next/router';
 
 // export const ItemInfoListResults = ({ itemInfos, ...rest }) => {
 export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelectedItemInfoIds,...rest }) => {
@@ -54,6 +55,12 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
 
     setSelectedItemInfoIds(newSelectedItemInfoIds);
   };
+
+  const router=useRouter();
+  function handleClick(itemNum)
+  {
+    router.push('/statistics'+'?'+('target=one_item')+'&'+('itemNum='+itemNum));
+  }
 
   const handleLimitChange = (event) => {
     setLimit(event.target.value);
@@ -109,10 +116,14 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
                       value="true"
                     />
                   </TableCell>
-                  <TableCell>
+                  <TableCell
+                    onClick={(event)=>{handleClick(itemInfo.itemNum);}}
+                  >
                     {itemInfo.itemNum}
                   </TableCell>
-                  <TableCell>
+                  <TableCell
+                    onClick={(event)=>{handleClick(itemInfo.itemNum);}}
+                  >
                     <Box
                       sx={{
                         alignItems: 'center',
@@ -127,10 +138,14 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
                       </Typography>
                     </Box>
                   </TableCell>
-                  <TableCell>
+                  <TableCell
+                    onClick={(event)=>{handleClick(itemInfo.itemNum);}}
+                  >
                     {itemInfo.type}
                   </TableCell>
-                  <TableCell>
+                  <TableCell
+                    onClick={(event)=>{handleClick(itemInfo.itemNum);}}
+                  >
                     {itemInfo.consumerPrice}
                   </TableCell>
                 </TableRow>

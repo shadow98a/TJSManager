@@ -147,7 +147,8 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
   }
   useEffect(()=>{setSalesCnts(getSalesCnts(selectedItemIds));},[selectedItemIds]);
 
-  function getCost(salesCnts)
+  const [itemStocks,setItemStocks]=useState({});
+  function getItemStocks()
   {
     console.log('getCost()');
     axios.get(domain+'/item/stock').
@@ -165,43 +166,48 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
           }
         }
 
-        let cost=0;
-        for(const itemNum of Object.keys(salesCnts))
-        {
-          console.log('itemNum: '+itemNum);
-          const itemStock=itemStocks[itemNum];
-          console.log('itemStock: '+itemStock);
-          const salesCnt=salesCnts[itemNum];
-          console.log('salesCnt: '+salesCnt);
-          let countToPay;
-          switch(itemStock.event)
-          {
-            case '2+1':
-              countToPay=Math.floor(salesCnt/3)*2+salesCnt%3;
-              break;
-
-            case '1+1':
-              countToPay=Math.floor(salesCnt/2)*1+salesCnt%2;
-              break;
-
-            // case '':
-            case '':
-            case null:
-              countToPay=salesCnt;
-              break;
-          }
-
-          console.log(countToPay);
-          cost+=countToPay*(((100-itemStock.sale)/100)*itemStock.primaryKey.itemNum.consumerPrice);
-          console.log('cost+= '+countToPay*(((100-itemStock.sale)/100)*itemStock.primaryKey.itemNum.consumerPrice));
-        }
-
-        console.log('cost: '+cost);
-        return cost;
+        setItemStocks(itemStocks);
       }
     );
   }
-  useEffect(()=>{getCost(salesCnts);},[salesCnts]);
+  useEffect(()=>{getItemStocks();},[]);
+  function getCost(salesCnts,itemStocks)
+  {
+    let cost=0;
+    for(const itemNum of Object.keys(salesCnts))
+    {
+      console.log('itemNum: '+itemNum);
+      console.log(itemStocks);
+      const itemStock=itemStocks[itemNum];
+      console.log('itemStock: '+itemStock);
+      const salesCnt=salesCnts[itemNum];
+      console.log('salesCnt: '+salesCnt);
+      let countToPay;
+      switch(itemStock.event)
+      {
+        case '2+1':
+          countToPay=Math.floor(salesCnt/3)*2+salesCnt%3;
+          break;
+
+        case '1+1':
+          countToPay=Math.floor(salesCnt/2)*1+salesCnt%2;
+          break;
+
+        // case '':
+        case '':
+        case null:
+          countToPay=salesCnt;
+          break;
+      }
+
+      console.log(countToPay);
+      cost+=countToPay*(((100-itemStock.sale)/100)*itemStock.primaryKey.itemNum.consumerPrice);
+      console.log('cost+= '+countToPay*(((100-itemStock.sale)/100)*itemStock.primaryKey.itemNum.consumerPrice));
+    }
+
+    console.log('cost: '+cost);
+    return cost;
+  }
 
   function validate(salesConsumerValues,membershipCustomerRecordValues,selectedItemIds)
   {
@@ -303,7 +309,7 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
       {
         const salesNum=response.data;
         postSalesRecords(salesNum,salesCnts);
-        postMembershipCustomerRecord(membershipCustomerRecordValues,salesNum,getCost(salesCnts));
+        postMembershipCustomerRecord(membershipCustomerRecordValues,salesNum,getCost(salesCnts,itemStocks));
       }
     );
     router.push('/statistics'+'?'+'target=all');

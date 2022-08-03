@@ -124,6 +124,7 @@ return  (
               }}
               placeholder="상품 검색"
               variant="outlined"
+              onChange={(event)=>{props.setSearchKeyword(event.target.value);}}
             />
           </Box>
         </CardContent>

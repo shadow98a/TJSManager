@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState,useEffect } from 'react';
 import {
   Box,
   Button,
@@ -10,8 +10,8 @@ import {
   TextField
 } from '@mui/material';
 import axios from 'axios';
-import { useRouter } from 'next/router';
-import { domain } from '../../api/restful-api';
+import {useRouter} from 'next/router';
+import {domain} from '../../api/restful-api';
 import { membershipCustomerRecords } from 'src/__mocks__/membershipCustomerRecords';
 
 const consumerGenders = [
@@ -68,45 +68,52 @@ const consumerAges = [
 ];
 
 // export const SalesProfileDetails = (props) => {
-export const SalesProfileDetails = ({ salesCnts, setSalesCnts, pointToUse, setPointToUse, ...props }) => {
-  const [customerNums, setCustomerNums] = useState([]);
-  function getCustomerNums() {
-    axios.get(domain + '/membership/customer').
-      then
-      (
-        (response) => {
-          const customerNums = [];
-          customerNums.push({ value: '', label: '' });
-          for (const membershipCustomer of response.data) {
-            customerNums.push({ value: membershipCustomer.customerNum, label: membershipCustomer.customerNum + '(' + membershipCustomer.customerName + ')' });
-          }
-
-          setCustomerNums(customerNums);
+export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointToUse,...props}) => {
+  const [customerNums,setCustomerNums]=useState([]);
+  function getCustomerNums()
+  {
+    axios.get(domain+'/membership/customer').
+    then
+    (
+      (response)=>
+      {
+        const customerNums=[];
+        customerNums.push({value:'',label:''});
+        for(const membershipCustomer of response.data)
+        {
+            customerNums.push({value:membershipCustomer.customerNum,label:membershipCustomer.customerNum+'('+membershipCustomer.customerName+')'});
         }
-      );
+
+        setCustomerNums(customerNums);
+      }
+    );
   }
   getCustomerNums();
 
-  const [itemNums, setItemNums] = useState([]);
-  function getItemNums() {
-    axios.get(domain + '/item/stock').
-      then
-      (
-        (response) => {
-          const itemNums = [];
-          itemNums.push({ value: '', label: '' });
-          const employee = JSON.parse(sessionStorage.getItem('employee'));
-          for (const itemStock of response.data) {
-            if (itemStock.primaryKey.storeNum.storeNum == employee.storeNum.storeNum) {
-              itemNums.push({ value: itemStock.primaryKey.itemNum.itemNum, label: itemStock.primaryKey.itemNum.itemNum + '(' + itemStock.primaryKey.itemNum.itemName + ')' });
-            }
+  const [itemNums,setItemNums]=useState([]);
+  function getItemNums()
+  {
+    axios.get(domain+'/item/stock').
+    then
+    (
+      (response)=>
+      {
+        const itemNums=[];
+        itemNums.push({value:'',label:''});
+        const employee=JSON.parse(sessionStorage.getItem('employee'));
+        for(const itemStock of response.data)
+        {
+          if(itemStock.primaryKey.storeNum.storeNum==employee.storeNum.storeNum)
+          {
+            itemNums.push({value:itemStock.primaryKey.itemNum.itemNum,label:itemStock.primaryKey.itemNum.itemNum+'('+itemStock.primaryKey.itemNum.itemName+')'});
           }
-
-          setItemNums(itemNums);
         }
-      );
+
+        setItemNums(itemNums);
+      }
+    );
   }
-  useEffect(() => { getItemNums(); }, []);
+  useEffect(()=>{getItemNums();},[]);
 
   const [salesConsumerValues, setSalesConsumerValues] = useState({
     salesNum: null,
@@ -114,7 +121,7 @@ export const SalesProfileDetails = ({ salesCnts, setSalesCnts, pointToUse, setPo
     consumerAge: '',
     memo: ''
   });
-  const [membershipCustomerRecordValues, setMembershipCustomerRecordValues] = useState({
+  const [membershipCustomerRecordValues,setMembershipCustomerRecordValues] = useState({
     customerNum: '',
     salesNum: undefined,
     usedPoint: undefined,
@@ -122,12 +129,15 @@ export const SalesProfileDetails = ({ salesCnts, setSalesCnts, pointToUse, setPo
   });
   const [selectedItemIds, setSelectedItemIds] = useState([
   ]);
-
-  function getSalesCnts(selectedItemIds) {
-    const salesCnts = {};
-    for (const itemNum of selectedItemIds) {
-      if (salesCnts[itemNum] === undefined) {
-        salesCnts[itemNum] = 0;
+  
+  function getSalesCnts(selectedItemIds)
+  {
+    const salesCnts={};
+    for(const itemNum of selectedItemIds)
+    {
+      if(salesCnts[itemNum]===undefined)
+      {
+        salesCnts[itemNum]=0;
       }
 
       salesCnts[itemNum]++;
@@ -135,101 +145,117 @@ export const SalesProfileDetails = ({ salesCnts, setSalesCnts, pointToUse, setPo
 
     return salesCnts;
   }
-  useEffect(() => { setSalesCnts(getSalesCnts(selectedItemIds)); }, [selectedItemIds]);
+  useEffect(()=>{setSalesCnts(getSalesCnts(selectedItemIds));},[selectedItemIds]);
 
-  const [itemStocks, setItemStocks] = useState({});
-  function getItemStocks() {
+  const [itemStocks,setItemStocks]=useState({});
+  function getItemStocks()
+  {
     console.log('getCost()');
-    axios.get(domain + '/item/stock').
-      then
-      (
-        (response) => {
-          const itemStocks = {};
-          const employee = JSON.parse(sessionStorage.getItem('employee'));
-          for (const itemStock of response.data) {
-            if (itemStock.primaryKey.storeNum.storeNum == employee.storeNum.storeNum) {
-              itemStocks[itemStock.primaryKey.itemNum.itemNum] = itemStock;
-            }
+    axios.get(domain+'/item/stock').
+    then
+    (
+      (response)=>
+      {
+        const itemStocks={};
+        const employee=JSON.parse(sessionStorage.getItem('employee'));
+        for(const itemStock of response.data)
+        {
+          if(itemStock.primaryKey.storeNum.storeNum==employee.storeNum.storeNum)
+          {
+            itemStocks[itemStock.primaryKey.itemNum.itemNum]=itemStock;
           }
-
-          setItemStocks(itemStocks);
         }
-      );
+
+        setItemStocks(itemStocks);
+      }
+    );
   }
-  useEffect(() => { getItemStocks(); }, []);
-  function getCost(salesCnts, itemStocks) {
-    let cost = 0;
-    for (const itemNum of Object.keys(salesCnts)) {
-      console.log('itemNum: ' + itemNum);
+  useEffect(()=>{getItemStocks();},[]);
+  function getCost(salesCnts,itemStocks)
+  {
+    let cost=0;
+    for(const itemNum of Object.keys(salesCnts))
+    {
+      console.log('itemNum: '+itemNum);
       console.log(itemStocks);
-      const itemStock = itemStocks[itemNum];
-      console.log('itemStock: ' + itemStock);
-      const salesCnt = salesCnts[itemNum];
-      console.log('salesCnt: ' + salesCnt);
+      const itemStock=itemStocks[itemNum];
+      console.log('itemStock: '+itemStock);
+      const salesCnt=salesCnts[itemNum];
+      console.log('salesCnt: '+salesCnt);
       let countToPay;
-      switch (itemStock.event) {
+      switch(itemStock.event)
+      {
         case '2+1':
-          countToPay = Math.floor(salesCnt / 3) * 2 + salesCnt % 3;
+          countToPay=Math.floor(salesCnt/3)*2+salesCnt%3;
           break;
 
         case '1+1':
-          countToPay = Math.floor(salesCnt / 2) * 1 + salesCnt % 2;
+          countToPay=Math.floor(salesCnt/2)*1+salesCnt%2;
           break;
 
         // case '':
         case '':
         case null:
-          countToPay = salesCnt;
+          countToPay=salesCnt;
           break;
       }
 
       console.log(countToPay);
-      cost += countToPay * (((100 - itemStock.sale) / 100) * itemStock.primaryKey.itemNum.consumerPrice);
-      console.log('cost+= ' + countToPay * (((100 - itemStock.sale) / 100) * itemStock.primaryKey.itemNum.consumerPrice));
+      cost+=countToPay*(((100-itemStock.sale)/100)*itemStock.primaryKey.itemNum.consumerPrice);
+      console.log('cost+= '+countToPay*(((100-itemStock.sale)/100)*itemStock.primaryKey.itemNum.consumerPrice));
     }
 
-    console.log('cost: ' + cost);
+    console.log('cost: '+cost);
     return cost;
   }
 
-  function validate(salesConsumerValues, membershipCustomerRecordValues, selectedItemIds) {
-    const requiredNamesOfSalesConsumerValues = ['consumerGender', 'consumerAge'];
-    for (const name of requiredNamesOfSalesConsumerValues) {
-      if (salesConsumerValues[name] == '') {
+  function validate(salesConsumerValues,membershipCustomerRecordValues,selectedItemIds)
+  {
+    const requiredNamesOfSalesConsumerValues=['consumerGender','consumerAge'];
+    for(const name of requiredNamesOfSalesConsumerValues)
+    {
+      if(salesConsumerValues[name]=='')
+      {
         return false;
       }
     }
 
-    const requiredNamesOfMembershipCustomerRecordValues = ['pointToUse'];
-    for (const name of requiredNamesOfMembershipCustomerRecordValues) {
-      if (membershipCustomerRecordValues[name] == '') {
+    const requiredNamesOfMembershipCustomerRecordValues=['pointToUse'];
+    for(const name of requiredNamesOfMembershipCustomerRecordValues)
+    {
+      if(membershipCustomerRecordValues[name]=='')
+      {
         return false;
       }
     }
 
-    return selectedItemIds.length > 0;
+    return selectedItemIds.length>0;
   }
-  const [isValid, setIsValid] = useState(validate(salesConsumerValues, membershipCustomerRecordValues, selectedItemIds));
-  useEffect(() => { setIsValid(validate(salesConsumerValues, membershipCustomerRecordValues, selectedItemIds)); }, [salesConsumerValues, membershipCustomerRecordValues, selectedItemIds]);
+  const [isValid, setIsValid] = useState(validate(salesConsumerValues,membershipCustomerRecordValues,selectedItemIds));
+  useEffect(()=>{setIsValid(validate(salesConsumerValues,membershipCustomerRecordValues,selectedItemIds));},[salesConsumerValues,membershipCustomerRecordValues,selectedItemIds]);
 
   const handleSalesConsumerChange = (event) => {
-    const positiveNumberNames = new Set([]);
-    if (positiveNumberNames.has(event.target.name)) {
-      if (event.target.value != '') {
-        event.target.value = Math.abs(event.target.value);
+    const positiveNumberNames=new Set([]);
+    if(positiveNumberNames.has(event.target.name))
+    {
+      if(event.target.value!='')
+      {
+        event.target.value=Math.abs(event.target.value);
       }
     }
-
+    
     setSalesConsumerValues({
       ...salesConsumerValues,
       [event.target.name]: event.target.value
     });
   };
   const handleMembershipCustomerRecordChange = (event) => {
-    const positiveNumberNames = new Set(['pointToUse']);
-    if (positiveNumberNames.has(event.target.name)) {
-      if (event.target.value != '') {
-        event.target.value = Math.abs(event.target.value);
+    const positiveNumberNames=new Set(['pointToUse']);
+    if(positiveNumberNames.has(event.target.name))
+    {
+      if(event.target.value!='')
+      {
+        event.target.value=Math.abs(event.target.value);
       }
     }
 
@@ -238,60 +264,70 @@ export const SalesProfileDetails = ({ salesCnts, setSalesCnts, pointToUse, setPo
       [event.target.name]: event.target.value
     });
   };
-  const handleSelectedItemIdsChange = (event, index) => {
-    const SelectedItemIdsToSet = [...selectedItemIds];
-    if (event.target.value != '') {
-      if (index == selectedItemIds.length - 1) {
+  const handleSelectedItemIdsChange = (event,index) => {
+    const SelectedItemIdsToSet=[...selectedItemIds];
+    if(event.target.value!='')
+    {
+      if(index==selectedItemIds.length-1)
+      {
         SelectedItemIdsToSet.push('');
       }
 
-      SelectedItemIdsToSet[index] = event.target.value;
+      SelectedItemIdsToSet[index]=event.target.value;
     }
-    else {
-      SelectedItemIdsToSet.splice(index, 1);
+    else
+    {
+      SelectedItemIdsToSet.splice(index,1);
     }
 
     setSelectedItemIds(SelectedItemIdsToSet);
   };
 
-  function postSalesRecords(salesNum, salesCnts) {
-    const employee = JSON.parse(sessionStorage.getItem('employee'));
-    for (const itemNum of Object.keys(salesCnts)) {
-      axios.post(domain + '/sales/record', { salesNum: salesNum, itemNum: itemNum, storeNum: employee.storeNum.storeNum, salesCnt: salesCnts[itemNum] });
+  function postSalesRecords(salesNum,salesCnts)
+  {
+    const employee=JSON.parse(sessionStorage.getItem('employee'));
+    for(const itemNum of Object.keys(salesCnts))
+    {
+      axios.post(domain+'/sales/record',{salesNum:salesNum,itemNum:itemNum,storeNum:employee.storeNum.storeNum,salesCnt:salesCnts[itemNum]});
     }
   }
-  function putMembershipCustomer(membershipCustomerRecordValues, cost) {
-    const ratioOfSavePointToCost = 0.1;
-    axios.get(domain + '/membership/customer' + ('/' + membershipCustomerRecordValues.customerNum)).
-      then
-      (
-        (response) => {
-          const membershipCustomer = { ...response.data, joinedStoreNum: response.data.joinedStoreNum.storeNum };
-          membershipCustomer.point += (ratioOfSavePointToCost * cost);
-          axios.put(domain + '/membership/customer' + ('/' + membershipCustomer.customerNum), membershipCustomer);
-        }
-      );
+  function putMembershipCustomer(membershipCustomerRecordValues,cost)
+  {
+    const ratioOfSavePointToCost=0.1;
+    axios.get(domain+'/membership/customer'+('/'+membershipCustomerRecordValues.customerNum)).
+    then
+    (
+      (response)=>
+      {
+        const membershipCustomer={...response.data,joinedStoreNum:response.data.joinedStoreNum.storeNum};
+        membershipCustomer.point+=(ratioOfSavePointToCost*cost);
+        axios.put(domain+'/membership/customer'+('/'+membershipCustomer.customerNum),membershipCustomer);
+      }
+    );
   }
-  function postMembershipCustomerRecord(membershipCustomerRecordValues, salesNum, cost) {
-    const ratioOfSavePointToCost = 0.1;
-    axios.post(domain + '/membership/customer_record', { customerNum: membershipCustomerRecordValues.customerNum, salesNum: salesNum, usedPoint: 0, savePoint: ratioOfSavePointToCost * cost });
+  function postMembershipCustomerRecord(membershipCustomerRecordValues,salesNum,cost)
+  {
+    const ratioOfSavePointToCost=0.1;
+    axios.post(domain+'/membership/customer_record',{customerNum:membershipCustomerRecordValues.customerNum,salesNum:salesNum,usedPoint:0,savePoint:ratioOfSavePointToCost*cost});
   }
 
-  const router = useRouter();
-  function handleSubmit(event) {
+  const router=useRouter();
+  function handleSubmit(event)
+  {
     event.preventDefault();
-
-    axios.post(domain + '/sales/consumer', salesConsumerValues).
-      then
-      (
-        (response) => {
-          const salesNum = response.data;
-          postSalesRecords(salesNum, salesCnts);
-          putMembershipCustomer(membershipCustomerRecordValues, getCost(salesCnts, itemStocks));
-          postMembershipCustomerRecord(membershipCustomerRecordValues, salesNum, getCost(salesCnts, itemStocks));
-        }
-      );
-    router.push('/statistics' + '?' + 'target=all');
+    
+    axios.post(domain+'/sales/consumer',salesConsumerValues).
+    then
+    (
+      (response)=>
+      {
+        const salesNum=response.data;
+        postSalesRecords(salesNum,salesCnts);
+        putMembershipCustomer(membershipCustomerRecordValues,getCost(salesCnts,itemStocks));
+        postMembershipCustomerRecord(membershipCustomerRecordValues,salesNum,getCost(salesCnts,itemStocks));
+      }
+    );
+    router.push('/statistics'+'?'+'target=all');
   }
 
   return (
@@ -317,9 +353,9 @@ export const SalesProfileDetails = ({ salesCnts, setSalesCnts, pointToUse, setPo
               xs={12}
             >
               <TextField
-                error={salesConsumerValues.consumerGender == ''}
+                error={salesConsumerValues.consumerGender==''}
                 fullWidth
-                helperText={salesConsumerValues.consumerGender == '' ? '구매자 성별을 입력해 주세요' : ''}
+                helperText={salesConsumerValues.consumerGender==''?'구매자 성별을 입력해 주세요':''}
                 label="구매자 성별"
                 name="consumerGender"
                 onChange={handleSalesConsumerChange}
@@ -345,9 +381,9 @@ export const SalesProfileDetails = ({ salesCnts, setSalesCnts, pointToUse, setPo
               xs={12}
             >
               <TextField
-                error={salesConsumerValues.consumerAge == ''}
+                error={salesConsumerValues.consumerAge==''}
                 fullWidth
-                helperText={salesConsumerValues.consumerAge == '' ? '구매자 나이대를 입력해 주세요' : ''}
+                helperText={salesConsumerValues.consumerAge==''?'구매자 나이대를 입력해 주세요':''}
                 label="구매자 나이대"
                 name="consumerAge"
                 onChange={handleSalesConsumerChange}
@@ -453,42 +489,43 @@ export const SalesProfileDetails = ({ salesCnts, setSalesCnts, pointToUse, setPo
             spacing={3}
           >
             {
-              [...selectedItemIds, ''].map
-                (
-                  (itemNum, index) => {
-                    return (
-                      <Grid
-                        item
-                        md={6}
-                        xs={12}
-                        key={index}
-                      >
-                        <TextField
-                          error={selectedItemIds.length == 0 && itemNum == ''}
-                          fullWidth
-                          helperText={selectedItemIds.length == 0 && itemNum == '' ? '판매 물품 번호를 입력해 주세요' : ''}
-                          label="판매 물품 번호"
-                          name="itemNum"
-                          onChange={(event) => { handleSelectedItemIdsChange(event, index); }}
-                          required={selectedItemIds.length == 0 + 1}
-                          select
-                          SelectProps={{ native: true }}
-                          value={itemNum}
-                          variant="outlined"
-                        >
-                          {itemNums.map((option) => (
-                            <option
-                              key={option.value}
-                              value={option.value}
+              [...selectedItemIds,''].map
+              (
+                (itemNum,index)=>
+                {
+                  return  (
+                            <Grid
+                              item
+                              md={6}
+                              xs={12}
+                              key={index}
                             >
-                              {option.label}
-                            </option>
-                          ))}
-                        </TextField>
-                      </Grid>
-                    );
-                  }
-                )
+                              <TextField
+                                error={selectedItemIds.length==0&&itemNum==''}
+                                fullWidth
+                                helperText={selectedItemIds.length==0&&itemNum==''?'판매 물품 번호를 입력해 주세요':''}
+                                label="판매 물품 번호"
+                                name="itemNum"
+                                onChange={(event)=>{handleSelectedItemIdsChange(event,index);}}
+                                required={selectedItemIds.length==0+1}
+                                select
+                                SelectProps={{ native: true }}
+                                value={itemNum}
+                                variant="outlined"
+                              >
+                                {itemNums.map((option) => (
+                                  <option
+                                    key={option.value}
+                                    value={option.value}
+                                  >
+                                    {option.label}
+                                  </option>
+                                ))}
+                              </TextField>
+                            </Grid>
+                          );
+                }
+              )
             }
           </Grid>
         </CardContent>
@@ -504,7 +541,7 @@ export const SalesProfileDetails = ({ salesCnts, setSalesCnts, pointToUse, setPo
             color="secondary"
             variant="contained"
             sx={{ mr: 1 }}
-            onClick={() => history.back()}
+            onClick={()=>history.back()}
           >
             뒤로가기
           </Button>

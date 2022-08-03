@@ -30,27 +30,27 @@ public class ScmController {
 	private ScmService scmService;
 
 	
-	// 매점 정보 생성
+	// 지점 정보 생성
 	@PostMapping("/managed_store")
-	public void createManagedStore(@RequestBody ManagedStore newManagedStore) {
-	scmService.saveManagedStore(newManagedStore);
+	public Long createManagedStore(@RequestBody ManagedStore newManagedStore) {
+	return scmService.saveManagedStore(newManagedStore);
 	}
 	
-	// 모든 매점 정보
+	// 모든 지점 정보
 	@GetMapping("/managed_store")
 	public List<ManagedStore> getAllManagedStore() {
 		List<ManagedStore> list = scmService.findAllManagedStore();
 		return list;
 	}
 	
-	// 한 매점 정보
+	// 한 지점 정보
 	@GetMapping("/managed_store/{store_num}")
 	public ManagedStore getOneManagedStore(@PathVariable("store_num") Long storeNum) {
 		ManagedStore managedStore = scmService.findByIdManagedStore(storeNum);
 		return managedStore;
 	}
 	
-	// 매점 정보 수정
+	// 지점 정보 수정
 	@PutMapping("/managed_store/{store_num}")
 	public void updateManagedStore(@PathVariable("store_num") Long storeNum, @RequestBody ManagedStore updateData) {
 		scmService.updateManagedStore(storeNum, updateData);

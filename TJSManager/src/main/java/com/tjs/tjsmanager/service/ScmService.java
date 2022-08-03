@@ -89,12 +89,12 @@ public class ScmService {
 		return entityData;
 	}
 
-	// 매점 정보 생성
-	public void saveManagedStore(ManagedStore newManagedStore) {
-		managedStoreRepository.save(newManagedStore);
+	// 지점 정보 생성
+	public Long saveManagedStore(ManagedStore newManagedStore) {
+		return managedStoreRepository.save(newManagedStore).getStoreNum();
 	}
 
-	// 모든 매점 정보
+	// 모든 지점 정보
 	public List<ManagedStore> findAllManagedStore() {
 		List<ManagedStore> list = (List<ManagedStore>) managedStoreRepository.findAll();
 		return list;
@@ -278,7 +278,6 @@ public class ScmService {
 		// map 0으로 초기화 / sql 결과로 해당 성별 데이터가 존재하지 않아도 0명으로 return 가능
 		returnJson.put("m", 0);
 		returnJson.put("f", 0);
-		returnJson.put("-", 0);
 
 		for (Map<String, Object> row : sqlResult) {
 			returnJson.put(row.get("consumerGender").toString(), row.get("count"));
@@ -328,7 +327,6 @@ public class ScmService {
 
 		returnJson.put("m", 0);
 		returnJson.put("f", 0);
-		returnJson.put("-", 0);
 
 		for (Map<String, Object> row : sqlResult) {
 			returnJson.put(row.get("consumerGender").toString(), row.get("count"));

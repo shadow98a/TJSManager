@@ -66,7 +66,7 @@ export const SalesByAge = (props) => {
         // data: [63, 15, 22],
         data: consumerAge,
         // backgroundColor: ['#3F51B5', '#e53935', '#FB8C00'],
-        backgroundColor: ['#3F51B5', '#e53935', '#FB8C00','#3F51B5','#e53935','#FB8C00','#3F51B5','#e53935'],
+        backgroundColor: ['#e53935','#cd8e3b','#bccd3b','#6dcd3b','#3bcd5a','#3bcda9','#3ba1cd','#3F51B5'],
         borderWidth: 8,
         borderColor: '#FFFFFF',
         hoverBorderColor: '#FFFFFF'
@@ -121,49 +121,49 @@ export const SalesByAge = (props) => {
       title: '10대 미만',
       value: Math.floor(100*(consumerAge[0]/getSummation(consumerAge))),
       icon: StrollerIcon,
-      color: '#3F51B5'
+      color: '#e53935'
     },
     {
       title: '10대',
       value: Math.floor(100*(consumerAge[1]/getSummation(consumerAge))),
       icon: EmojiPeopleIcon,
-      color: '#E53935'
+      color: '#cd8e3b'
     },
     {
       title: '20대',
       value: Math.floor(100*(consumerAge[2]/getSummation(consumerAge))),
       icon: EmojiPeopleIcon,
-      color: '#FB8C00'
+      color: '#bccd3b'
     },
     {
       title: '30대',
       value: Math.floor(100*(consumerAge[3]/getSummation(consumerAge))),
       icon: DirectionsRunIcon,
-      color: '#3F51B5'
+      color: '#6dcd3b'
     },
     {
       title: '40대',
       value: Math.floor(100*(consumerAge[4]/getSummation(consumerAge))),
       icon: DirectionsRunIcon,
-      color: '#E53935'
+      color: '#3bcd5a'
     },
     {
       title: '50대',
       value: Math.floor(100*(consumerAge[5]/getSummation(consumerAge))),
       icon: DirectionsWalkIcon,
-      color: '#FB8C00'
+      color: '#3bcda9'
     },
     {
       title: '60대',
       value: Math.floor(100*(consumerAge[6]/getSummation(consumerAge))),
       icon: DirectionsWalkIcon,
-      color: '#3F51B5'
+      color: '#3ba1cd'
     },
     {
       title: '70대 이상',
       value: Math.floor(100*(consumerAge[7]/getSummation(consumerAge))),
       icon: ElderlyIcon,
-      color: '#E53935'
+      color: '#3F51B5'
     }
   ];
 

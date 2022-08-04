@@ -150,7 +150,6 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
   const [itemStocks,setItemStocks]=useState({});
   function getItemStocks()
   {
-    console.log('getCost()');
     axios.get(domain+'/item/stock').
     then
     (
@@ -176,12 +175,8 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
     let cost=0;
     for(const itemNum of Object.keys(salesCnts))
     {
-      console.log('itemNum: '+itemNum);
-      console.log(itemStocks);
       const itemStock=itemStocks[itemNum];
-      console.log('itemStock: '+itemStock);
       const salesCnt=salesCnts[itemNum];
-      console.log('salesCnt: '+salesCnt);
       let countToPay;
       switch(itemStock.event)
       {
@@ -200,12 +195,9 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
           break;
       }
 
-      console.log(countToPay);
       cost+=countToPay*(((100-itemStock.sale)/100)*itemStock.primaryKey.itemNum.consumerPrice);
-      console.log('cost+= '+countToPay*(((100-itemStock.sale)/100)*itemStock.primaryKey.itemNum.consumerPrice));
     }
 
-    console.log('cost: '+cost);
     return cost;
   }
 
@@ -299,8 +291,42 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
         }
       );
     }
+  }
+  function postInWarehouseReports(salesCnts)
+  {
+    const employee=JSON.parse(sessionStorage.getItem('employee'));
+    axios.get(domain+'/item/in_warehouse_report').
+    then
+    (
+      (response)=>
+      {
+        for(const itemNum of Object.keys(salesCnts))
+        {
+          let isReportFound=false;
 
-    
+          for(const inWarehouseReport of response.data)
+          {
+            if(inWarehouseReport.storeNum.storeNum==employee.storeNum.storeNum&&inWarehouseReport.itemNum.itemNum==itemNum)
+            {
+              inWarehouseReport.storeNum=inWarehouseReport.storeNum.storeNum;
+              inWarehouseReport.itemNum=inWarehouseReport.itemNum.itemNum;
+              inWarehouseReport.reqCnt+=salesCnts[itemNum];
+              inWarehouseReport.reqDate=new Date().toISOString().slice(0,4+1+2+1+2);
+              inWarehouseReport.writerNum=employee.empNum;
+              axios.put(domain+'/item/in_warehouse_report'+('/'+inWarehouseReport.reportNum),inWarehouseReport);
+
+              isReportFound=true;
+              break;
+            }
+         }
+
+          if(!isReportFound)
+          {
+            axios.post(domain+'/item/in_warehouse_report',{reportNum:null,storeNum:employee.storeNum.storeNum,itemNum:itemNum,reqCnt:salesCnts[itemNum],reqDate:new Date().toISOString().slice(0,4+1+2+1+2),writerNum:employee.empNum,approvedDate:null});
+          }
+        }
+      }
+    );
   }
   function postSalesRecords(salesNum,salesCnts)
   {
@@ -336,6 +362,7 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
     event.preventDefault();
     
     putItemStocks(salesCnts);
+    postInWarehouseReports(salesCnts);
     axios.post(domain+'/sales/consumer',salesConsumerValues).
     then
     (

@@ -117,13 +117,13 @@ export const SalesByGender = (props) => {
     // }
     {
       title: 'm',
-      value: Math.floor(100*(consumerGender[0]/getSummation(consumerGender))),
+      value: Math.floor(100*(getSummation(consumerGender)>0?consumerGender[0]/getSummation(consumerGender):0)),
       icon: MaleIcon,
       color: '#3F51B5'
     },
     {
       title: 'f',
-      value: Math.floor(100*(consumerGender[1]/getSummation(consumerGender))),
+      value: Math.floor(100*(getSummation(consumerGender)>0?consumerGender[1]/getSummation(consumerGender):0)),
       icon: FemaleIcon,
       color: '#E53935'
     }

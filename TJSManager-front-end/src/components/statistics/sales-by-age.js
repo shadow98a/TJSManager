@@ -119,49 +119,49 @@ export const SalesByAge = (props) => {
     // }
     {
       title: '10대 미만',
-      value: Math.floor(100*(consumerAge[0]/getSummation(consumerAge))),
+      value: Math.floor(100*(getSummation(consumerAge)>0?consumerAge[0]/getSummation(consumerAge):0)),
       icon: StrollerIcon,
       color: '#e53935'
     },
     {
       title: '10대',
-      value: Math.floor(100*(consumerAge[1]/getSummation(consumerAge))),
+      value: Math.floor(100*(getSummation(consumerAge)>0?consumerAge[1]/getSummation(consumerAge):0)),
       icon: EmojiPeopleIcon,
       color: '#cd8e3b'
     },
     {
       title: '20대',
-      value: Math.floor(100*(consumerAge[2]/getSummation(consumerAge))),
+      value: Math.floor(100*(getSummation(consumerAge)>0?consumerAge[2]/getSummation(consumerAge):0)),
       icon: EmojiPeopleIcon,
       color: '#bccd3b'
     },
     {
       title: '30대',
-      value: Math.floor(100*(consumerAge[3]/getSummation(consumerAge))),
+      value: Math.floor(100*(getSummation(consumerAge)>0?consumerAge[3]/getSummation(consumerAge):0)),
       icon: DirectionsRunIcon,
       color: '#6dcd3b'
     },
     {
       title: '40대',
-      value: Math.floor(100*(consumerAge[4]/getSummation(consumerAge))),
+      value: Math.floor(100*(getSummation(consumerAge)>0?consumerAge[4]/getSummation(consumerAge):0)),
       icon: DirectionsRunIcon,
       color: '#3bcd5a'
     },
     {
       title: '50대',
-      value: Math.floor(100*(consumerAge[5]/getSummation(consumerAge))),
+      value: Math.floor(100*(getSummation(consumerAge)>0?consumerAge[5]/getSummation(consumerAge):0)),
       icon: DirectionsWalkIcon,
       color: '#3bcda9'
     },
     {
       title: '60대',
-      value: Math.floor(100*(consumerAge[6]/getSummation(consumerAge))),
+      value: Math.floor(100*(getSummation(consumerAge)>0?consumerAge[6]/getSummation(consumerAge):0)),
       icon: DirectionsWalkIcon,
       color: '#3ba1cd'
     },
     {
       title: '70대 이상',
-      value: Math.floor(100*(consumerAge[7]/getSummation(consumerAge))),
+      value: Math.floor(100*(getSummation(consumerAge)>0?consumerAge[7]/getSummation(consumerAge):0)),
       icon: ElderlyIcon,
       color: '#3F51B5'
     }

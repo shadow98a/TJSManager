@@ -20,6 +20,7 @@ import {useRouter} from 'next/router';
 
 // export const ItemInfoListResults = ({ itemInfos, ...rest }) => {
 export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelectedItemInfoIds,searchKeyword,...rest }) => {
+  const searchedItemInfos=itemInfos.filter((itemInfo)=>{return itemInfo.itemNum.toString().includes(searchKeyword)||itemInfo.itemName.toString().includes(searchKeyword)||itemInfo.type.toString().includes(searchKeyword)||itemInfo.consumerPrice.toString().includes(searchKeyword);});
   // const [selectedItemInfoIds, setSelectedItemInfoIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
@@ -28,7 +29,7 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
     let newSelectedItemInfoIds;
 
     if (event.target.checked) {
-      newSelectedItemInfoIds = itemInfos.map((itemInfo) => JSON.stringify({itemNum:itemInfo.itemNum}));
+      newSelectedItemInfoIds = searchedItemInfos.map((itemInfo) => JSON.stringify({itemNum:itemInfo.itemNum}));
     } else {
       newSelectedItemInfoIds = [];
     }
@@ -79,11 +80,11 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedItemInfoIds.length === itemInfos.length}
+                    checked={selectedItemInfoIds.length === searchedItemInfos.length}
                     color="primary"
                     indeterminate={
                       selectedItemInfoIds.length > 0
-                      && selectedItemInfoIds.length < itemInfos.length
+                      && selectedItemInfoIds.length < searchedItemInfos.length
                     }
                     onChange={handleSelectAll}
                   />
@@ -103,7 +104,7 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
               </TableRow>
             </TableHead>
             <TableBody>
-              {itemInfos.slice(limit*page, limit*(page+1)).map((itemInfo) => JSON.stringify(itemInfo).includes(searchKeyword)&&(
+              {searchedItemInfos.slice(limit*page, limit*(page+1)).map((itemInfo) => (
                 <TableRow
                   hover
                   key={JSON.stringify({itemNum:itemInfo.itemNum})}
@@ -156,7 +157,7 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={itemInfos.length}
+        count={searchedItemInfos.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -168,5 +169,5 @@ export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelected
 };
 
 ItemInfoListResults.propTypes = {
-  itemInfos: PropTypes.array.isRequired
+  searchedItemInfos: PropTypes.array.isRequired
 };

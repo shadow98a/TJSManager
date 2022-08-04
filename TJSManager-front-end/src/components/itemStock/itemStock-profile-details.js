@@ -48,7 +48,7 @@ export const ItemStockProfileDetails = (props) => {
       }
     );
   }
-  getItemNums();
+  useEffect(getItemNums,[]);
 
   const [values, setValues] = useState({
     itemNum: '',

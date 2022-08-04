@@ -1,7 +1,7 @@
 import Head from 'next/head';
 import { Box, Container } from '@mui/material';
-import { MembershipCustomerRecordListResults } from '../components/membershipCustomerRecord/membershipCustomerRecord-list-results';
-import { MembershipCustomerRecordListToolbar } from '../components/membershipCustomerRecord/membershipCustomerRecord-list-toolbar';
+// import { MembershipCustomerRecordListResults } from '../components/membershipCustomerRecord/membershipCustomerRecord-list-results';
+// import { MembershipCustomerRecordListToolbar } from '../components/membershipCustomerRecord/membershipCustomerRecord-list-toolbar';
 import { DashboardLayout } from '../components/dashboard-layout';
 import { membershipCustomerRecords } from '../__mocks__/membershipCustomerRecords';
 
@@ -20,9 +20,9 @@ const MembershipCustomerRecords = () => (
       }}
     >
       <Container maxWidth={false}>
-        <MembershipCustomerRecordListToolbar />
+        {/* <MembershipCustomerRecordListToolbar /> */}
         <Box sx={{ mt: 3 }}>
-          <MembershipCustomerRecordListResults membershipCustomerRecords={membershipCustomerRecords} />
+          {/* <MembershipCustomerRecordListResults membershipCustomerRecords={membershipCustomerRecords} /> */}
         </Box>
       </Container>
     </Box>

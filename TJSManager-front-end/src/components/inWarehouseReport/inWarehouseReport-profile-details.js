@@ -33,7 +33,7 @@ export const InWarehouseReportProfileDetails = (props) => {
       }
     );
   }
-  getItemNums();
+  useEffect(()=>{getItemNums();},[]);
 
   const [values, setValues] = useState({
     reportNum: null,

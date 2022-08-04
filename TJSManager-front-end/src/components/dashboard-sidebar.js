@@ -13,6 +13,10 @@ import { User as UserIcon } from '../icons/user';
 import { UserAdd as UserAddIcon } from '../icons/user-add';
 import { Users as UsersIcon } from '../icons/users';
 import { XCircle as XCircleIcon } from '../icons/x-circle';
+import StoreIcon from '@mui/icons-material/Store';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import InventoryIcon from '@mui/icons-material/Inventory';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Logo } from './logo';
 import { NavItem } from './nav-item';
 
@@ -58,61 +62,39 @@ const items = [
   //   title: 'Error'
   // },
   {
-    href: '/membership-customers',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: '멤버쉽 고객'
-  // },
-  // {
-  //   href: '/membership-customer-records',
-  //   icon: (<XCircleIcon fontSize="small" />),
-  //   title: '멤버쉽 고객 구매 이력'
-  },
-  {
-    href: '/sales',
-    icon: (<XCircleIcon fontSize="small" />),
-    title: '판매'
-  }
-];
-
-const scmItems = [
-  {
     href: '/item-infos',
-    icon: (<XCircleIcon fontSize="small" />),
+    icon: (<ShoppingBagIcon fontSize="small" />),
     title: '모든 상품'
   },
   {
     href: '/managed-stores',
-    icon: (<XCircleIcon fontSize="small" />),
+    icon: (<StoreIcon fontSize="small" />),
     title: '지점'
   },
   {
     href: '/in-warehouse-reports',
-    icon: (<XCircleIcon fontSize="small" />),
+    icon: (<LocalShippingIcon fontSize="small" />),
     title: '입고 신청'
   },
-  // {
-  //   href: '/reqs-in-warehouse',
-  //   icon: (<XCircleIcon fontSize="small" />),
-  //   title: '입고 신청'
-  // },
   {
     href: '/item-stocks',
-    icon: (<XCircleIcon fontSize="small" />),
+    icon: (<InventoryIcon fontSize="small" />),
     title: '재고 현황'
   },
   {
+    href: '/membership-customers',
+    icon: (<UsersIcon fontSize="small" />),
+    title: '멤버쉽 고객'
+  },
+  {
+    href: '/sales',
+    icon: (<ShoppingCartIcon fontSize="small" />),
+    title: '판매'
+  },
+  {
     href: '/statistics'+'?'+'target=all',
-    icon: (<XCircleIcon fontSize="small" />),
+    icon: (<ChartBarIcon fontSize="small" />),
     title: '통계'
-  // {
-  //   href: '/sales-consumers',
-  //   icon: (<XCircleIcon fontSize="small" />),
-  //   title: '구매자 기록'
-  // },
-  // {
-  //   href: '/sales-records',
-  //   icon: (<XCircleIcon fontSize="small" />),
-  //   title: '판매 이력'
   }
 ];
 
@@ -147,7 +129,7 @@ export const DashboardSidebar = (props) => {
           height: '100%'
         }}
       >
-        <div>
+        {/* <div>
           <Box sx={{ p: 3 }}>
             <NextLink
               href="/"
@@ -207,19 +189,9 @@ export const DashboardSidebar = (props) => {
             borderColor: '#2D3748',
             my: 3
           }}
-        />
+        /> */}
         <Box sx={{ flexGrow: 1 }}>
           {items.map((item) => (
-            <NavItem
-              key={item.title}
-              icon={item.icon}
-              href={item.href}
-              title={item.title}
-            />
-          ))}
-        </Box>
-        <Box sx={{ flexGrow: 1 }}>
-          {scmItems.map((item) => (
             <NavItem
               key={item.title}
               icon={item.icon}

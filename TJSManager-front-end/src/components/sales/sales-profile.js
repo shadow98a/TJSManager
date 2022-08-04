@@ -49,7 +49,7 @@ export const SalesProfile = ({salesCnts,pointToUse,...props}) =>
       }
     );
   }
-  useEffect(()=>{setItemStocks(getItemStocks());},[]);
+  useEffect(()=>{getItemStocks();},[]);
 
   function getCountsToPay(salesCnts,itemStocks)
   {

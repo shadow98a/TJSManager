@@ -88,7 +88,7 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
       }
     );
   }
-  getCustomerNums();
+  useEffect(()=>{getCustomerNums();},[]);
 
   const [itemNums,setItemNums]=useState([]);
   function getItemNums()
@@ -282,7 +282,26 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
 
     setSelectedItemIds(SelectedItemIdsToSet);
   };
+  
+  function putItemStocks(salesCnts)
+  {
+    const employee=JSON.parse(sessionStorage.getItem('employee'));
+    for(const itemNum of Object.keys(salesCnts))
+    {
+      axios.get(domain+'/item/stock'+('/'+employee.storeNum.storeNum)+('/'+itemNum)).
+      then
+      (
+        (response)=>
+        {
+          const ItemStock={...response.data,itemNum:response.data.primaryKey.itemNum.itemNum,storeNum:response.data.primaryKey.storeNum.storeNum};
+          ItemStock.outCnt+=salesCnts[itemNum];
+          axios.put(domain+'/item/stock'+('/'+employee.storeNum.storeNum)+('/'+itemNum),ItemStock);
+        }
+      );
+    }
 
+    
+  }
   function postSalesRecords(salesNum,salesCnts)
   {
     const employee=JSON.parse(sessionStorage.getItem('employee'));
@@ -316,6 +335,7 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
   {
     event.preventDefault();
     
+    putItemStocks(salesCnts);
     axios.post(domain+'/sales/consumer',salesConsumerValues).
     then
     (
@@ -323,8 +343,11 @@ export const SalesProfileDetails = ({salesCnts,setSalesCnts,pointToUse,setPointT
       {
         const salesNum=response.data;
         postSalesRecords(salesNum,salesCnts);
-        putMembershipCustomer(membershipCustomerRecordValues,getCost(salesCnts,itemStocks));
-        postMembershipCustomerRecord(membershipCustomerRecordValues,salesNum,getCost(salesCnts,itemStocks));
+        if(membershipCustomerRecordValues.customerNum!='')
+        {
+          putMembershipCustomer(membershipCustomerRecordValues,getCost(salesCnts,itemStocks));
+          postMembershipCustomerRecord(membershipCustomerRecordValues,salesNum,getCost(salesCnts,itemStocks));
+        }
       }
     );
     router.push('/statistics'+'?'+'target=all');

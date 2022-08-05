@@ -18,8 +18,9 @@ import {
 import { getInitials } from '../../utils/get-initials';
 
 // export const ManagedStoreListResults = ({ managedStores, ...rest }) => {
-export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds,setSelectedManagedStoreIds,...rest }) => {
+export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds,setSelectedManagedStoreIds,searchKeyword,...rest }) => {
   // const [selectedManagedStoreIds, setSelectedManagedStoreIds] = useState([]);
+  const searchedManagedStores=managedStores.filter((managedStore)=>{return managedStore.storeNum==Number(searchKeyword)||managedStore.storePassword.includes(searchKeyword)||managedStore.storeName.includes(searchKeyword)||managedStore.storeAddress.includes(searchKeyword)||managedStore.storeTelNum.includes(searchKeyword);});
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
 
@@ -27,7 +28,7 @@ export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds
     let newSelectedManagedStoreIds;
 
     if (event.target.checked) {
-      newSelectedManagedStoreIds = managedStores.map((managedStore) => JSON.stringify({storeNum:managedStore.storeNum}));
+      newSelectedManagedStoreIds = searchedManagedStores.map((managedStore) => JSON.stringify({storeNum:managedStore.storeNum}));
     } else {
       newSelectedManagedStoreIds = [];
     }
@@ -72,11 +73,11 @@ export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedManagedStoreIds.length === managedStores.length}
+                    checked={selectedManagedStoreIds.length === searchedManagedStores.length}
                     color="primary"
                     indeterminate={
                       selectedManagedStoreIds.length > 0
-                      && selectedManagedStoreIds.length < managedStores.length
+                      && selectedManagedStoreIds.length < searchedManagedStores.length
                     }
                     onChange={handleSelectAll}
                   />
@@ -99,7 +100,7 @@ export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds
               </TableRow>
             </TableHead>
             <TableBody>
-              {managedStores.slice(limit*page, limit*(page+1)).map((managedStore) => (
+              {searchedManagedStores.slice(limit*page, limit*(page+1)).map((managedStore) => (
                 <TableRow
                   hover
                   key={JSON.stringify({storeNum:managedStore.storeNum})}
@@ -134,7 +135,7 @@ export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds
                     </Box>
                   </TableCell>
                   <TableCell>
-                    {managedStore.storeAdress}
+                    {managedStore.storeAddress}
                   </TableCell>
                   <TableCell>
                     {managedStore.storeTelNum}
@@ -147,7 +148,7 @@ export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={managedStores.length}
+        count={searchedManagedStores.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -159,5 +160,5 @@ export const ManagedStoreListResults = ({ managedStores, selectedManagedStoreIds
 };
 
 ManagedStoreListResults.propTypes = {
-  managedStores: PropTypes.array.isRequired
+  searchedManagedStores: PropTypes.array.isRequired
 };

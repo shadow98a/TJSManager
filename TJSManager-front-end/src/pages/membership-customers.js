@@ -12,8 +12,8 @@ const MembershipCustomers = () =>
 {
   const [membershipCustomers,setMembershipCustomers]=useState([]);
   axios.get(domain+'/membership/customer').then((response)=>{setMembershipCustomers(response.data);});
-
   const [selectedMembershipCustomerIds, setSelectedMembershipCustomerIds] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
   
   return  (
             <>
@@ -31,10 +31,10 @@ const MembershipCustomers = () =>
               >
                 <Container maxWidth={false}>
                   {/* <MembershipCustomerListToolbar /> */}
-                  <MembershipCustomerListToolbar selectedMembershipCustomerIds={selectedMembershipCustomerIds}/>
+                  <MembershipCustomerListToolbar selectedMembershipCustomerIds={selectedMembershipCustomerIds} setSearchKeyword={setSearchKeyword}/>
                   <Box sx={{ mt: 3 }}>
                     {/* <MembershipCustomerListResults membershipCustomers={membershipCustomers} /> */}
-                    <MembershipCustomerListResults membershipCustomers={membershipCustomers} selectedMembershipCustomerIds={selectedMembershipCustomerIds} setSelectedMembershipCustomerIds={setSelectedMembershipCustomerIds}/>
+                    <MembershipCustomerListResults membershipCustomers={membershipCustomers} selectedMembershipCustomerIds={selectedMembershipCustomerIds} setSelectedMembershipCustomerIds={setSelectedMembershipCustomerIds} searchKeyword={searchKeyword}/>
                   </Box>
                 </Container>
               </Box>

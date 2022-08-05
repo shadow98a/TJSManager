@@ -20,7 +20,7 @@ import {useRouter} from 'next/router';
 
 // export const ItemInfoListResults = ({ itemInfos, ...rest }) => {
 export const ItemInfoListResults = ({ itemInfos, selectedItemInfoIds,setSelectedItemInfoIds,searchKeyword,...rest }) => {
-  const searchedItemInfos=itemInfos.filter((itemInfo)=>{return itemInfo.itemNum.toString().includes(searchKeyword)||itemInfo.itemName.toString().includes(searchKeyword)||itemInfo.type.toString().includes(searchKeyword)||itemInfo.consumerPrice.toString().includes(searchKeyword);});
+  const searchedItemInfos=itemInfos.filter((itemInfo)=>{return itemInfo.itemNum==Number(searchKeyword)||itemInfo.itemName.includes(searchKeyword)||itemInfo.type.includes(searchKeyword)||itemInfo.consumerPrice==Number(searchKeyword);});
   // const [selectedItemInfoIds, setSelectedItemInfoIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);

@@ -12,8 +12,8 @@ const ManagedStores = () =>
 {
   const [managedStores,setManagedStores]=useState([]);
   axios.get(domain+'/managed_store').then((response)=>{setManagedStores(response.data);});
-
   const [selectedManagedStoreIds, setSelectedManagedStoreIds] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
   
   return  (
             <>
@@ -31,10 +31,10 @@ const ManagedStores = () =>
               >
                 <Container maxWidth={false}>
                   {/* <ManagedStoreListToolbar /> */}
-                  <ManagedStoreListToolbar selectedManagedStoreIds={selectedManagedStoreIds}/>
+                  <ManagedStoreListToolbar selectedManagedStoreIds={selectedManagedStoreIds} setSearchKeyword={setSearchKeyword}/>
                   <Box sx={{ mt: 3 }}>
                     {/* <ManagedStoreListResults managedStores={managedStores} /> */}
-                    <ManagedStoreListResults managedStores={managedStores} selectedManagedStoreIds={selectedManagedStoreIds} setSelectedManagedStoreIds={setSelectedManagedStoreIds}/>
+                    <ManagedStoreListResults managedStores={managedStores} selectedManagedStoreIds={selectedManagedStoreIds} setSelectedManagedStoreIds={setSelectedManagedStoreIds} searchKeyword={searchKeyword}/>
                   </Box>
                 </Container>
               </Box>

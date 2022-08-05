@@ -12,8 +12,8 @@ const ItemStocks = () =>
 {
   const [itemStocks,setItemStocks]=useState([]);
   axios.get(domain+'/item/stock').then((response)=>{setItemStocks(response.data);});
-
   const [selectedItemStockIds, setSelectedItemStockIds] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
   
   return  (
             <>
@@ -31,10 +31,10 @@ const ItemStocks = () =>
               >
                 <Container maxWidth={false}>
                   {/* <ItemStockListToolbar /> */}
-                  <ItemStockListToolbar selectedItemStockIds={selectedItemStockIds}/>
+                  <ItemStockListToolbar selectedItemStockIds={selectedItemStockIds} setSearchKeyword={setSearchKeyword}/>
                   <Box sx={{ mt: 3 }}>
                     {/* <ItemStockListResults itemStocks={itemStocks} /> */}
-                    <ItemStockListResults itemStocks={itemStocks} selectedItemStockIds={selectedItemStockIds} setSelectedItemStockIds={setSelectedItemStockIds}/>
+                    <ItemStockListResults itemStocks={itemStocks} selectedItemStockIds={selectedItemStockIds} setSelectedItemStockIds={setSelectedItemStockIds} searchKeyword={searchKeyword}/>
                   </Box>
                 </Container>
               </Box>

@@ -12,8 +12,8 @@ const InWarehouseReports = () =>
 {
   const [inWarehouseReports,setInWarehouseReports]=useState([]);
   axios.get(domain+'/item/in_warehouse_report').then((response)=>{setInWarehouseReports(response.data);});
-
   const [selectedInWarehouseReportIds, setSelectedInWarehouseReportIds] = useState([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
   
   return  (
             <>
@@ -31,10 +31,10 @@ const InWarehouseReports = () =>
               >
                 <Container maxWidth={false}>
                   {/* <InWarehouseReportListToolbar /> */}
-                  <InWarehouseReportListToolbar selectedInWarehouseReportIds={selectedInWarehouseReportIds}/>
+                  <InWarehouseReportListToolbar selectedInWarehouseReportIds={selectedInWarehouseReportIds} setSearchKeyword={setSearchKeyword}/>
                   <Box sx={{ mt: 3 }}>
                     {/* <InWarehouseReportListResults inWarehouseReports={inWarehouseReports} /> */}
-                    <InWarehouseReportListResults inWarehouseReports={inWarehouseReports} selectedInWarehouseReportIds={selectedInWarehouseReportIds} setSelectedInWarehouseReportIds={setSelectedInWarehouseReportIds}/>
+                    <InWarehouseReportListResults inWarehouseReports={inWarehouseReports} selectedInWarehouseReportIds={selectedInWarehouseReportIds} setSelectedInWarehouseReportIds={setSelectedInWarehouseReportIds} searchKeyword={searchKeyword}/>
                   </Box>
                 </Container>
               </Box>

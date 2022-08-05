@@ -18,16 +18,17 @@ import {
 import { getInitials } from '../../utils/get-initials';
 
 // export const InWarehouseReportListResults = ({ inWarehouseReports, ...rest }) => {
-export const InWarehouseReportListResults = ({ inWarehouseReports, selectedInWarehouseReportIds,setSelectedInWarehouseReportIds,...rest }) => {
+export const InWarehouseReportListResults = ({ inWarehouseReports, selectedInWarehouseReportIds,setSelectedInWarehouseReportIds,searchKeyword,...rest }) => {
   // const [selectedInWarehouseReportIds, setSelectedInWarehouseReportIds] = useState([]);
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(0);
+  const searchedInWarehouseReports=inWarehouseReports.filter((inWarehouseReport)=>{return inWarehouseReport.reportNum==Number(searchKeyword)||(inWarehouseReport.storeNum.storeNum==Number(searchKeyword)||inWarehouseReport.storeNum.storeName.includes(searchKeyword))||(inWarehouseReport.itemNum.itemNum==Number(searchKeyword)||inWarehouseReport.itemNum.itemName.includes(searchKeyword))||inWarehouseReport.reqCnt==Number(searchKeyword)||inWarehouseReport.reqDate.includes(searchKeyword)||(inWarehouseReport.writerNum.empNum==Number(searchKeyword)||inWarehouseReport.writerNum.name.includes(searchKeyword))||(inWarehouseReport.approvedDate!==null&&inWarehouseReport.approvedDate.includes(searchKeyword));});
 
   const handleSelectAll = (event) => {
     let newSelectedInWarehouseReportIds;
 
     if (event.target.checked) {
-      newSelectedInWarehouseReportIds = inWarehouseReports.map((inWarehouseReport) => JSON.stringify({reportNum:inWarehouseReport.reportNum}));
+      newSelectedInWarehouseReportIds = searchedInWarehouseReports.map((inWarehouseReport) => JSON.stringify({reportNum:inWarehouseReport.reportNum}));
     } else {
       newSelectedInWarehouseReportIds = [];
     }
@@ -72,11 +73,11 @@ export const InWarehouseReportListResults = ({ inWarehouseReports, selectedInWar
               <TableRow>
                 <TableCell padding="checkbox">
                   <Checkbox
-                    checked={selectedInWarehouseReportIds.length === inWarehouseReports.length}
+                    checked={selectedInWarehouseReportIds.length === searchedInWarehouseReports.length}
                     color="primary"
                     indeterminate={
                       selectedInWarehouseReportIds.length > 0
-                      && selectedInWarehouseReportIds.length < inWarehouseReports.length
+                      && selectedInWarehouseReportIds.length < searchedInWarehouseReports.length
                     }
                     onChange={handleSelectAll}
                   />
@@ -105,7 +106,7 @@ export const InWarehouseReportListResults = ({ inWarehouseReports, selectedInWar
               </TableRow>
             </TableHead>
             <TableBody>
-              {inWarehouseReports.slice(limit*page, limit*(page+1)).map((inWarehouseReport) => (
+              {searchedInWarehouseReports.slice(limit*page, limit*(page+1)).map((inWarehouseReport) => (
                 <TableRow
                   hover
                   key={JSON.stringify({reportNum:inWarehouseReport.reportNum})}
@@ -147,7 +148,7 @@ export const InWarehouseReportListResults = ({ inWarehouseReports, selectedInWar
       </PerfectScrollbar>
       <TablePagination
         component="div"
-        count={inWarehouseReports.length}
+        count={searchedInWarehouseReports.length}
         onPageChange={handlePageChange}
         onRowsPerPageChange={handleLimitChange}
         page={page}
@@ -159,5 +160,5 @@ export const InWarehouseReportListResults = ({ inWarehouseReports, selectedInWar
 };
 
 InWarehouseReportListResults.propTypes = {
-  inWarehouseReports: PropTypes.array.isRequired
+  searchedInWarehouseReports: PropTypes.array.isRequired
 };
